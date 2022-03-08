@@ -3,9 +3,9 @@ package speedcubing.All;
 
 import cubing.bukkit.PlayerUtils;
 import cubing.bukkit.api.SideBarAPI;
-import cubingserver.connection.ServerUtils;
 import cubingserver.libs.PlayerData;
 import cubingserver.libs.Rank;
+import cubingserver.speedcubingServer;
 import net.minecraft.server.v1_8_R3.Packet;
 import net.minecraft.server.v1_8_R3.PacketPlayOutSpawnEntityLiving;
 import net.minecraft.server.v1_8_R3.PlayerConnection;
@@ -74,7 +74,7 @@ public class Lobby {
                 {sidebar[4]},
                 {sidebar[3]},
                 {sidebar[2]},
-                {"", sidebar[1], Integer.toString(ServerUtils.AllPlayers)},
+                {"", sidebar[1], Integer.toString(speedcubingServer.AllPlayers)},
                 {sidebar[0]},
         }, new int[]{4, 3, 2, 1, 0});
         player.setScoreboard(scoreboard);

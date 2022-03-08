@@ -6,14 +6,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import speedcubing.All.Chat;
 import speedcubing.All.Lobby;
-import speedcubing.All.NPCClick;
 import speedcubing.Core.Core;
-import speedcubing.Main;
 
 import java.util.UUID;
 
@@ -28,8 +24,6 @@ public class PlayerJoin implements Listener {
             PlayerQuit.bruh.add(uuid);
             Lobby.Join(player, true);
             new Thread(() -> Core.integerCache.put(uuid, ArrayUtils.toObject(speedcubingServer.connection.selectInts("playersdata", "mlgrush_stick,mlgrush_block,mlgrush_pickaxe,mlgrush_stickskin,mlgrush_blockskin,mlgrush_autoreset,mlgrush_hitdelay,mlgrush_falldamage,mlgrush_autoremove,mlgrush_oldkb", "uuid='" + uuid + "'")))).start();
-            new Chat().PacketInject(player);
-            new NPCClick().PacketInject(player);
         }
     }
 }

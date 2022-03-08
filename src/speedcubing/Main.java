@@ -1,11 +1,11 @@
 package speedcubing;
 
+import cubing.bukkit.Event.ServerEventManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.WorldCreator;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
-import speedcubing.All.SocketServer;
 import speedcubing.BukkitCommands.reset;
 import speedcubing.BukkitEventListener.*;
 import speedcubing.Core.BlockEditor;
@@ -51,6 +51,6 @@ public class Main extends JavaPlugin implements CommandExecutor {
         new MLGRush4x1().Load();
         new StickDuel().Load();
         new BlockEditor().Load();
-        new SocketServer().Load();
+        ServerEventManager.registerEventListener(new ServerEvent());
     }
 }
