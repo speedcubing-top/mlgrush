@@ -51,6 +51,6 @@ public class Main extends JavaPlugin implements CommandExecutor {
         new MLGRush4x1().Load();
         new StickDuel().Load();
         new BlockEditor().Load();
-        ServerEventManager.registerEventListener(new ServerEvent());
+        ServerEventManager.registerListeners(new ServerEvent());
     }
 }
