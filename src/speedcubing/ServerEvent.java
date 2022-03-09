@@ -41,6 +41,7 @@ public class ServerEvent {
 
     @ServerEventHandler
     public void PlayInChatEvent(PlayInChatEvent e) {
+        e.setCancelled(true);
         Player player = e.player;
         String message = Reflections.getField(e.packet, "a").toString();
         long time = System.currentTimeMillis();
@@ -67,8 +68,7 @@ public class ServerEvent {
                 Console.sendColoredConsole("§7[§aChatLog§7] [§b" + player.getWorld().getName() + "§7] " + out[1]);
                 speedcubingServer.lastmsg.put(uuid, message);
             }
-            e.setCancelled(true);
-        }
+        } else e.setCancelled(false);
         speedcubingServer.spam.put(uuid, time);
     }
 
