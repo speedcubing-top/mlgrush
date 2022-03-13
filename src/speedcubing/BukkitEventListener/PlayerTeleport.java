@@ -1,8 +1,5 @@
 package speedcubing.BukkitEventListener;
 
-import cubingserver.libs.PlayerData;
-import cubingserver.libs.Rank;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,11 +7,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import speedcubing.Core.Core;
 import speedcubing.Core.MLGRush2x1;
-import speedcubing.Core.MLGRush4x1;
 import speedcubing.Core.StickDuel;
-import speedcubing.List.StringList;
 
-import java.util.*;
+import java.util.UUID;
 
 public class PlayerTeleport implements Listener {
     @EventHandler
@@ -33,10 +28,10 @@ public class PlayerTeleport implements Listener {
 //                    {
 //                    int room = Core.randomToRoom(from.getZ());
 //                    if (from.getBlockX() > 500) {
-//                        String[] format = Rank.format(uuid);
+//                        String[] format = User.getFormat(User.getRank((uuid);
 //                        MLGRush4x1.Queue[room].remove(uuid);
 //                        List<UUID> queue = MLGRush4x1.Queue[room];
-//                        queue.forEach(p -> Bukkit.getPlayer(p).sendMessage(StringList.MLGRushQuitQueue[PlayerData.getLang(p)]
+//                        queue.forEach(p -> Bukkit.getPlayer(p).sendMessage(StringList.MLGRushQuitQueue[User.getLang(p)]
 //                                .replace("%format0%", format[0])
 //                                .replace("%name%", player.getName())
 //                                .replace("%format2%", format[2])
@@ -44,7 +39,7 @@ public class PlayerTeleport implements Listener {
 //                        if (queue.size() == 2) {
 //                            queue.forEach(id -> {
 //                                Player p = Bukkit.getPlayer(id);
-//                                p.sendMessage(StringList.MLGRushNotenoughplayers[PlayerData.getLang(id)]);
+//                                p.sendMessage(StringList.MLGRushNotenoughplayers[User.getLang(id)]);
 //                                p.setLevel(0);
 //                            });
 //                            MLGRush4x1.QueueCounter.get(room).cancel();

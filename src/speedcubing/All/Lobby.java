@@ -3,8 +3,7 @@ package speedcubing.All;
 
 import cubing.bukkit.PlayerUtils;
 import cubing.bukkit.api.SideBarAPI;
-import cubingserver.libs.PlayerData;
-import cubingserver.libs.Rank;
+import cubingserver.libs.User;
 import cubingserver.speedcubingServer;
 import net.minecraft.server.v1_8_R3.Packet;
 import net.minecraft.server.v1_8_R3.PacketPlayOutSpawnEntityLiving;
@@ -30,8 +29,8 @@ public class Lobby {
     public static void Join(Player player, boolean externalMessage) {
         UUID uuid = player.getUniqueId();
         String name = player.getName();
-        String[] format = Rank.format(uuid);
-        int lang = PlayerData.getLang(uuid);
+        String[] format = User.getFormat(User.getRank(uuid));
+        int lang = User.getLang(uuid);
         if (externalMessage)
             player.sendMessage(StringList.LobbyJoinMessage[lang]
                     .replace("%format0%", format[0])
@@ -39,7 +38,7 @@ public class Lobby {
                     .replace("%format2%", format[2])
                     .replace("%name%", name));
         for (Player p : player.getWorld().getPlayers()) {
-            p.sendMessage(StringList.LobbyJoinMessage[PlayerData.getLang(p.getUniqueId())]
+            p.sendMessage(StringList.LobbyJoinMessage[User.getLang(p.getUniqueId())]
                     .replace("%format0%", format[0])
                     .replace("%format1%", format[1])
                     .replace("%format2%", format[2])
@@ -66,7 +65,7 @@ public class Lobby {
         }
 
         Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-        String[] sidebar = StringList.LobbySideBar[PlayerData.getLang(player.getUniqueId())];
+        String[] sidebar = StringList.LobbySideBar[User.getLang(player.getUniqueId())];
         Objective objective = scoreboard.registerNewObjective("sidebar", "dummy");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         objective.setDisplayName(sidebar[5]);
@@ -84,7 +83,7 @@ public class Lobby {
     }
 
     public static void Items(Player player) {
-        int lang = PlayerData.getLang(player.getUniqueId());
+        int lang = User.getLang(player.getUniqueId());
         player.setItemOnCursor(new ItemStack(Material.AIR));
         PlayerInventory inventory = player.getInventory();
         inventory.clear();

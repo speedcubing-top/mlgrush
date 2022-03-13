@@ -1,7 +1,6 @@
 package speedcubing.BukkitEventListener;
 
-import cubingserver.libs.PlayerData;
-import cubingserver.libs.Rank;
+import cubingserver.libs.User;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -29,13 +28,13 @@ public class PlayerInteract implements Listener {
             case "world":
                 switch (player.getItemInHand().getType()) {
                     case COMPASS:
-                        player.openInventory(ItemStackList.specinventory[PlayerData.getLang(player.getUniqueId())]);
+                        player.openInventory(ItemStackList.specinventory[User.getLang(player.getUniqueId())]);
                         break;
                     case CHEST:
-                        player.openInventory(ItemStackList.Gadgets[PlayerData.getLang(player.getUniqueId())]);
+                        player.openInventory(ItemStackList.Gadgets[User.getLang(player.getUniqueId())]);
                         break;
                     case REDSTONE_COMPARATOR:
-                        player.openInventory(ItemStackList.Settings[PlayerData.getLang(player.getUniqueId())]);
+                        player.openInventory(ItemStackList.Settings[User.getLang(player.getUniqueId())]);
                         break;
                 }
                 if (e.getClickedBlock() != null && (player.getGameMode() == GameMode.SURVIVAL || player.getGameMode() == GameMode.ADVENTURE))
@@ -60,12 +59,12 @@ public class PlayerInteract implements Listener {
                             int room = Core.Spectate.get(uuid);
                             MLGRush2x1.Spectators.get(room).remove(uuid);
                             Core.Spectate.remove(uuid);
-                            String str = Rank.format(uuid)[0] + player.getName();
+                            String str = User.getFormat(User.getRank(uuid))[0] + player.getName();
                             for (UUID id : MLGRush2x1.Spectators.get(room)) {
-                                Bukkit.getPlayer(id).sendMessage(StringList.LeaveSpectate[PlayerData.getLang(id)].replace("%player%", str));
+                                Bukkit.getPlayer(id).sendMessage(StringList.LeaveSpectate[User.getLang(id)].replace("%player%", str));
                             }
                             for (UUID id : MLGRush2x1.Players.get(room)) {
-                                Bukkit.getPlayer(id).sendMessage(StringList.LeaveSpectate[PlayerData.getLang(id)].replace("%player%", str));
+                                Bukkit.getPlayer(id).sendMessage(StringList.LeaveSpectate[User.getLang(id)].replace("%player%", str));
                                 Bukkit.getPlayer(id).showPlayer(player);
                             }
                         }
@@ -77,12 +76,12 @@ public class PlayerInteract implements Listener {
                             int room = Core.Spectate.get(uuid);
                             StickDuel.Spectators.get(room).remove(uuid);
                             Core.Spectate.remove(uuid);
-                            String str = Rank.format(uuid)[0] + player.getName();
+                            String str = User.getFormat(User.getRank(uuid))[0] + player.getName();
                             for (UUID id : StickDuel.Spectators.get(room)) {
-                                Bukkit.getPlayer(id).sendMessage(StringList.LeaveSpectate[PlayerData.getLang(id)].replace("%player%", str));
+                                Bukkit.getPlayer(id).sendMessage(StringList.LeaveSpectate[User.getLang(id)].replace("%player%", str));
                             }
                             for (UUID id : StickDuel.Players.get(room)) {
-                                Bukkit.getPlayer(id).sendMessage(StringList.LeaveSpectate[PlayerData.getLang(id)].replace("%player%", str));
+                                Bukkit.getPlayer(id).sendMessage(StringList.LeaveSpectate[User.getLang(id)].replace("%player%", str));
                                 Bukkit.getPlayer(id).showPlayer(player);
                             }
                         }

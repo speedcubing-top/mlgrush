@@ -1,5 +1,5 @@
 package speedcubing.List;
-import cubingserver.configcache;
+import cubingserver.config;
 /**
  *
  **/
@@ -124,22 +124,22 @@ public class StringList {
     };
 
     public static String[][] LobbySideBar = {
-            {"§5", "§8» §b", "§aOnline-Spieler§a:", "§8", "§6" + configcache.SERVERIP, "§3MLGRush"},
-            {"§5", "§8» §b", "§aOnline players§a:", "§8", "§6" + configcache.SERVERIP, "§3MLGRush"},
-            {"§5", "§8» §b", "§a線上玩家:", "§8", "§6" + configcache.SERVERIP, "§3MLGRush"},
-            {"§5", "§8» §b", "§a线上玩家", "§8", "§6" + configcache.SERVERIP, "§3MLGRush"}
+            {"§5", "§8» §b", "§aOnline-Spieler§a:", "§8", "§6" + config.SERVERIP, "§3MLGRush"},
+            {"§5", "§8» §b", "§aOnline players§a:", "§8", "§6" + config.SERVERIP, "§3MLGRush"},
+            {"§5", "§8» §b", "§a線上玩家:", "§8", "§6" + config.SERVERIP, "§3MLGRush"},
+            {"§5", "§8» §b", "§a线上玩家", "§8", "§6" + config.SERVERIP, "§3MLGRush"}
     };
     public static String[][] MLGRushSideBar = {
-            {"§0", " §7▶ ", " §7▶ ", "§3", "§6" + configcache.SERVERIP, "§3MLGRush 2x1 §7▶§b %h%%m%%s%"},
-            {"§0", " §7▶ ", " §7▶ ", "§3", "§6" + configcache.SERVERIP, "§3MLGRush 2x1 §7▶§b %h%%m%%s%"},
-            {"§0", " §7▶ ", " §7▶ ", "§3", "§6" + configcache.SERVERIP, "§3MLGRush 2x1 §7▶§b %h%%m%%s%"},
-            {"§0", " §7▶ ", " §7▶ ", "§3", "§6" + configcache.SERVERIP, "§3MLGRush 2x1 §7▶§b %h%%m%%s%"}
+            {"§0", " §7▶ ", " §7▶ ", "§3", "§6" + config.SERVERIP, "§3MLGRush 2x1 §7▶§b %h%%m%%s%"},
+            {"§0", " §7▶ ", " §7▶ ", "§3", "§6" + config.SERVERIP, "§3MLGRush 2x1 §7▶§b %h%%m%%s%"},
+            {"§0", " §7▶ ", " §7▶ ", "§3", "§6" + config.SERVERIP, "§3MLGRush 2x1 §7▶§b %h%%m%%s%"},
+            {"§0", " §7▶ ", " §7▶ ", "§3", "§6" + config.SERVERIP, "§3MLGRush 2x1 §7▶§b %h%%m%%s%"}
     };
     public static String[][] StickDuelSideBar = {
-            {"§0", " §7▶ ", " §7▶ ", "§3", "§6" + configcache.SERVERIP, "§3StickDuel §7▶§b %h%%m%%s%"},
-            {"§0", " §7▶ ", " §7▶ ", "§3", "§6" + configcache.SERVERIP, "§3StickDuel §7▶§b %h%%m%%s%"},
-            {"§0", " §7▶ ", " §7▶ ", "§3", "§6" + configcache.SERVERIP, "§3StickDuel §7▶§b %h%%m%%s%"},
-            {"§0", " §7▶ ", " §7▶ ", "§3", "§6" + configcache.SERVERIP, "§3StickDuel §7▶§b %h%%m%%s%"}
+            {"§0", " §7▶ ", " §7▶ ", "§3", "§6" + config.SERVERIP, "§3StickDuel §7▶§b %h%%m%%s%"},
+            {"§0", " §7▶ ", " §7▶ ", "§3", "§6" + config.SERVERIP, "§3StickDuel §7▶§b %h%%m%%s%"},
+            {"§0", " §7▶ ", " §7▶ ", "§3", "§6" + config.SERVERIP, "§3StickDuel §7▶§b %h%%m%%s%"},
+            {"§0", " §7▶ ", " §7▶ ", "§3", "§6" + config.SERVERIP, "§3StickDuel §7▶§b %h%%m%%s%"}
     };
 
     public static String[] JoinSpectate = {

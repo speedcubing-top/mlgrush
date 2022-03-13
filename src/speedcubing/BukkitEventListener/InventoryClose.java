@@ -2,7 +2,7 @@ package speedcubing.BukkitEventListener;
 
 
 import cubingserver.StringList.GlobalString;
-import cubingserver.libs.PlayerData;
+import cubingserver.libs.User;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,7 +21,7 @@ public class InventoryClose implements Listener {
             UUID uuid = player.getUniqueId();
             if (Core.iseditingkit.contains(uuid)) {
                 Core.iseditingkit.remove(uuid);
-                player.sendMessage(GlobalString.UnSavedSettings[PlayerData.getLang(uuid)]);
+                player.sendMessage(GlobalString.UnSavedSettings[User.getLang(uuid)]);
                 Lobby.Items(player);
             }
         }

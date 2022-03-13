@@ -1,7 +1,7 @@
 package speedcubing.BukkitEventListener;
 
 
-import cubingserver.libs.PlayerData;
+import cubingserver.libs.User;
 import cubingserver.speedcubingServer;
 import net.minecraft.server.v1_8_R3.PacketPlayOutEntityVelocity;
 import org.bukkit.GameMode;
@@ -54,7 +54,7 @@ public class EntityDamageByEntity implements Listener {
                             MLGRush2x1.gameStart(damagerUniqueId, victimUniqueId, 0);
                         Lobby.DeleteChallenge(damagerUniqueId);
                         Lobby.DeleteChallenge(victimUniqueId);
-                    } else damager.openInventory(ItemStackList.Challenger[PlayerData.getLang(damagerUniqueId)]);
+                    } else damager.openInventory(ItemStackList.Challenger[User.getLang(damagerUniqueId)]);
                 }
                 break;
             case "MLGRush4x1":

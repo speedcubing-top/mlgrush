@@ -1,6 +1,6 @@
 package speedcubing.BukkitCommands;
 
-import cubingserver.libs.PlayerData;
+import cubingserver.libs.User;
 import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -25,7 +25,7 @@ public class reset implements CommandExecutor, TabCompleter {
         Player player = (Player) sender;
         if (args.length == 0) {
             if (player.getAllowFlight())
-                player.sendMessage(StringList.MLGRushInvalidWorld[PlayerData.getLang(player.getUniqueId())]);
+                player.sendMessage(StringList.MLGRushInvalidWorld[User.getLang(player.getUniqueId())]);
             else
                 switch (player.getWorld().getName()) {
                     case "MLGRush2x1":
@@ -35,7 +35,7 @@ public class reset implements CommandExecutor, TabCompleter {
 //                        MLGRush4x1.resetBlocks(Core.randomToRoom(player.getLocation().getZ()));
                         break;
                     default:
-                        player.sendMessage(StringList.MLGRushInvalidWorld[PlayerData.getLang(player.getUniqueId())]);
+                        player.sendMessage(StringList.MLGRushInvalidWorld[User.getLang(player.getUniqueId())]);
                         break;
                 }
         } else
