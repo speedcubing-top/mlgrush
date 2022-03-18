@@ -1,8 +1,8 @@
 package speedcubing.All;
 
 
-import cubing.bukkit.PlayerUtils;
-import cubing.bukkit.api.SideBarAPI;
+import cubing.spigot.lib.bukkit.PlayerUtils;
+import cubing.spigot.lib.bukkit.api.SideBarAPI;
 import cubingserver.libs.User;
 import cubingserver.speedcubingServer;
 import net.minecraft.server.v1_8_R3.Packet;

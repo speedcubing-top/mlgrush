@@ -1,6 +1,6 @@
 package speedcubing.Core;
 
-import cubing.bukkit.InventoryUtils;
+import cubing.spigot.lib.bukkit.InventoryUtils;
 import cubingserver.StringList.GlobalString;
 import cubingserver.libs.User;
 import net.minecraft.server.v1_8_R3.EntityArmorStand;
