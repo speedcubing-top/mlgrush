@@ -1,10 +1,9 @@
 package speedcubing;
 
+import cubing.lib.utils.Console;
 import cubing.spigot.lib.bukkit.Event.ServerEventHandler;
 import cubing.spigot.lib.bukkit.Event.events.PlayInChatEvent;
 import cubing.spigot.lib.bukkit.Event.events.PlayInUseEntityEvent;
-import cubing.lib.utils.Console;
-import cubing.lib.utils.Reflections;
 import cubingserver.StringList.GlobalString;
 import cubingserver.customEvents.UDPEvent;
 import cubingserver.libs.User;
@@ -42,7 +41,7 @@ public class ServerEvent {
     public void PlayInChatEvent(PlayInChatEvent e) {
         e.setCancelled(true);
         Player player = e.player;
-        String message = e.packet.a;
+        String message = e.packet.a();
         long time = System.currentTimeMillis();
         UUID uuid = player.getUniqueId();
         boolean spam = PlayerJoin.Canspam.contains(uuid);
@@ -75,8 +74,8 @@ public class ServerEvent {
     public void PlayInUseEntityEvent(PlayInUseEntityEvent e) {
         Player player = e.player;
         PacketPlayInUseEntity packet = e.packet;
-        if (player.getItemInHand().getType() == org.bukkit.Material.AIR && Reflections.getField(packet, "action").toString().equals("INTERACT")) {
-            switch (EntityList.NPCS.indexOf(Reflections.getField(packet, "a"))) {
+        if (player.getItemInHand().getType() == org.bukkit.Material.AIR && packet.a().equals(PacketPlayInUseEntity.EnumEntityUseAction.INTERACT)) {
+            switch (EntityList.NPCS.indexOf(packet.a)) {
                 case 0:
                     StickDuel.Queue(player);
                     break;
