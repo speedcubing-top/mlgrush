@@ -104,14 +104,14 @@ public class StickDuel {
         objective.setDisplayName(sidebar[5].replace("%h%", x / 3600 == 0 ? "" : x / 3600 + ":").replace("%m%", String.format("%02d", (x % 3600) / 60) + ":").replace("%s%", String.format("%02d", x % 60)));
         Integer[] score = Score.get(room);
         String[] suffix = (score[0].equals(score[1])) ? new String[]{"§e" + score[0], "§e" + score[1]} : (score[0] > score[1] ? new String[]{"§a" + score[0], "§c" + score[1]} : new String[]{"§c" + score[0], "§a" + score[1]});
-        SideBarAPI.sidebarTeams(scoreboard, new String[][]{{sidebar[4]}, {sidebar[3]}, {"§2§f", User.getFormat(User.getRank(playeruuid[0]))[0] + Bukkit.getPlayer(playeruuid[0]).getName() + sidebar[2] + suffix[0]}, {"§1§f", User.getFormat(User.getRank(playeruuid[1]))[0] + Bukkit.getPlayer(playeruuid[1]).getName() + sidebar[1] + suffix[1]}, {sidebar[0]},}, new int[]{4, 3, 2, 1, 0});
+        SideBarAPI.sidebarTeams(scoreboard, new String[][]{{sidebar[4]}, {sidebar[3]}, {"§2§f", User.getFormat(User.getRank(playeruuid[0]))[1] + Bukkit.getPlayer(playeruuid[0]).getName() + sidebar[2] + suffix[0]}, {"§1§f", User.getFormat(User.getRank(playeruuid[1]))[1] + Bukkit.getPlayer(playeruuid[1]).getName() + sidebar[1] + suffix[1]}, {sidebar[0]},}, new int[]{4, 3, 2, 1, 0});
         player.setScoreboard(scoreboard);
         player.getInventory().clear();
         player.getInventory().setItem(8, ItemStackList.HubSlime[lang]);
         Set<UUID> targets = new HashSet<>();
         targets.addAll(Spectators.get(room));
         targets.addAll(Arrays.asList(playeruuid));
-        String name = User.getFormat(User.getRank(uuid))[0] + player.getName();
+        String name = User.getFormat(User.getRank(uuid))[1] + player.getName();
         for (UUID id : targets) {
             Bukkit.getPlayer(id).sendMessage(StringList.JoinSpectate[User.getLang(id)].replace("%player%", name));
         }
@@ -141,7 +141,7 @@ public class StickDuel {
         }
         if (time - Kill.get(room)[1 - w] < 2500) {
             String[] winnerformat = User.getFormat(User.getRank(playeruuid[w]));
-            String[] formats = new String[]{User.getFormat(User.getRank(playeruuid[0]))[0] + players[0].getName(), User.getFormat(User.getRank(playeruuid[1]))[0] + players[1].getName()};
+            String[] formats = new String[]{User.getFormat(User.getRank(playeruuid[0]))[1] + players[0].getName(), User.getFormat(User.getRank(playeruuid[1]))[1] + players[1].getName()};
             killer.playSound(killer.getLocation(), Sound.SUCCESSFUL_HIT, 1F, 1F);
             Score.get(room)[w] += 1;
             Integer[] score = Score.get(room);
@@ -172,9 +172,9 @@ public class StickDuel {
                 scoreboard.getTeam("§1§f").setSuffix(split2[1]);
                 PlayerUtils.sendActionBar(((CraftPlayer) p).getHandle().playerConnection, actionbar[room]);
                 p.sendMessage(StringList.StickDuelKill[lang]
-                        .replace("%format0%", loserformat[0])
+                        .replace("%format0%", loserformat[1])
                         .replace("%name0%", player.getName())
-                        .replace("%format1%", winnerformat[0])
+                        .replace("%format1%", winnerformat[1])
                         .replace("%name1%", killer.getName()));
             }
         } else {
@@ -212,7 +212,7 @@ public class StickDuel {
             Players.put(room, new Random().nextBoolean() ? new UUID[]{uuid1, uuid2} : new UUID[]{uuid2, uuid1});
             UUID[] playeruuid = Players.get(room);
             Player[] players = {Bukkit.getPlayer(playeruuid[0]), Bukkit.getPlayer(playeruuid[1])};
-            String[] formats = {User.getFormat(User.getRank(playeruuid[0]))[0], User.getFormat(User.getRank(playeruuid[1]))[0]};
+            String[] formats = {User.getFormat(User.getRank(playeruuid[0]))[1], User.getFormat(User.getRank(playeruuid[1]))[1]};
             actionbar[room] = formats[0] + players[0].getName() + " §e0 §8x §e0 " + formats[1] + players[1].getName();
             World world = Bukkit.getWorld("StickDuel");
             int[] Maploc = MapLocations(room);

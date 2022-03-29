@@ -146,14 +146,14 @@ public class MLGRush2x1 {
         objective.setDisplayName(sidebar[5].replace("%h%", x / 3600 == 0 ? "" : x / 3600 + ":").replace("%m%", String.format("%02d", (x % 3600) / 60) + ":").replace("%s%", String.format("%02d", x % 60)));
         Integer[] score = Score.get(room);
         String[] suffix = (score[0].equals(score[1])) ? new String[]{"§e" + score[0], "§e" + score[1]} : (score[0] > score[1] ? new String[]{"§a" + score[0], "§c" + score[1]} : new String[]{"§c" + score[0], "§a" + score[1]});
-        SideBarAPI.sidebarTeams(scoreboard, new String[][]{{sidebar[4]}, {sidebar[3]}, {"§2§f", User.getFormat(User.getRank(playeruuid[0]))[0] + Bukkit.getPlayer(playeruuid[0]).getName() + sidebar[2] + suffix[0]}, {"§1§f", User.getFormat(User.getRank(playeruuid[1]))[0] + Bukkit.getPlayer(playeruuid[1]).getName() + sidebar[1] + suffix[1]}, {sidebar[0]},}, new int[]{4, 3, 2, 1, 0});
+        SideBarAPI.sidebarTeams(scoreboard, new String[][]{{sidebar[4]}, {sidebar[3]}, {"§2§f", User.getFormat(User.getRank(playeruuid[0]))[1] + Bukkit.getPlayer(playeruuid[0]).getName() + sidebar[2] + suffix[0]}, {"§1§f", User.getFormat(User.getRank(playeruuid[1]))[1] + Bukkit.getPlayer(playeruuid[1]).getName() + sidebar[1] + suffix[1]}, {sidebar[0]},}, new int[]{4, 3, 2, 1, 0});
         player.setScoreboard(scoreboard);
         player.getInventory().clear();
         player.getInventory().setItem(8, ItemStackList.HubSlime[lang]);
         Set<UUID> targets = new HashSet<>();
         targets.addAll(Spectators.get(room));
         targets.addAll(Arrays.asList(playeruuid));
-        String name = User.getFormat(User.getRank(uuid))[0] + player.getName();
+        String name = User.getFormat(User.getRank(uuid))[1] + player.getName();
         for (UUID id : targets) {
             Bukkit.getPlayer(id).sendMessage(StringList.JoinSpectate[User.getLang(id)].replace("%player%", name));
         }
@@ -181,12 +181,12 @@ public class MLGRush2x1 {
             int w = players[0] == breaker ? 0 : 1;
             Score.get(room)[w] += 1;
             Integer[] score = Score.get(room);
-            String[] formats = {User.getFormat(User.getRank(playeruuid[0]))[0] + players[0].getName(), User.getFormat(User.getRank(playeruuid[1]))[0] + players[1].getName()};
+            String[] formats = {User.getFormat(User.getRank(playeruuid[0]))[1] + players[0].getName(), User.getFormat(User.getRank(playeruuid[1]))[1] + players[1].getName()};
             Set<UUID> targets = new HashSet<>();
             targets.addAll(Spectators.get(room));
             targets.addAll(Arrays.asList(playeruuid));
-            String breakerName = User.getFormat(User.getRank(breaker.getUniqueId()))[0] + breaker.getName();
-            String name2 = User.getFormat(User.getRank(playeruuid[1 - w]))[0] + players[1 - w].getName();
+            String breakerName = User.getFormat(User.getRank(breaker.getUniqueId()))[1] + breaker.getName();
+            String name2 = User.getFormat(User.getRank(playeruuid[1 - w]))[1] + players[1 - w].getName();
             String[] suffix = new String[2];
             if (score[0].equals(score[1])) {
                 actionbar[room] = formats[0] + " §e" + score[0] + " §8x §e" + score[1] + " " + formats[1];
@@ -253,7 +253,7 @@ public class MLGRush2x1 {
             UUID[] playeruuid = Players.get(room);
             UUID[] playeruuid2 = Players2.get(room);
             Player[] players = {Bukkit.getPlayer(playeruuid[0]), Bukkit.getPlayer(playeruuid[1])};
-            String[] formats = {User.getFormat(User.getRank(playeruuid[0]))[0], User.getFormat(User.getRank(playeruuid[1]))[0]};
+            String[] formats = {User.getFormat(User.getRank(playeruuid[0]))[1], User.getFormat(User.getRank(playeruuid[1]))[1]};
             actionbar[room] = formats[0] + players[0].getName() + " §e0 §8x §e0 " + formats[1] + players[1].getName();
             org.bukkit.World world = Bukkit.getWorld("MLGRush2x1");
             int[] Map = MapLocations(map);
@@ -444,9 +444,9 @@ public class MLGRush2x1 {
             String[] format1 = User.getFormat(User.getRank(killer.getUniqueId()));
             for (UUID id : targets) {
                 Bukkit.getPlayer(id).sendMessage(StringList.MLGRushKill[User.getLang(id)]
-                        .replace("%format0%", format[0])
+                        .replace("%format0%", format[1])
                         .replace("%name0%", player.getName())
-                        .replace("%format1%", format1[0])
+                        .replace("%format1%", format1[1])
                         .replace("%name1%", killer.getName()));
             }
         } else {

@@ -167,14 +167,14 @@ public class InventoryClick implements Listener {
                             if (Core.StickDuel.containsKey(lastdamager) && Core.StickDuel.get(lastdamager).equals(uuid)) {
                                 Core.Challenge.get(lastdamager).add(uuid);
                                 Core.StickDuel.remove(lastdamager);
-                                player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", User.getFormat(User.getRank(lastdamager))[0] + lastdamage.getName()).replace("%gametype%", "§bMLGRush 2x1"));
-                                lastdamage.sendMessage(StringList.ChallengeFrom[User.getLang(lastdamager)].replace("%player%", User.getFormat(User.getRank(uuid))[0] + player.getName()).replace("%gametype%", "§bMLGRush 2x1"));
+                                player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", User.getFormat(User.getRank(lastdamager))[1] + lastdamage.getName()).replace("%gametype%", "§bMLGRush 2x1"));
+                                lastdamage.sendMessage(StringList.ChallengeFrom[User.getLang(lastdamager)].replace("%player%", User.getFormat(User.getRank(uuid))[1] + player.getName()).replace("%gametype%", "§bMLGRush 2x1"));
                             } else
-                                player.sendMessage(StringList.AlreadyChallenged[lang].replace("%player%", User.getFormat(User.getRank(lastdamager))[0] + lastdamage.getName()).replace("%gametype%", "§bMLGRush 2x1"));
+                                player.sendMessage(StringList.AlreadyChallenged[lang].replace("%player%", User.getFormat(User.getRank(lastdamager))[1] + lastdamage.getName()).replace("%gametype%", "§bMLGRush 2x1"));
                         } else {
                             Core.Challenge.get(lastdamager).add(uuid);
-                            player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", User.getFormat(User.getRank(lastdamager))[0] + lastdamage.getName()).replace("%gametype%", "§bMLGRush 2x1"));
-                            lastdamage.sendMessage(StringList.ChallengeFrom[User.getLang(lastdamager)].replace("%player%", User.getFormat(User.getRank(uuid))[0] + player.getName()).replace("%gametype%", "§bMLGRush 2x1"));
+                            player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", User.getFormat(User.getRank(lastdamager))[1] + lastdamage.getName()).replace("%gametype%", "§bMLGRush 2x1"));
+                            lastdamage.sendMessage(StringList.ChallengeFrom[User.getLang(lastdamager)].replace("%player%", User.getFormat(User.getRank(uuid))[1] + player.getName()).replace("%gametype%", "§bMLGRush 2x1"));
                         }
                         break;
                     case 15:
@@ -185,15 +185,15 @@ public class InventoryClick implements Listener {
                             if (!(Core.StickDuel.containsKey(lastdamager) && Core.StickDuel.get(lastdamager).equals(uuid))) {
                                 Core.Challenge.get(lastdamager).add(uuid);
                                 Core.StickDuel.put(lastdamager, uuid);
-                                player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", User.getFormat(User.getRank(lastdamager))[0] + lastdamage.getName()).replace("%gametype%", "§bStickDuel"));
-                                lastdamage.sendMessage(StringList.ChallengeFrom[User.getLang(lastdamager)].replace("%player%", User.getFormat(User.getRank(uuid))[0] + player.getName()).replace("%gametype%", "§bStickDuel"));
+                                player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", User.getFormat(User.getRank(lastdamager))[1] + lastdamage.getName()).replace("%gametype%", "§bStickDuel"));
+                                lastdamage.sendMessage(StringList.ChallengeFrom[User.getLang(lastdamager)].replace("%player%", User.getFormat(User.getRank(uuid))[1] + player.getName()).replace("%gametype%", "§bStickDuel"));
                             } else
-                                player.sendMessage(StringList.AlreadyChallenged[lang].replace("%player%", User.getFormat(User.getRank(lastdamager))[0] + lastdamage.getName()).replace("%gametype%", "§bStickDuel"));
+                                player.sendMessage(StringList.AlreadyChallenged[lang].replace("%player%", User.getFormat(User.getRank(lastdamager))[1] + lastdamage.getName()).replace("%gametype%", "§bStickDuel"));
                         } else {
                             Core.Challenge.get(lastdamager).add(uuid);
                             Core.StickDuel.put(lastdamager, uuid);
-                            player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", User.getFormat(User.getRank(lastdamager))[0] + lastdamage.getName()).replace("%gametype%", "§bStickDuel"));
-                            lastdamage.sendMessage(StringList.ChallengeFrom[User.getLang(lastdamager)].replace("%player%", User.getFormat(User.getRank(uuid))[0] + player.getName()).replace("%gametype%", "§bStickDuel"));
+                            player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", User.getFormat(User.getRank(lastdamager))[1] + lastdamage.getName()).replace("%gametype%", "§bStickDuel"));
+                            lastdamage.sendMessage(StringList.ChallengeFrom[User.getLang(lastdamager)].replace("%player%", User.getFormat(User.getRank(uuid))[1] + player.getName()).replace("%gametype%", "§bStickDuel"));
                         }
                         break;
                 }

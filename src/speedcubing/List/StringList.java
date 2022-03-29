@@ -6,10 +6,10 @@ import cubingserver.config;
 public class StringList {
 
     public static String[] LobbyJoinMessage = {
-            "%format0%%format1%%name%%format2% has joined the Lobby!",
-            "%format0%%format1%%name%%format2% has joined the Lobby!",
-            "%format0%%format1%%name%%format2% has joined the Lobby!",
-            "%format0%%format1%%name%%format2% has joined the Lobby!"};
+            "%f0%%name%%f1% has joined the Lobby!",
+            "%f0%%name%%f1% has joined the Lobby!",
+            "%f0%%name%%f1% has joined the Lobby!",
+            "%f0%%name%%f1% has joined the Lobby!"};
 
     public static String[] MLGRushBreakOwnBed = {
             "§8[§bMLGRush§8] §cDu kannst dein Bett nicht zerbrechen!",

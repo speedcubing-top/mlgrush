@@ -167,7 +167,7 @@ public class MLGRush4x1 {
             String size = Integer.toString(queue.size());
             Bukkit.getScheduler().runTask(Main.getPlugin(Main.class), () -> player.teleport(new Location(Bukkit.getWorld("MLGRush4x1"), 1000, 100, Core.roomToBed(R), 0, 0)));
             queue.forEach(id -> Bukkit.getPlayer(id).sendMessage(StringList.MLGRushJoinQueue[User.getLang(id)]
-                    .replace("%format0%", format[0])
+                    .replace("%format0%", format[1])
                     .replace("%name%", player.getName())
                     .replace("%format2%", format[2])
                     .replace("%int0%", size)));

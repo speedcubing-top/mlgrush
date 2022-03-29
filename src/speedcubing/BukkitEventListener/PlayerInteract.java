@@ -59,7 +59,7 @@ public class PlayerInteract implements Listener {
                             int room = Core.Spectate.get(uuid);
                             MLGRush2x1.Spectators.get(room).remove(uuid);
                             Core.Spectate.remove(uuid);
-                            String str = User.getFormat(User.getRank(uuid))[0] + player.getName();
+                            String str = User.getFormat(User.getRank(uuid))[1] + player.getName();
                             for (UUID id : MLGRush2x1.Spectators.get(room)) {
                                 Bukkit.getPlayer(id).sendMessage(StringList.LeaveSpectate[User.getLang(id)].replace("%player%", str));
                             }
@@ -76,7 +76,7 @@ public class PlayerInteract implements Listener {
                             int room = Core.Spectate.get(uuid);
                             StickDuel.Spectators.get(room).remove(uuid);
                             Core.Spectate.remove(uuid);
-                            String str = User.getFormat(User.getRank(uuid))[0] + player.getName();
+                            String str = User.getFormat(User.getRank(uuid))[1] + player.getName();
                             for (UUID id : StickDuel.Spectators.get(room)) {
                                 Bukkit.getPlayer(id).sendMessage(StringList.LeaveSpectate[User.getLang(id)].replace("%player%", str));
                             }
