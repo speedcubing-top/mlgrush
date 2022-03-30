@@ -38,9 +38,8 @@ public class Lobby {
                     .replace("%name%", name));
         for (Player p : player.getWorld().getPlayers()) {
             p.sendMessage(StringList.LobbyJoinMessage[User.getLang(p.getUniqueId())]
-                    .replace("%format0%", format[0])
-                    .replace("%format1%", format[1])
-                    .replace("%format2%", format[2])
+                    .replace("%f0%", format[0])
+                    .replace("%f1%", format[2])
                     .replace("%name%", name));
         }
 
