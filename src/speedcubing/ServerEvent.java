@@ -1,9 +1,11 @@
 package speedcubing;
 
+import cubing.lib.bukkit.packetwrapper.OutPlayerListHeaderFooter;
 import cubing.lib.utils.Console;
-import cubing.spigot.lib.bukkit.Event.ServerEventHandler;
-import cubing.spigot.lib.bukkit.Event.events.PlayInChatEvent;
-import cubing.spigot.lib.bukkit.Event.events.PlayInUseEntityEvent;
+import cubing.lib.bukkit.Event.ServerEventHandler;
+import cubing.lib.bukkit.Event.events.PlayInChatEvent;
+import cubing.lib.bukkit.Event.events.PlayInUseEntityEvent;
+import cubing.lib.utils.Reflections;
 import cubingserver.StringList.GlobalString;
 import cubingserver.customEvents.UDPEvent;
 import cubingserver.libs.User;
@@ -29,7 +31,7 @@ public class ServerEvent {
             speedcubingServer.AllPlayers = Integer.parseInt(rs[2]);
             for (Player p : Bukkit.getOnlinePlayers()) {
                 int lang = User.getLang(p.getUniqueId());
-                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerListHeaderFooter(GlobalString.LobbyTabList[0][lang], GlobalString.LobbyTabList[1][lang].replace("%int%", rs[2])));
+                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(OutPlayerListHeaderFooter.a(GlobalString.LobbyTabList[0][lang], GlobalString.LobbyTabList[1][lang].replace("%int%", rs[2])));
                 Team team = p.getScoreboard().getTeam(speedcubing.List.StringList.LobbySideBar[lang][1]);
                 if (team != null)
                     team.setSuffix(rs[2]);
@@ -75,7 +77,7 @@ public class ServerEvent {
         Player player = e.player;
         PacketPlayInUseEntity packet = e.packet;
         if (player.getItemInHand().getType() == org.bukkit.Material.AIR && packet.a().equals(PacketPlayInUseEntity.EnumEntityUseAction.INTERACT)) {
-            switch (EntityList.NPCS.indexOf(packet.a)) {
+            switch (EntityList.NPCS.indexOf(Reflections.getField(packet,"a"))) {
                 case 0:
                     StickDuel.Queue(player);
                     break;

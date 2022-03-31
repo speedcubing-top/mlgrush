@@ -1,8 +1,8 @@
 package speedcubing.Core;
 
 
-import cubing.spigot.lib.bukkit.PlayerUtils;
-import cubing.spigot.lib.bukkit.api.SideBarAPI;
+import cubing.lib.bukkit.PlayerUtils;
+import cubing.lib.bukkit.SideBarAPI;
 import cubingserver.StringList.GlobalString;
 import cubingserver.libs.User;
 import net.minecraft.server.v1_8_R3.BlockPosition;
