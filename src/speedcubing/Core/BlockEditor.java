@@ -11,7 +11,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import speedcubing.List.ItemStackList;
 
-import java.util.Collections;
 import java.util.UUID;
 
 public class BlockEditor {
@@ -58,7 +57,7 @@ public class BlockEditor {
                         }
                         int set = Core.integerCache.get(uuid)[4];
                         if (set < 6)
-                            inv.setItem((set < 3) ? set + 10 : set + 11, ItemUtils.glow(ItemUtils.setLore(ItemStackList.sandstoneeditor[set][lang].clone(), Collections.singletonList(GlobalString.selected[lang]))));
+                            inv.setItem((set < 3) ? set + 10 : set + 11, ItemUtils.glow(ItemUtils.setLore(ItemStackList.sandstoneeditor[set][lang].clone(),GlobalString.selected[lang])));
                         player.openInventory(inv);
                     }
                     break;
@@ -72,7 +71,7 @@ public class BlockEditor {
                         }
                         int index = Core.integerCache.get(uuid)[4] - ItemStackList.sandstoneeditor.length;
                         if (index < ItemStackList.quartzeditor.length && index >= 0)
-                            inv.setItem(index + 12, ItemUtils.glow(ItemUtils.setLore(ItemStackList.quartzeditor[index][lang].clone(), Collections.singletonList(GlobalString.selected[lang]))));
+                            inv.setItem(index + 12, ItemUtils.glow(ItemUtils.setLore(ItemStackList.quartzeditor[index][lang].clone(), GlobalString.selected[lang])));
                         player.openInventory(inv);
                     }
                     break;
@@ -86,7 +85,7 @@ public class BlockEditor {
                         }
                         int index = Core.integerCache.get(uuid)[4] - (ItemStackList.sandstoneeditor.length + ItemStackList.quartzeditor.length);
                         if (index < ItemStackList.clayeditor.length && index >= 0)
-                            inv.setItem(index, ItemUtils.glow(ItemUtils.setLore(ItemStackList.clayeditor[index][lang].clone(), Collections.singletonList(GlobalString.selected[lang]))));
+                            inv.setItem(index, ItemUtils.glow(ItemUtils.setLore(ItemStackList.clayeditor[index][lang].clone(), GlobalString.selected[lang])));
                         player.openInventory(inv);
                     }
                     break;
