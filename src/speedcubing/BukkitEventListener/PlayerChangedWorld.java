@@ -11,7 +11,7 @@ public class PlayerChangedWorld implements Listener {
     @EventHandler
     public void PlayerChangeWorldEvent(PlayerChangedWorldEvent e) {
         Player player = e.getPlayer();
-        if (PlayerQuit.bruh.contains(player.getUniqueId()) && player.getWorld().getName().equals("world"))
+        if (player.getWorld().getName().equals("world"))
             Lobby.Join(player, false);
     }
 }
