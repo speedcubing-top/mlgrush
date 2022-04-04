@@ -64,9 +64,7 @@ public class EntityDamageByEntity implements Listener {
             case "MLGRush2x1": {
                 if (!damager.getAllowFlight()) {
                     UUID uuid = victim.getUniqueId();
-                    if (victim.getMaximumNoDamageTicks() != 0 && oldKb.contains(uuid)) {
-                        if (victim.getNoDamageTicks() > victim.getMaximumNoDamageTicks() / 2)
-                            return;
+                    if (victim.getMaximumNoDamageTicks() != 0 && oldKb.contains(uuid) && victim.getNoDamageTicks() <= victim.getMaximumNoDamageTicks() / 2) {
                         double xDiff = damager.getLocation().getX() - victim.getLocation().getX();
                         double zDiff = damager.getLocation().getZ() - victim.getLocation().getZ();
                         float horizontalDistance = (float) Math.sqrt(xDiff * xDiff + zDiff * zDiff);
