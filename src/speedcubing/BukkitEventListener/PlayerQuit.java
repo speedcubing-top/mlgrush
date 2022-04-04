@@ -1,7 +1,10 @@
 package speedcubing.BukkitEventListener;
 
+import com.mysql.jdbc.Buffer;
 import cubingserver.speedcubingServer;
 import cubingserver.things.events.PlayerJoin;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,6 +21,7 @@ public class PlayerQuit implements Listener {
         Player player = e.getPlayer();
         UUID uuid = player.getUniqueId();
         if (PlayerJoin.JoinPackets.containsKey(uuid)) {
+            player.teleport(new Location(Bukkit.getWorld("world"), 0.5, 100, 0.5, 0, 0));
             Core.QuitAllQueue(uuid);
             Lobby.DeleteChallenge(uuid);
             new Thread(() -> {
