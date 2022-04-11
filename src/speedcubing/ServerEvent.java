@@ -1,18 +1,16 @@
 package speedcubing;
 
-import cubing.lib.bukkit.packetwrapper.OutPlayerListHeaderFooter;
-import cubing.lib.utils.Console;
 import cubing.lib.bukkit.Event.ServerEventHandler;
 import cubing.lib.bukkit.Event.events.PlayInChatEvent;
 import cubing.lib.bukkit.Event.events.PlayInUseEntityEvent;
+import cubing.lib.bukkit.packetwrapper.OutPlayerListHeaderFooter;
+import cubing.lib.utils.Console;
 import cubing.lib.utils.Reflections;
 import cubingserver.StringList.GlobalString;
 import cubingserver.customEvents.UDPEvent;
 import cubingserver.libs.User;
 import cubingserver.speedcubingServer;
-import cubingserver.things.events.PlayerJoin;
 import net.minecraft.server.v1_8_R3.PacketPlayInUseEntity;
-import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerListHeaderFooter;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -41,35 +39,24 @@ public class ServerEvent {
 
     @ServerEventHandler
     public void PlayInChatEvent(PlayInChatEvent e) {
-        e.setCancelled(true);
-        Player player = e.player;
         String message = e.packet.a();
-        long time = System.currentTimeMillis();
-        UUID uuid = player.getUniqueId();
-        boolean spam = PlayerJoin.Canspam.contains(uuid);
-        if (!spam && time - speedcubingServer.spam.get(uuid) < 500)
-            player.sendMessage(GlobalString.spam[User.getLang(uuid)]);
-        else if (message.charAt(0) != '/') {
-            if (!spam && speedcubingServer.lastmsg.get(uuid).equals(message))
-                player.sendMessage(GlobalString.samemsg[User.getLang(uuid)]);
-            else {
-                String[] formats = User.getFormat(User.getRank(uuid));
-                String text = formats[0] + player.getName();
-                String[] str = GlobalString.MessageFormat[0];
-                String[] out = new String[]{
-                        str[0].replace("%text%", text).replace("%text2%", formats[2] + message),
-                        str[1].replace("%text%", text).replace("%text2%", formats[2] + message),
-                        str[2].replace("%text%", text).replace("%text2%", formats[2] + message),
-                        str[3].replace("%text%", text).replace("%text2%", formats[2] + message)
-                };
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    p.sendMessage(out[User.getLang(p.getUniqueId())]);
-                }
-                Console.sendColoredConsole("§7[§aChatLog§7] [§b" + player.getWorld().getName() + "§7] " + out[1]);
-                speedcubingServer.lastmsg.put(uuid, message);
+        if (message.charAt(0) != '/') {
+            e.setCancelled(true);
+            Player player = e.player;
+            String[] formats = User.getFormat(User.getRank(player.getUniqueId()));
+            String text = formats[0] + player.getName();
+            String[] str = GlobalString.MessageFormat[0];
+            String[] out = new String[]{
+                    str[0].replace("%text%", text).replace("%text2%", formats[2] + message),
+                    str[1].replace("%text%", text).replace("%text2%", formats[2] + message),
+                    str[2].replace("%text%", text).replace("%text2%", formats[2] + message),
+                    str[3].replace("%text%", text).replace("%text2%", formats[2] + message)
+            };
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                p.sendMessage(out[User.getLang(p.getUniqueId())]);
             }
-        } else e.setCancelled(false);
-        speedcubingServer.spam.put(uuid, time);
+            Console.sendColoredConsole("§7[§aChatLog§7] [§b" + player.getWorld().getName() + "§7] " + out[1]);
+        }
     }
 
     @ServerEventHandler
@@ -77,7 +64,7 @@ public class ServerEvent {
         Player player = e.player;
         PacketPlayInUseEntity packet = e.packet;
         if (player.getItemInHand().getType() == org.bukkit.Material.AIR && packet.a().equals(PacketPlayInUseEntity.EnumEntityUseAction.INTERACT)) {
-            switch (EntityList.NPCS.indexOf(Reflections.getField(packet,"a"))) {
+            switch (EntityList.NPCS.indexOf(Reflections.getField(packet, "a"))) {
                 case 0:
                     StickDuel.Queue(player);
                     break;
