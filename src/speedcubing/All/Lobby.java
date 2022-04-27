@@ -1,10 +1,10 @@
 package speedcubing.All;
 
 
-import cubing.lib.bukkit.PlayerUtils;
-import cubing.lib.bukkit.SideBarAPI;
-import cubingserver.libs.User;
-import cubingserver.speedcubingServer;
+import speedcubing.lib.bukkit.PlayerUtils;
+import speedcubing.lib.bukkit.SideBarAPI;
+import speedcubing.server.libs.User;
+import speedcubing.server.speedcubingServer;
 import net.minecraft.server.v1_8_R3.Packet;
 import net.minecraft.server.v1_8_R3.PacketPlayOutSpawnEntityLiving;
 import net.minecraft.server.v1_8_R3.PlayerConnection;

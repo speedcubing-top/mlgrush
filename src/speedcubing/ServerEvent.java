@@ -1,15 +1,15 @@
 package speedcubing;
 
-import cubing.lib.bukkit.Event.ServerEventHandler;
-import cubing.lib.bukkit.Event.events.PlayInChatEvent;
-import cubing.lib.bukkit.Event.events.PlayInUseEntityEvent;
-import cubing.lib.bukkit.packetwrapper.OutPlayerListHeaderFooter;
-import cubing.lib.utils.Console;
-import cubing.lib.utils.Reflections;
-import cubingserver.StringList.GlobalString;
-import cubingserver.customEvents.UDPEvent;
-import cubingserver.libs.User;
-import cubingserver.speedcubingServer;
+import speedcubing.spigot.Event.ServerEventHandler;
+import speedcubing.spigot.Event.events.PlayInChatEvent;
+import speedcubing.spigot.Event.events.PlayInUseEntityEvent;
+import speedcubing.lib.bukkit.packetwrapper.OutPlayerListHeaderFooter;
+import speedcubing.lib.utils.Console;
+import speedcubing.lib.utils.Reflections;
+import speedcubing.server.StringList.GlobalString;
+import speedcubing.server.events.UDPEvent;
+import speedcubing.server.libs.User;
+import speedcubing.server.speedcubingServer;
 import net.minecraft.server.v1_8_R3.PacketPlayInUseEntity;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;

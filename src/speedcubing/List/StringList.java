@@ -1,5 +1,5 @@
 package speedcubing.List;
-import cubingserver.config;
+import speedcubing.server.config;
 /**
  *
  **/

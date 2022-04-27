@@ -1,8 +1,8 @@
 package speedcubing.BukkitEventListener;
 
 
-import cubingserver.libs.User;
-import cubingserver.speedcubingServer;
+import speedcubing.server.libs.User;
+import speedcubing.server.speedcubingServer;
 import net.minecraft.server.v1_8_R3.PacketPlayOutEntityVelocity;
 import org.bukkit.GameMode;
 import org.bukkit.Material;

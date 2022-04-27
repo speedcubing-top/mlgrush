@@ -1,6 +1,6 @@
 package speedcubing.BukkitCommands;
 
-import cubingserver.libs.User;
+import speedcubing.server.libs.User;
 import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

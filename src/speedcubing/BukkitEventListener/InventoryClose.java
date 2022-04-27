@@ -1,8 +1,8 @@
 package speedcubing.BukkitEventListener;
 
 
-import cubingserver.StringList.GlobalString;
-import cubingserver.libs.User;
+import speedcubing.server.StringList.GlobalString;
+import speedcubing.server.libs.User;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

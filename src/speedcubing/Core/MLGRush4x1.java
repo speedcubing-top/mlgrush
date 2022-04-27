@@ -1,7 +1,7 @@
 package speedcubing.Core;
 
-import cubingserver.StringList.GlobalString;
-import cubingserver.libs.User;
+import speedcubing.server.StringList.GlobalString;
+import speedcubing.server.libs.User;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

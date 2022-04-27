@@ -1,7 +1,7 @@
 package speedcubing.BukkitEventListener;
 
 
-import cubing.lib.bukkit.PlayerUtils;
+import speedcubing.lib.bukkit.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
