@@ -1,7 +1,7 @@
 package speedcubing.Core;
 
 import speedcubing.lib.bukkit.InventoryUtils;
-import speedcubing.server.StringList.GlobalString;
+import speedcubing.server.libs.GlobalString;
 import speedcubing.server.libs.User;
 import net.minecraft.server.v1_8_R3.EntityArmorStand;
 import net.minecraft.server.v1_8_R3.PacketPlayOutEntityMetadata;
@@ -51,7 +51,7 @@ public class Core {
         UUID uuid = player.getUniqueId();
         Inventory inventory = player.getInventory();
         Integer[] ints = integerCache.get(uuid);
-        inventory.setItem(ints[1], ItemStackList.Blocks[ints[4]][User.getLang(uuid)]);
+        inventory.setItem(ints[1], ItemStackList.Blocks[ints[4]][User.getUser(uuid).lang]);
     }
 
     public static void saveStickEditor(Player player, int RawSlot) {
@@ -60,7 +60,7 @@ public class Core {
             UUID uuid = player.getUniqueId();
             integerCache.get(uuid)[3] = RawSlot - 10;
             player.closeInventory();
-            player.sendMessage(GlobalString.SavedSettings[User.getLang(uuid)]);
+            player.sendMessage(GlobalString.SavedSettings[User.getUser(uuid).lang]);
         }
     }
 
@@ -100,7 +100,7 @@ public class Core {
 
     public static void openKitEditor(Player player) {
         UUID uuid = player.getUniqueId();
-        int lang = User.getLang(uuid);
+        int lang = User.getUser(uuid).lang;
         player.playSound(player.getLocation(), Sound.CLICK, 1F, 1F);
         Inventory inventory = player.getInventory();
         inventory.clear();
@@ -115,7 +115,7 @@ public class Core {
 
     public static void openPreference(Player player) {
         UUID uuid = player.getUniqueId();
-        int lang = User.getLang(uuid);
+        int lang = User.getUser(uuid).lang;
         Inventory inventory = Bukkit.createInventory(PrefHolder, 36, prefedit[lang]);
         for (int i = 0; i < 5; i++) {
             inventory.setItem(i + 11, ItemStackList.prefereditor[i][lang]);
@@ -133,7 +133,7 @@ public class Core {
 
     public static void openStickEditor(Player player) {
         UUID uuid = player.getUniqueId();
-        int lang = User.getLang(uuid);
+        int lang = User.getUser(uuid).lang;
         Inventory inventory = Bukkit.createInventory(StickSkinHolder, 27, stickedit[lang]);
         for (int i = 0; i < 6; i++) {
             inventory.setItem(i + 10, ItemStackList.stickeditor[0][i][lang]);

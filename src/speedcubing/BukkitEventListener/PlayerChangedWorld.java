@@ -26,7 +26,7 @@ public class PlayerChangedWorld implements Listener {
 //                    {
 //                    int room = Core.randomToRoom(from.getZ());
 //                    if (from.getBlockX() > 500) {
-//                        String[] format = User.getFormat(User.getRank((uuid);
+//                        String[] format = speedcubingServer.getFormat(User.getUser((uuid);
 //                        MLGRush4x1.Queue[room].remove(uuid);
 //                        List<UUID> queue = MLGRush4x1.Queue[room];
 //                        queue.forEach(p -> Bukkit.getPlayer(p).sendMessage(StringList.MLGRushQuitQueue[User.getLang(p)]
@@ -37,7 +37,7 @@ public class PlayerChangedWorld implements Listener {
 //                        if (queue.size() == 2) {
 //                            queue.forEach(id -> {
 //                                Player p = Bukkit.getPlayer(id);
-//                                p.sendMessage(StringList.MLGRushNotenoughplayers[User.getLang(id)]);
+//                                p.sendMessage(StringList.MLGRushNotenoughplayers[User.getUser(id).lang]);
 //                                p.setLevel(0);
 //                            });
 //                            MLGRush4x1.QueueCounter.get(room).cancel();

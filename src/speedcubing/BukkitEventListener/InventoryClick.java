@@ -19,6 +19,7 @@ import speedcubing.Core.MLGRush2x1;
 import speedcubing.Core.StickDuel;
 import speedcubing.List.ItemStackList;
 import speedcubing.List.StringList;
+import speedcubing.server.speedcubingServer;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -45,7 +46,7 @@ public class InventoryClick implements Listener {
                 switch (RawSlot) {
                     case 3:
                         player.playSound(player.getLocation(), Sound.CLICK, 1F, 1F);
-                        Core.saveKitEditor(player, e.getCursor(), User.getLang(uuid));
+                        Core.saveKitEditor(player, e.getCursor(), User.getUser(uuid).lang);
                         break;
                     case 5:
                         player.playSound(player.getLocation(), Sound.CLICK, 1F, 1F);
@@ -104,35 +105,35 @@ public class InventoryClick implements Listener {
                     case 20: {
                         player.playSound(player.getLocation(), Sound.CLICK, 1F, 1F);
                         int b = Core.integerCache.get(uuid)[9];
-                        e.getClickedInventory().setItem(20, ItemStackList.preferButton[b][User.getLang(uuid)]);
+                        e.getClickedInventory().setItem(20, ItemStackList.preferButton[b][User.getUser(uuid).lang]);
                         Core.integerCache.get(uuid)[9] = 1 - b;
                     }
                     break;
                     case 21: {
                         player.playSound(player.getLocation(), Sound.CLICK, 1F, 1F);
                         int b = Core.integerCache.get(uuid)[5];
-                        e.getClickedInventory().setItem(21, ItemStackList.preferButton[b][User.getLang(uuid)]);
+                        e.getClickedInventory().setItem(21, ItemStackList.preferButton[b][User.getUser(uuid).lang]);
                         Core.integerCache.get(uuid)[5] = 1 - b;
                     }
                     break;
                     case 22: {
                         player.playSound(player.getLocation(), Sound.CLICK, 1F, 1F);
                         int b = Core.integerCache.get(uuid)[6];
-                        e.getClickedInventory().setItem(22, ItemStackList.preferButton[b][User.getLang(uuid)]);
+                        e.getClickedInventory().setItem(22, ItemStackList.preferButton[b][User.getUser(uuid).lang]);
                         Core.integerCache.get(uuid)[6] = 1 - b;
                     }
                     break;
                     case 23: {
                         player.playSound(player.getLocation(), Sound.CLICK, 1F, 1F);
                         int b = Core.integerCache.get(uuid)[7];
-                        e.getClickedInventory().setItem(23, ItemStackList.preferButton[b][User.getLang(uuid)]);
+                        e.getClickedInventory().setItem(23, ItemStackList.preferButton[b][User.getUser(uuid).lang]);
                         Core.integerCache.get(uuid)[7] = 1 - b;
                     }
                     break;
                     case 24: {
                         player.playSound(player.getLocation(), Sound.CLICK, 1F, 1F);
                         int b = Core.integerCache.get(uuid)[8];
-                        e.getClickedInventory().setItem(24, ItemStackList.preferButton[b][User.getLang(uuid)]);
+                        e.getClickedInventory().setItem(24, ItemStackList.preferButton[b][User.getUser(uuid).lang]);
                         Core.integerCache.get(uuid)[8] = 1 - b;
                     }
                     break;
@@ -157,7 +158,7 @@ public class InventoryClick implements Listener {
                     player.closeInventory();
                     return;
                 }
-                int lang = User.getLang(uuid);
+                int lang = User.getUser(uuid).lang;
                 switch (RawSlot) {
                     case 11:
                         player.closeInventory();
@@ -167,14 +168,14 @@ public class InventoryClick implements Listener {
                             if (Core.StickDuel.containsKey(lastdamager) && Core.StickDuel.get(lastdamager).equals(uuid)) {
                                 Core.Challenge.get(lastdamager).add(uuid);
                                 Core.StickDuel.remove(lastdamager);
-                                player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", User.getFormat(User.getRank(lastdamager))[1] + lastdamage.getName()).replace("%gametype%", "§bMLGRush 2x1"));
-                                lastdamage.sendMessage(StringList.ChallengeFrom[User.getLang(lastdamager)].replace("%player%", User.getFormat(User.getRank(uuid))[1] + player.getName()).replace("%gametype%", "§bMLGRush 2x1"));
+                                player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", speedcubingServer.getFormat(User.getUser(lastdamager).rank)[1] + lastdamage.getName()).replace("%gametype%", "§bMLGRush 2x1"));
+                                lastdamage.sendMessage(StringList.ChallengeFrom[User.getUser(lastdamager).lang].replace("%player%", speedcubingServer.getFormat(User.getUser(uuid).rank)[1] + player.getName()).replace("%gametype%", "§bMLGRush 2x1"));
                             } else
-                                player.sendMessage(StringList.AlreadyChallenged[lang].replace("%player%", User.getFormat(User.getRank(lastdamager))[1] + lastdamage.getName()).replace("%gametype%", "§bMLGRush 2x1"));
+                                player.sendMessage(StringList.AlreadyChallenged[lang].replace("%player%", speedcubingServer.getFormat(User.getUser(lastdamager).rank)[1] + lastdamage.getName()).replace("%gametype%", "§bMLGRush 2x1"));
                         } else {
                             Core.Challenge.get(lastdamager).add(uuid);
-                            player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", User.getFormat(User.getRank(lastdamager))[1] + lastdamage.getName()).replace("%gametype%", "§bMLGRush 2x1"));
-                            lastdamage.sendMessage(StringList.ChallengeFrom[User.getLang(lastdamager)].replace("%player%", User.getFormat(User.getRank(uuid))[1] + player.getName()).replace("%gametype%", "§bMLGRush 2x1"));
+                            player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", speedcubingServer.getFormat(User.getUser(lastdamager).rank)[1] + lastdamage.getName()).replace("%gametype%", "§bMLGRush 2x1"));
+                            lastdamage.sendMessage(StringList.ChallengeFrom[User.getUser(lastdamager).lang].replace("%player%", speedcubingServer.getFormat(User.getUser(uuid).rank)[1] + player.getName()).replace("%gametype%", "§bMLGRush 2x1"));
                         }
                         break;
                     case 15:
@@ -185,15 +186,15 @@ public class InventoryClick implements Listener {
                             if (!(Core.StickDuel.containsKey(lastdamager) && Core.StickDuel.get(lastdamager).equals(uuid))) {
                                 Core.Challenge.get(lastdamager).add(uuid);
                                 Core.StickDuel.put(lastdamager, uuid);
-                                player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", User.getFormat(User.getRank(lastdamager))[1] + lastdamage.getName()).replace("%gametype%", "§bStickDuel"));
-                                lastdamage.sendMessage(StringList.ChallengeFrom[User.getLang(lastdamager)].replace("%player%", User.getFormat(User.getRank(uuid))[1] + player.getName()).replace("%gametype%", "§bStickDuel"));
+                                player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", speedcubingServer.getFormat(User.getUser(lastdamager).rank)[1] + lastdamage.getName()).replace("%gametype%", "§bStickDuel"));
+                                lastdamage.sendMessage(StringList.ChallengeFrom[User.getUser(lastdamager).lang].replace("%player%", speedcubingServer.getFormat(User.getUser(uuid).rank)[1] + player.getName()).replace("%gametype%", "§bStickDuel"));
                             } else
-                                player.sendMessage(StringList.AlreadyChallenged[lang].replace("%player%", User.getFormat(User.getRank(lastdamager))[1] + lastdamage.getName()).replace("%gametype%", "§bStickDuel"));
+                                player.sendMessage(StringList.AlreadyChallenged[lang].replace("%player%", speedcubingServer.getFormat(User.getUser(lastdamager).rank)[1] + lastdamage.getName()).replace("%gametype%", "§bStickDuel"));
                         } else {
                             Core.Challenge.get(lastdamager).add(uuid);
                             Core.StickDuel.put(lastdamager, uuid);
-                            player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", User.getFormat(User.getRank(lastdamager))[1] + lastdamage.getName()).replace("%gametype%", "§bStickDuel"));
-                            lastdamage.sendMessage(StringList.ChallengeFrom[User.getLang(lastdamager)].replace("%player%", User.getFormat(User.getRank(uuid))[1] + player.getName()).replace("%gametype%", "§bStickDuel"));
+                            player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", speedcubingServer.getFormat(User.getUser(lastdamager).rank)[1] + lastdamage.getName()).replace("%gametype%", "§bStickDuel"));
+                            lastdamage.sendMessage(StringList.ChallengeFrom[User.getUser(lastdamager).lang].replace("%player%", speedcubingServer.getFormat(User.getUser(uuid).rank)[1] + player.getName()).replace("%gametype%", "§bStickDuel"));
                         }
                         break;
                 }

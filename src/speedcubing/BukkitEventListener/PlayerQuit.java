@@ -2,9 +2,7 @@ package speedcubing.BukkitEventListener;
 
 import com.mysql.jdbc.Buffer;
 import speedcubing.server.speedcubingServer;
-import speedcubing.server.things.events.PlayerJoin;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
+import speedcubing.server.listeners.PlayerJoin;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

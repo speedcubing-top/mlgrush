@@ -54,7 +54,7 @@ public class EntityDamageByEntity implements Listener {
                             MLGRush2x1.gameStart(damagerUniqueId, victimUniqueId, 0);
                         Lobby.DeleteChallenge(damagerUniqueId);
                         Lobby.DeleteChallenge(victimUniqueId);
-                    } else damager.openInventory(ItemStackList.Challenger[User.getLang(damagerUniqueId)]);
+                    } else damager.openInventory(ItemStackList.Challenger[User.getUser(damagerUniqueId).lang]);
                 }
                 break;
             case "MLGRush4x1":
@@ -92,11 +92,11 @@ public class EntityDamageByEntity implements Listener {
                         double x = vector.getX() * horizontalMultiplier;
                         double y = vector.getY() * verticalMultiplier;
                         double z = vector.getZ() * horizontalMultiplier;
-                        if (speedcubingServer.velocities.containsKey(uuid)) {
-                            Double[] d = speedcubingServer.velocities.get(uuid);
-                            x = x * d[0];
-                            y = y * d[1];
-                            z = z * d[0];
+                        User user = User.getUser(uuid);
+                        if (user.velocities != null) {
+                            x = x * user.velocities[0];
+                            y = y * user.velocities[1];
+                            z = z * user.velocities[0];
                         }
                         (((CraftPlayer) victim).getHandle()).playerConnection.sendPacket(new PacketPlayOutEntityVelocity(victim.getEntityId(), x, y, z));
                     }

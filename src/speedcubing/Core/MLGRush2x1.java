@@ -2,7 +2,7 @@ package speedcubing.Core;
 
 import speedcubing.lib.bukkit.PlayerUtils;
 import speedcubing.lib.bukkit.SideBarAPI;
-import speedcubing.server.StringList.GlobalString;
+import speedcubing.server.libs.GlobalString;
 import speedcubing.server.libs.User;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.EntityArmorStand;
@@ -23,6 +23,7 @@ import speedcubing.List.EntityList;
 import speedcubing.List.ItemStackList;
 import speedcubing.List.StringList;
 import speedcubing.Main;
+import speedcubing.server.speedcubingServer;
 
 import java.util.*;
 
@@ -98,13 +99,13 @@ public class MLGRush2x1 {
             if (Queue == null) {
                 Core.QuitAllQueue(uuid);
                 player.closeInventory();
-                player.sendMessage(StringList.MLGRushQueue[User.getLang(uuid)]);
+                player.sendMessage(StringList.MLGRushQueue[User.getUser(uuid).lang]);
                 Queue = uuid;
                 stand.setCustomName("§a1/2");
             } else {
                 stand.setCustomName("§a0/2");
                 if (Queue.equals(uuid))
-                    player.sendMessage(StringList.MLGRushUnQueue[User.getLang(uuid)]);
+                    player.sendMessage(StringList.MLGRushUnQueue[User.getUser(uuid).lang]);
                 else
                     gameStart(uuid, Queue, 0);
                 Queue = null;
@@ -133,7 +134,7 @@ public class MLGRush2x1 {
 
     public static void joinSpec(Player player, int room) {
         UUID uuid = player.getUniqueId();
-        int lang = User.getLang(uuid);
+        int lang = User.getUser(uuid).lang;
         Core.QuitAllGame(uuid);
         Core.QuitAllQueue(uuid);
         player.teleport(new Location(Bukkit.getWorld("MLGRush2x1"), 0.5, 110, Core.roomToBed(room), 0, 0));
@@ -146,16 +147,16 @@ public class MLGRush2x1 {
         objective.setDisplayName(sidebar[5].replace("%h%", x / 3600 == 0 ? "" : x / 3600 + ":").replace("%m%", String.format("%02d", (x % 3600) / 60) + ":").replace("%s%", String.format("%02d", x % 60)));
         Integer[] score = Score.get(room);
         String[] suffix = (score[0].equals(score[1])) ? new String[]{"§e" + score[0], "§e" + score[1]} : (score[0] > score[1] ? new String[]{"§a" + score[0], "§c" + score[1]} : new String[]{"§c" + score[0], "§a" + score[1]});
-        SideBarAPI.sidebarTeams(scoreboard, new String[][]{{sidebar[4]}, {sidebar[3]}, {"§2§f", User.getFormat(User.getRank(playeruuid[0]))[1] + Bukkit.getPlayer(playeruuid[0]).getName() + sidebar[2] + suffix[0]}, {"§1§f", User.getFormat(User.getRank(playeruuid[1]))[1] + Bukkit.getPlayer(playeruuid[1]).getName() + sidebar[1] + suffix[1]}, {sidebar[0]},}, new int[]{4, 3, 2, 1, 0});
+        SideBarAPI.sidebarTeams(scoreboard, new String[][]{{sidebar[4]}, {sidebar[3]}, {"§2§f", speedcubingServer.getFormat(User.getUser(playeruuid[0]).rank)[1] + Bukkit.getPlayer(playeruuid[0]).getName() + sidebar[2] + suffix[0]}, {"§1§f", speedcubingServer.getFormat(User.getUser(playeruuid[1]).rank)[1] + Bukkit.getPlayer(playeruuid[1]).getName() + sidebar[1] + suffix[1]}, {sidebar[0]},}, new int[]{4, 3, 2, 1, 0});
         player.setScoreboard(scoreboard);
         player.getInventory().clear();
         player.getInventory().setItem(8, ItemStackList.HubSlime[lang]);
         Set<UUID> targets = new HashSet<>();
         targets.addAll(Spectators.get(room));
         targets.addAll(Arrays.asList(playeruuid));
-        String name = User.getFormat(User.getRank(uuid))[1] + player.getName();
+        String name = speedcubingServer.getFormat(User.getUser(uuid).rank)[1] + player.getName();
         for (UUID id : targets) {
-            Bukkit.getPlayer(id).sendMessage(StringList.JoinSpectate[User.getLang(id)].replace("%player%", name));
+            Bukkit.getPlayer(id).sendMessage(StringList.JoinSpectate[User.getUser(id).lang].replace("%player%", name));
         }
         Spectators.get(room).add(uuid);
         Core.Spectate.put(uuid, room);
@@ -175,18 +176,18 @@ public class MLGRush2x1 {
         Player[] players = {Bukkit.getPlayer(playeruuid[0]), Bukkit.getPlayer(playeruuid[1])};
         Player[] players2 = {Bukkit.getPlayer(playeruuid2[0]), Bukkit.getPlayer(playeruuid2[1])};
         if (bedX / Math.abs(bedX) == (players2[0] == breaker ? 1 : -1))
-            breaker.sendMessage(StringList.MLGRushBreakOwnBed[User.getLang(uuid)]);
+            breaker.sendMessage(StringList.MLGRushBreakOwnBed[User.getUser(uuid).lang]);
         else {
             resetBlocks(room);
             int w = players[0] == breaker ? 0 : 1;
             Score.get(room)[w] += 1;
             Integer[] score = Score.get(room);
-            String[] formats = {User.getFormat(User.getRank(playeruuid[0]))[1] + players[0].getName(), User.getFormat(User.getRank(playeruuid[1]))[1] + players[1].getName()};
+            String[] formats = {speedcubingServer.getFormat(User.getUser(playeruuid[0]).rank)[1] + players[0].getName(), speedcubingServer.getFormat(User.getUser(playeruuid[1]).rank)[1] + players[1].getName()};
             Set<UUID> targets = new HashSet<>();
             targets.addAll(Spectators.get(room));
             targets.addAll(Arrays.asList(playeruuid));
-            String breakerName = User.getFormat(User.getRank(breaker.getUniqueId()))[1] + breaker.getName();
-            String name2 = User.getFormat(User.getRank(playeruuid[1 - w]))[1] + players[1 - w].getName();
+            String breakerName = speedcubingServer.getFormat(User.getUser(breaker.getUniqueId()).rank)[1] + breaker.getName();
+            String name2 = speedcubingServer.getFormat(User.getUser(playeruuid[1 - w]).rank)[1] + players[1 - w].getName();
             String[] suffix = new String[2];
             if (score[0].equals(score[1])) {
                 actionbar[room] = formats[0] + " §e" + score[0] + " §8x §e" + score[1] + " " + formats[1];
@@ -203,7 +204,7 @@ public class MLGRush2x1 {
             }
             for (UUID id : targets) {
                 Player p = Bukkit.getPlayer(id);
-                int lang = User.getLang(id);
+                int lang = User.getUser(id).lang;
                 String[] sidebar = StringList.MLGRushSideBar[lang];
                 String[] split = SideBarAPI.prefixSuffixSplit(formats[0] + sidebar[2] + suffix[0]);
                 String[] split2 = SideBarAPI.prefixSuffixSplit(formats[1] + sidebar[1] + suffix[1]);
@@ -236,8 +237,8 @@ public class MLGRush2x1 {
             }
         }
         if (full) {
-            Bukkit.getPlayer(uuid1).sendMessage(GlobalString.NoEnoughServers[User.getLang(uuid1)]);
-            Bukkit.getPlayer(uuid2).sendMessage(GlobalString.NoEnoughServers[User.getLang(uuid2)]);
+            Bukkit.getPlayer(uuid1).sendMessage(GlobalString.NoEnoughServers[User.getUser(uuid1).lang]);
+            Bukkit.getPlayer(uuid2).sendMessage(GlobalString.NoEnoughServers[User.getUser(uuid2).lang]);
             return;
         }
         Bukkit.getScheduler().runTask(Main.getPlugin(Main.class), () -> {
@@ -253,7 +254,7 @@ public class MLGRush2x1 {
             UUID[] playeruuid = Players.get(room);
             UUID[] playeruuid2 = Players2.get(room);
             Player[] players = {Bukkit.getPlayer(playeruuid[0]), Bukkit.getPlayer(playeruuid[1])};
-            String[] formats = {User.getFormat(User.getRank(playeruuid[0]))[1], User.getFormat(User.getRank(playeruuid[1]))[1]};
+            String[] formats = {speedcubingServer.getFormat(User.getUser(playeruuid[0]).rank)[1], speedcubingServer.getFormat(User.getUser(playeruuid[1]).rank)[1]};
             actionbar[room] = formats[0] + players[0].getName() + " §e0 §8x §e0 " + formats[1] + players[1].getName();
             org.bukkit.World world = Bukkit.getWorld("MLGRush2x1");
             int[] Map = MapLocations(map);
@@ -264,7 +265,7 @@ public class MLGRush2x1 {
             for (Player p : players) {
                 p.setGameMode(GameMode.SURVIVAL);
                 UUID id = p.getUniqueId();
-                int lang = User.getLang(id);
+                int lang = User.getUser(id).lang;
                 p.sendMessage(StringList.MLGRushOpponentFound[lang]);
                 Lobby.DeleteChallenge(id);
                 Core.PlayerRoom.put(id, room);
@@ -327,7 +328,7 @@ public class MLGRush2x1 {
                         if (id != null) {
                             Player p = Bukkit.getPlayer(id);
                             PlayerUtils.sendActionBar(((CraftPlayer) p).getHandle().playerConnection, actionbar[r]);
-                            p.getScoreboard().getObjective(DisplaySlot.SIDEBAR).setDisplayName(StringList.MLGRushSideBar[User.getLang(id)][5].replace("%h%", x / 3600 == 0 ? "" : x / 3600 + ":").replace("%m%", String.format("%02d", (x % 3600) / 60) + ":").replace("%s%", String.format("%02d", x % 60)));
+                            p.getScoreboard().getObjective(DisplaySlot.SIDEBAR).setDisplayName(StringList.MLGRushSideBar[User.getUser(id).lang][5].replace("%h%", x / 3600 == 0 ? "" : x / 3600 + ":").replace("%m%", String.format("%02d", (x % 3600) / 60) + ":").replace("%s%", String.format("%02d", x % 60)));
                         }
                     }
                     x++;
@@ -373,7 +374,7 @@ public class MLGRush2x1 {
             Core.PlacedBlocks.remove(id);
         }
         Player[] players = {Bukkit.getPlayer(uuids[0]), Bukkit.getPlayer(uuids[1])};
-        players[quitter].sendMessage(StringList.MLGRushOpponentDisconnect[User.getLang(uuids[quitter])]);
+        players[quitter].sendMessage(StringList.MLGRushOpponentDisconnect[User.getUser(uuids[quitter]).lang]);
         resetBlocks(room);
         Players.remove(room);
         Players2.remove(room);
@@ -392,7 +393,7 @@ public class MLGRush2x1 {
                 pp.showPlayer(p);
             }
             p.setAllowFlight(false);
-            p.sendMessage(StringList.MLGRushGameEnd[User.getLang(id)]);
+            p.sendMessage(StringList.MLGRushGameEnd[User.getUser(id).lang]);
             p.teleport(lb);
             Core.Spectate.remove(id);
         }
@@ -426,7 +427,7 @@ public class MLGRush2x1 {
 
     public static void fell(Player player) {
         UUID uuid = player.getUniqueId();
-        String[] format = User.getFormat(User.getRank(uuid));
+        String[] format = speedcubingServer.getFormat(User.getUser(uuid).rank);
         int z = Core.randomToBed(player.getLocation().getZ());
         int room = Core.PlayerRoom.get(uuid);
         Core.PlacedBlocks.put(player.getUniqueId(), 0);
@@ -441,9 +442,9 @@ public class MLGRush2x1 {
         if (System.currentTimeMillis() - Kill.get(room)[t[0]] < 2500) {
             Player killer = Bukkit.getPlayer(uuids[1 - t[0]]);
             killer.playSound(killer.getLocation(), Sound.SUCCESSFUL_HIT, 1F, 1F);
-            String[] format1 = User.getFormat(User.getRank(killer.getUniqueId()));
+            String[] format1 = speedcubingServer.getFormat(User.getUser(killer.getUniqueId()).rank);
             for (UUID id : targets) {
-                Bukkit.getPlayer(id).sendMessage(StringList.MLGRushKill[User.getLang(id)]
+                Bukkit.getPlayer(id).sendMessage(StringList.MLGRushKill[User.getUser(id).lang]
                         .replace("%format0%", format[1])
                         .replace("%name0%", player.getName())
                         .replace("%format1%", format1[1])
@@ -451,7 +452,7 @@ public class MLGRush2x1 {
             }
         } else {
             for (UUID id : targets) {
-                Bukkit.getPlayer(id).sendMessage(StringList.MLGRushFell[User.getLang(id)].replace("%format0%", format[0]).replace("%name%", player.getName()));
+                Bukkit.getPlayer(id).sendMessage(StringList.MLGRushFell[User.getUser(id).lang].replace("%format0%", format[0]).replace("%name%", player.getName()));
             }
         }
         WorldServer mlgrush2x1 = ((CraftWorld) Bukkit.getWorld("MLGRush2x1")).getHandle();

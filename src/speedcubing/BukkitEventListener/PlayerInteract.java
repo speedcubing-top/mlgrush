@@ -16,6 +16,7 @@ import speedcubing.Core.MLGRush2x1;
 import speedcubing.Core.StickDuel;
 import speedcubing.List.ItemStackList;
 import speedcubing.List.StringList;
+import speedcubing.server.speedcubingServer;
 
 import java.util.UUID;
 
@@ -28,13 +29,13 @@ public class PlayerInteract implements Listener {
             case "world":
                 switch (player.getItemInHand().getType()) {
                     case COMPASS:
-                        player.openInventory(ItemStackList.specinventory[User.getLang(player.getUniqueId())]);
+                        player.openInventory(ItemStackList.specinventory[User.getUser(player.getUniqueId()).lang]);
                         break;
                     case CHEST:
-                        player.openInventory(ItemStackList.Gadgets[User.getLang(player.getUniqueId())]);
+                        player.openInventory(ItemStackList.Gadgets[User.getUser(player.getUniqueId()).lang]);
                         break;
                     case REDSTONE_COMPARATOR:
-                        player.openInventory(ItemStackList.Settings[User.getLang(player.getUniqueId())]);
+                        player.openInventory(ItemStackList.Settings[User.getUser(player.getUniqueId()).lang]);
                         break;
                 }
                 if (e.getClickedBlock() != null && (player.getGameMode() == GameMode.SURVIVAL || player.getGameMode() == GameMode.ADVENTURE))
@@ -59,12 +60,12 @@ public class PlayerInteract implements Listener {
                             int room = Core.Spectate.get(uuid);
                             MLGRush2x1.Spectators.get(room).remove(uuid);
                             Core.Spectate.remove(uuid);
-                            String str = User.getFormat(User.getRank(uuid))[1] + player.getName();
+                            String str = speedcubingServer.getFormat(User.getUser(uuid).rank)[1] + player.getName();
                             for (UUID id : MLGRush2x1.Spectators.get(room)) {
-                                Bukkit.getPlayer(id).sendMessage(StringList.LeaveSpectate[User.getLang(id)].replace("%player%", str));
+                                Bukkit.getPlayer(id).sendMessage(StringList.LeaveSpectate[User.getUser(id).lang].replace("%player%", str));
                             }
                             for (UUID id : MLGRush2x1.Players.get(room)) {
-                                Bukkit.getPlayer(id).sendMessage(StringList.LeaveSpectate[User.getLang(id)].replace("%player%", str));
+                                Bukkit.getPlayer(id).sendMessage(StringList.LeaveSpectate[User.getUser(id).lang].replace("%player%", str));
                                 Bukkit.getPlayer(id).showPlayer(player);
                             }
                         }
@@ -76,12 +77,12 @@ public class PlayerInteract implements Listener {
                             int room = Core.Spectate.get(uuid);
                             StickDuel.Spectators.get(room).remove(uuid);
                             Core.Spectate.remove(uuid);
-                            String str = User.getFormat(User.getRank(uuid))[1] + player.getName();
+                            String str = speedcubingServer.getFormat(User.getUser(uuid).rank)[1] + player.getName();
                             for (UUID id : StickDuel.Spectators.get(room)) {
-                                Bukkit.getPlayer(id).sendMessage(StringList.LeaveSpectate[User.getLang(id)].replace("%player%", str));
+                                Bukkit.getPlayer(id).sendMessage(StringList.LeaveSpectate[User.getUser(id).lang].replace("%player%", str));
                             }
                             for (UUID id : StickDuel.Players.get(room)) {
-                                Bukkit.getPlayer(id).sendMessage(StringList.LeaveSpectate[User.getLang(id)].replace("%player%", str));
+                                Bukkit.getPlayer(id).sendMessage(StringList.LeaveSpectate[User.getUser(id).lang].replace("%player%", str));
                                 Bukkit.getPlayer(id).showPlayer(player);
                             }
                         }

@@ -1,6 +1,6 @@
 package speedcubing.Core;
 
-import speedcubing.server.StringList.GlobalString;
+import speedcubing.server.libs.GlobalString;
 import speedcubing.server.libs.User;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import org.bukkit.Bukkit;
@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import speedcubing.List.ItemStackList;
 import speedcubing.List.StringList;
 import speedcubing.Main;
+import speedcubing.server.speedcubingServer;
 
 import java.util.*;
 
@@ -67,7 +68,7 @@ public class MLGRush4x1 {
         for (UUID id : spec) {
             Player p = Bukkit.getPlayer(id);
             p.setAllowFlight(false);
-            p.sendMessage(StringList.MLGRushGameEnd[User.getLang(id)]);
+            p.sendMessage(StringList.MLGRushGameEnd[User.getUser(id).lang]);
             p.teleport(lb);
         }
         Blocks.remove(room);
@@ -91,7 +92,7 @@ public class MLGRush4x1 {
 //                Core.PlacedBlocks.put(id, 0);
 //                Inventory inventory = p.getInventory();
 //                inventory.clear();
-//                int lang = User.getLang(id);
+//                int lang = User.getUser(id).lang;
 //                Integer[] ints = Core.integerCache.get(id);
 //                inventory.setItem(ints[0], ItemStackList.Sticks[ints[3]][lang]);
 //                inventory.setItem(ints[1], ItemStackList.Blocks[ints[4]][lang]);
@@ -106,12 +107,12 @@ public class MLGRush4x1 {
 
     public static void joinSpec(Player player, int room) {
 //                for (UUID id : Spectators4x1.get(room)) {
-//                    Bukkit.getPlayer(id).sendMessage(StringList.JoinSpectate[User.getLang(id)].replace("%player%", name));
+//                    Bukkit.getPlayer(id).sendMessage(StringList.JoinSpectate[User.getUser(id).lang].replace("%player%", name));
 //                }
 //                for (UUID id : Players4x1.get(room)) {
 //                    Player p = Bukkit.getPlayer(id);
 //                    if (p.getWorld().getName().equals("MLGRush4x1"))
-//                        p.sendMessage(StringList.JoinSpectate[User.getLang(id)].replace("%player%", name));
+//                        p.sendMessage(StringList.JoinSpectate[User.getUser(id).lang].replace("%player%", name));
 //                }
 //                Spectators4x1.get(room).add(uuid);
     }
@@ -122,7 +123,7 @@ public class MLGRush4x1 {
 //        if (Players.get(room)[lose] == null)
 //            return;
 //        if (Arrays.asList(Players.get(room)).indexOf(uuid) == lose)
-//            breaker.sendMessage(StringList.MLGRushBreakOwnBed[User.getLang(uuid)]);
+//            breaker.sendMessage(StringList.MLGRushBreakOwnBed[User.getUser(uuid).lang]);
 //        else {
 //            resetBlocks(room);
 //            int[] Map = Core.MapLocations[1][MapStorage[room]];
@@ -162,18 +163,18 @@ public class MLGRush4x1 {
             player.getInventory().clear();
             player.getInventory().setItem(8, ItemStackList.HubSlime[lang]);
             int R = room;
-            String[] format = User.getFormat(User.getRank(uuid));
+            String[] format = speedcubingServer.getFormat(User.getUser(uuid).rank);
             List<UUID> queue = Queue[room];
             String size = Integer.toString(queue.size());
             Bukkit.getScheduler().runTask(Main.getPlugin(Main.class), () -> player.teleport(new Location(Bukkit.getWorld("MLGRush4x1"), 1000, 100, Core.roomToBed(R), 0, 0)));
-            queue.forEach(id -> Bukkit.getPlayer(id).sendMessage(StringList.MLGRushJoinQueue[User.getLang(id)]
+            queue.forEach(id -> Bukkit.getPlayer(id).sendMessage(StringList.MLGRushJoinQueue[User.getUser(id).lang]
                     .replace("%format0%", format[1])
                     .replace("%name%", player.getName())
                     .replace("%format2%", format[2])
                     .replace("%int0%", size)));
             switch (queue.size()) {
                 case 3:
-                    queue.forEach(id -> Bukkit.getPlayer(id).sendMessage(StringList.MLGRushGameStartCountDown[User.getLang(id)]));
+                    queue.forEach(id -> Bukkit.getPlayer(id).sendMessage(StringList.MLGRushGameStartCountDown[User.getUser(id).lang]));
                     QueueCounter.put(room, new TimerTask() {
                         int c = 20;
 

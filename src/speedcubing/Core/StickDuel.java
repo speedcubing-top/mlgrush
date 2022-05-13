@@ -3,7 +3,7 @@ package speedcubing.Core;
 
 import speedcubing.lib.bukkit.PlayerUtils;
 import speedcubing.lib.bukkit.SideBarAPI;
-import speedcubing.server.StringList.GlobalString;
+import speedcubing.server.libs.GlobalString;
 import speedcubing.server.libs.User;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.EntityArmorStand;
@@ -20,6 +20,7 @@ import speedcubing.List.EntityList;
 import speedcubing.List.ItemStackList;
 import speedcubing.List.StringList;
 import speedcubing.Main;
+import speedcubing.server.speedcubingServer;
 
 import java.util.*;
 
@@ -53,13 +54,13 @@ public class StickDuel {
             if (Queue == null) {
                 Core.QuitAllQueue(uuid);
                 player.closeInventory();
-                player.sendMessage(StringList.StickDuelQueue[User.getLang(uuid)]);
+                player.sendMessage(StringList.StickDuelQueue[User.getUser(uuid).lang]);
                 Queue = uuid;
                 stand.setCustomName("§a1/2");
             } else {
                 stand.setCustomName("§a0/2");
                 if (Queue.equals(uuid))
-                    player.sendMessage(StringList.StickDuelUnQueue[User.getLang(uuid)]);
+                    player.sendMessage(StringList.StickDuelUnQueue[User.getUser(uuid).lang]);
                 else
                     gameStart(uuid, Queue, 0);
                 Queue = null;
@@ -91,7 +92,7 @@ public class StickDuel {
 
     public static void JoinSpec(Player player, int room) {
         UUID uuid = player.getUniqueId();
-        int lang = User.getLang(uuid);
+        int lang = User.getUser(uuid).lang;
         Core.QuitAllGame(uuid);
         Core.QuitAllQueue(uuid);
         player.teleport(new Location(Bukkit.getWorld("StickDuel"), 0.5, 110, Core.roomToBed(room), 0, 0));
@@ -104,16 +105,16 @@ public class StickDuel {
         objective.setDisplayName(sidebar[5].replace("%h%", x / 3600 == 0 ? "" : x / 3600 + ":").replace("%m%", String.format("%02d", (x % 3600) / 60) + ":").replace("%s%", String.format("%02d", x % 60)));
         Integer[] score = Score.get(room);
         String[] suffix = (score[0].equals(score[1])) ? new String[]{"§e" + score[0], "§e" + score[1]} : (score[0] > score[1] ? new String[]{"§a" + score[0], "§c" + score[1]} : new String[]{"§c" + score[0], "§a" + score[1]});
-        SideBarAPI.sidebarTeams(scoreboard, new String[][]{{sidebar[4]}, {sidebar[3]}, {"§2§f", User.getFormat(User.getRank(playeruuid[0]))[1] + Bukkit.getPlayer(playeruuid[0]).getName() + sidebar[2] + suffix[0]}, {"§1§f", User.getFormat(User.getRank(playeruuid[1]))[1] + Bukkit.getPlayer(playeruuid[1]).getName() + sidebar[1] + suffix[1]}, {sidebar[0]},}, new int[]{4, 3, 2, 1, 0});
+        SideBarAPI.sidebarTeams(scoreboard, new String[][]{{sidebar[4]}, {sidebar[3]}, {"§2§f", speedcubingServer.getFormat(User.getUser(playeruuid[0]).rank)[1] + Bukkit.getPlayer(playeruuid[0]).getName() + sidebar[2] + suffix[0]}, {"§1§f", speedcubingServer.getFormat(User.getUser(playeruuid[1]).rank)[1] + Bukkit.getPlayer(playeruuid[1]).getName() + sidebar[1] + suffix[1]}, {sidebar[0]},}, new int[]{4, 3, 2, 1, 0});
         player.setScoreboard(scoreboard);
         player.getInventory().clear();
         player.getInventory().setItem(8, ItemStackList.HubSlime[lang]);
         Set<UUID> targets = new HashSet<>();
         targets.addAll(Spectators.get(room));
         targets.addAll(Arrays.asList(playeruuid));
-        String name = User.getFormat(User.getRank(uuid))[1] + player.getName();
+        String name = speedcubingServer.getFormat(User.getUser(uuid).rank)[1] + player.getName();
         for (UUID id : targets) {
-            Bukkit.getPlayer(id).sendMessage(StringList.JoinSpectate[User.getLang(id)].replace("%player%", name));
+            Bukkit.getPlayer(id).sendMessage(StringList.JoinSpectate[User.getUser(id).lang].replace("%player%", name));
         }
         Spectators.get(room).add(uuid);
         Core.Spectate.put(uuid, room);
@@ -131,7 +132,7 @@ public class StickDuel {
         int w = players[0] == player ? 1 : 0;
         Core.PlacedBlocks.put(uuid, 0);
         Player killer = players[w];
-        String[] loserformat = User.getFormat(User.getRank(uuid));
+        String[] loserformat = speedcubingServer.getFormat(User.getUser(uuid).rank);
         Set<UUID> targets = new HashSet<>();
         targets.addAll(Spectators.get(room));
         targets.addAll(Arrays.asList(playeruuid));
@@ -140,8 +141,8 @@ public class StickDuel {
             Core.resetItems(p);
         }
         if (time - Kill.get(room)[1 - w] < 2500) {
-            String[] winnerformat = User.getFormat(User.getRank(playeruuid[w]));
-            String[] formats = new String[]{User.getFormat(User.getRank(playeruuid[0]))[1] + players[0].getName(), User.getFormat(User.getRank(playeruuid[1]))[1] + players[1].getName()};
+            String[] winnerformat = speedcubingServer.getFormat(User.getUser(playeruuid[w]).rank);
+            String[] formats = new String[]{speedcubingServer.getFormat(User.getUser(playeruuid[0]).rank)[1] + players[0].getName(), speedcubingServer.getFormat(User.getUser(playeruuid[1]).rank)[1] + players[1].getName()};
             killer.playSound(killer.getLocation(), Sound.SUCCESSFUL_HIT, 1F, 1F);
             Score.get(room)[w] += 1;
             Integer[] score = Score.get(room);
@@ -161,7 +162,7 @@ public class StickDuel {
             }
             for (UUID id : targets) {
                 Player p = Bukkit.getPlayer(id);
-                int lang = User.getLang(id);
+                int lang = User.getUser(id).lang;
                 String[] sidebar = StringList.StickDuelSideBar[lang];
                 String[] split = SideBarAPI.prefixSuffixSplit(formats[0] + sidebar[2] + suffix[0]);
                 String[] split2 = SideBarAPI.prefixSuffixSplit(formats[1] + sidebar[1] + suffix[1]);
@@ -179,7 +180,7 @@ public class StickDuel {
             }
         } else {
             for (UUID id : targets) {
-                Bukkit.getPlayer(id).sendMessage(StringList.StickDuelFell[User.getLang(uuid)].replace("%format0%", loserformat[0]).replace("%name%", player.getName()));
+                Bukkit.getPlayer(id).sendMessage(StringList.StickDuelFell[User.getUser(uuid).lang].replace("%format0%", loserformat[0]).replace("%name%", player.getName()));
             }
         }
         int pos = killer.getLocation().getX() > 0 ? -1 : 1;
@@ -197,8 +198,8 @@ public class StickDuel {
             }
         }
         if (full) {
-            Bukkit.getPlayer(uuid1).sendMessage(GlobalString.NoEnoughServers[User.getLang(uuid1)]);
-            Bukkit.getPlayer(uuid2).sendMessage(GlobalString.NoEnoughServers[User.getLang(uuid2)]);
+            Bukkit.getPlayer(uuid1).sendMessage(GlobalString.NoEnoughServers[User.getUser(uuid1).lang]);
+            Bukkit.getPlayer(uuid2).sendMessage(GlobalString.NoEnoughServers[User.getUser(uuid2).lang]);
             return;
         }
         Bukkit.getScheduler().runTask(Main.getPlugin(Main.class), () -> {
@@ -212,7 +213,7 @@ public class StickDuel {
             Players.put(room, new Random().nextBoolean() ? new UUID[]{uuid1, uuid2} : new UUID[]{uuid2, uuid1});
             UUID[] playeruuid = Players.get(room);
             Player[] players = {Bukkit.getPlayer(playeruuid[0]), Bukkit.getPlayer(playeruuid[1])};
-            String[] formats = {User.getFormat(User.getRank(playeruuid[0]))[1], User.getFormat(User.getRank(playeruuid[1]))[1]};
+            String[] formats = {speedcubingServer.getFormat(User.getUser(playeruuid[0]).rank)[1], speedcubingServer.getFormat(User.getUser(playeruuid[1]).rank)[1]};
             actionbar[room] = formats[0] + players[0].getName() + " §e0 §8x §e0 " + formats[1] + players[1].getName();
             World world = Bukkit.getWorld("StickDuel");
             int[] Maploc = MapLocations(room);
@@ -222,7 +223,7 @@ public class StickDuel {
             for (Player p : players) {
                 p.setGameMode(GameMode.SURVIVAL);
                 UUID id = p.getUniqueId();
-                int lang = User.getLang(id);
+                int lang = User.getUser(id).lang;
                 p.sendMessage(StringList.StickDuelOpponentFound[lang]);
                 Lobby.DeleteChallenge(id);
                 Core.PlayerRoom.put(id, room);
@@ -270,7 +271,7 @@ public class StickDuel {
                         for (UUID id : targets) {
                             if (id != null) {
                                 Player p = Bukkit.getPlayer(id);
-                                p.getScoreboard().getObjective(DisplaySlot.SIDEBAR).setDisplayName(StringList.StickDuelSideBar[User.getLang(id)][5].replace("%h%", x / 3600 == 0 ? "" : x / 3600 + ":").replace("%m%", String.format("%02d", (x % 3600) / 60) + ":").replace("%s%", String.format("%02d", x % 60)));
+                                p.getScoreboard().getObjective(DisplaySlot.SIDEBAR).setDisplayName(StringList.StickDuelSideBar[User.getUser(id).lang][5].replace("%h%", x / 3600 == 0 ? "" : x / 3600 + ":").replace("%m%", String.format("%02d", (x % 3600) / 60) + ":").replace("%s%", String.format("%02d", x % 60)));
                                 PlayerUtils.sendActionBar(((CraftPlayer) p).getHandle().playerConnection, actionbar[r]);
                             }
                         }
@@ -318,7 +319,7 @@ public class StickDuel {
             Core.PlacedBlocks.remove(id);
         }
         Player[] players = {Bukkit.getPlayer(uuids[0]), Bukkit.getPlayer(uuids[1])};
-        players[quitter].sendMessage(StringList.StickDuelOpponentDisconnect[User.getLang(uuids[quitter])]);
+        players[quitter].sendMessage(StringList.StickDuelOpponentDisconnect[User.getUser(uuids[quitter]).lang]);
         ResetBlocks(room);
         Players.remove(room);
         TimerTask.get(room).cancel();
@@ -334,7 +335,7 @@ public class StickDuel {
                 pp.showPlayer(p);
             }
             p.setAllowFlight(false);
-            p.sendMessage(StringList.MLGRushGameEnd[User.getLang(id)]);
+            p.sendMessage(StringList.MLGRushGameEnd[User.getUser(id).lang]);
             p.teleport(lb);
             Core.Spectate.remove(id);
         }

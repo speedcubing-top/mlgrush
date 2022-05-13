@@ -1,7 +1,7 @@
 package speedcubing.Core;
 
 import speedcubing.lib.bukkit.ItemUtils;
-import speedcubing.server.StringList.GlobalString;
+import speedcubing.server.libs.GlobalString;
 import speedcubing.server.libs.User;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -30,7 +30,7 @@ public class BlockEditor {
     public static void createMainPage(Player player) {
         player.playSound(player.getLocation(), Sound.CLICK, 1F, 1F);
         UUID uuid = player.getUniqueId();
-        int lang = User.getLang(uuid);
+        int lang = User.getUser(uuid).lang;
         Inventory inv = Bukkit.createInventory(BlockHolder, 27, ItemStackList.blockedit[lang]);
         for (int i = 0; i < ItemStackList.categoryblockeditor.length; i++) {
             inv.setItem(i + 12, ItemStackList.categoryblockeditor[i][lang]);
@@ -47,7 +47,7 @@ public class BlockEditor {
                     case 12: {
                         player.playSound(player.getLocation(), Sound.NOTE_PLING, 1F, 1F);
                         UUID uuid = player.getUniqueId();
-                        int lang = User.getLang(uuid);
+                        int lang = User.getUser(uuid).lang;
                         Inventory inv = Bukkit.createInventory(sandstoneholder, 27, ItemStackList.sandstoneedit[lang]);
                         for (int i = 0; i < 3; i++) {
                             inv.setItem(i + 10, ItemStackList.sandstoneeditor[i][lang]);
@@ -64,7 +64,7 @@ public class BlockEditor {
                     case 13: {
                         player.playSound(player.getLocation(), Sound.NOTE_PLING, 1F, 1F);
                         UUID uuid = player.getUniqueId();
-                        int lang = User.getLang(uuid);
+                        int lang = User.getUser(uuid).lang;
                         Inventory inv = Bukkit.createInventory(quartzeditor, 27, ItemStackList.quartzedit[lang]);
                         for (int i = 0; i < ItemStackList.quartzeditor.length; i++) {
                             inv.setItem(i + 12, ItemStackList.quartzeditor[i][lang]);
@@ -78,7 +78,7 @@ public class BlockEditor {
                     case 14: {
                         player.playSound(player.getLocation(), Sound.NOTE_PLING, 1F, 1F);
                         UUID uuid = player.getUniqueId();
-                        int lang = User.getLang(uuid);
+                        int lang = User.getUser(uuid).lang;
                         Inventory inv = Bukkit.createInventory(clayeditor, 27, ItemStackList.clayedit[lang]);
                         for (int i = 0; i < ItemStackList.clayeditor.length; i++) {
                             inv.setItem(i, ItemStackList.clayeditor[i][lang]);
@@ -97,7 +97,7 @@ public class BlockEditor {
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1F, 1F);
                 int x = RawSlot > 12 ? RawSlot - 11 : RawSlot - 10;
                 UUID uuid = player.getUniqueId();
-                int lang = User.getLang(uuid);
+                int lang = User.getUser(uuid).lang;
                 Core.integerCache.get(uuid)[4] = x;
                 player.closeInventory();
                 player.sendMessage(GlobalString.SavedSettings[lang]);
@@ -108,7 +108,7 @@ public class BlockEditor {
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1F, 1F);
                 int x = RawSlot + ItemStackList.sandstoneeditor.length - 12;
                 UUID uuid = player.getUniqueId();
-                int lang = User.getLang(uuid);
+                int lang = User.getUser(uuid).lang;
                 Core.integerCache.get(uuid)[4] = x;
                 player.closeInventory();
 
@@ -121,7 +121,7 @@ public class BlockEditor {
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1F, 1F);
                 int x = RawSlot + ItemStackList.sandstoneeditor.length + ItemStackList.quartzeditor.length;
                 UUID uuid = player.getUniqueId();
-                int lang = User.getLang(uuid);
+                int lang = User.getUser(uuid).lang;
                 Core.integerCache.get(uuid)[4] = x;
                 player.closeInventory();
                 player.sendMessage(GlobalString.SavedSettings[lang]);

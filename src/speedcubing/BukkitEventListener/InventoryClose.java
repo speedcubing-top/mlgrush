@@ -1,15 +1,14 @@
 package speedcubing.BukkitEventListener;
 
 
-import speedcubing.server.StringList.GlobalString;
-import speedcubing.server.libs.User;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import speedcubing.All.Lobby;
 import speedcubing.Core.Core;
-import speedcubing.List.StringList;
+import speedcubing.server.libs.GlobalString;
+import speedcubing.server.libs.User;
 
 import java.util.UUID;
 
@@ -21,7 +20,7 @@ public class InventoryClose implements Listener {
             UUID uuid = player.getUniqueId();
             if (Core.iseditingkit.contains(uuid)) {
                 Core.iseditingkit.remove(uuid);
-                player.sendMessage(GlobalString.UnSavedSettings[User.getLang(uuid)]);
+                player.sendMessage(GlobalString.UnSavedSettings[User.getUser(uuid).lang]);
                 Lobby.Items(player);
             }
         }

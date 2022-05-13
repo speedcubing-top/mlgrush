@@ -42,7 +42,7 @@ public class BlockPlace implements Listener {
                         if (Core.PlacedBlocks.get(uuid) > 32) {
                             Core.PlacedBlocks.put(uuid, 0);
                             Integer[] i = Core.integerCache.get(uuid);
-                            player.getInventory().setItem(i[1], ItemStackList.Blocks[i[4]][User.getLang(uuid)]);
+                            player.getInventory().setItem(i[1], ItemStackList.Blocks[i[4]][User.getUser(uuid).lang]);
                         }
                         if (MLGRush2x1.Preference.get(room)[3]) {
                             MLGRush2x1.Diff.put(position, 0);
@@ -59,7 +59,7 @@ public class BlockPlace implements Listener {
                         if (Core.PlacedBlocks.get(uuid) > 32) {
                             Core.PlacedBlocks.put(uuid, 0);
                             Integer[] i = Core.integerCache.get(uuid);
-                            player.getInventory().setItem(i[1], ItemStackList.Blocks[i[4]][User.getLang(uuid)]);
+                            player.getInventory().setItem(i[1], ItemStackList.Blocks[i[4]][User.getUser(uuid).lang]);
                         }
                     }
                     break;
@@ -71,7 +71,7 @@ public class BlockPlace implements Listener {
                         MLGRush4x1.Blocks.get(Core.PlayerRoom.get(uuid)).add(new BlockPosition(block.getX(), y, z));
                         if (Core.PlacedBlocks.get(uuid) > 48) {
                             Core.PlacedBlocks.put(uuid, 0);
-                            player.getInventory().setItem(Core.integerCache.get(uuid)[1], ItemStackList.Blocks[Core.integerCache.get(uuid)[4]][User.getLang(uuid)]);
+                            player.getInventory().setItem(Core.integerCache.get(uuid)[1], ItemStackList.Blocks[Core.integerCache.get(uuid)[4]][User.getUser(uuid).lang]);
                         }
                     }
                     break;
