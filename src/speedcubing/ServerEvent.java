@@ -1,15 +1,5 @@
 package speedcubing;
 
-import speedcubing.spigot.Event.ServerEventHandler;
-import speedcubing.spigot.Event.events.PlayInChatEvent;
-import speedcubing.spigot.Event.events.PlayInUseEntityEvent;
-import speedcubing.lib.bukkit.packetwrapper.OutPlayerListHeaderFooter;
-import speedcubing.lib.utils.Console;
-import speedcubing.lib.utils.Reflections;
-import speedcubing.server.libs.GlobalString;
-import speedcubing.server.events.UDPEvent;
-import speedcubing.server.libs.User;
-import speedcubing.server.speedcubingServer;
 import net.minecraft.server.v1_8_R3.PacketPlayInUseEntity;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -18,12 +8,20 @@ import org.bukkit.scoreboard.Team;
 import speedcubing.Core.MLGRush2x1;
 import speedcubing.Core.StickDuel;
 import speedcubing.List.EntityList;
-
-import java.util.UUID;
+import speedcubing.lib.bukkit.packetwrapper.OutPlayerListHeaderFooter;
+import speedcubing.lib.utils.Console;
+import speedcubing.lib.utils.Reflections;
+import speedcubing.server.events.SocketEvent;
+import speedcubing.server.libs.GlobalString;
+import speedcubing.server.libs.User;
+import speedcubing.server.speedcubingServer;
+import speedcubing.spigot.Event.ServerEventHandler;
+import speedcubing.spigot.Event.events.PlayInChatEvent;
+import speedcubing.spigot.Event.events.PlayInUseEntityEvent;
 
 public class ServerEvent {
     @ServerEventHandler
-    public void UDPEvent(UDPEvent e) {
+    public void SocketEvent(SocketEvent e) {
         String[] rs = e.rs;
         if (rs[0].equals("o") && rs[1].equals("1")) {
             speedcubingServer.AllPlayers = Integer.parseInt(rs[2]);
