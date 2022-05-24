@@ -54,7 +54,7 @@ public class PlayerInteract implements Listener {
                 if (hand.equals(Material.SLIME_BALL)) {
                     switch (player.getWorld().getName()) {
                         case "MLGRush2x1": {
-                            player.teleport(new Location(Bukkit.getWorld("world"), 0.5, 100, 0.5, 0, 0));
+                            player.teleport(new Location(Bukkit.getWorld("world"), 129.5, 111, -21.5, 90, 0));
                             UUID uuid = player.getUniqueId();
                             player.setAllowFlight(false);
                             int room = Core.Spectate.get(uuid);
@@ -71,7 +71,7 @@ public class PlayerInteract implements Listener {
                         }
                         break;
                         case "StickDuel": {
-                            player.teleport(new Location(Bukkit.getWorld("world"), 0.5, 100, 0.5, 0, 0));
+                            player.teleport(new Location(Bukkit.getWorld("world"), 129.5, 111, -21.5, 90, 0));
                             UUID uuid = player.getUniqueId();
                             player.setAllowFlight(false);
                             int room = Core.Spectate.get(uuid);

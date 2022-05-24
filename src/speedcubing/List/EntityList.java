@@ -29,12 +29,12 @@ public class EntityList {
             Lobbys[i].setInvisible(true);
             Lobbys[i].n(true);
         }
-        Lobbys[0].setLocation(-2.5, 101.85, 19.5, 0, 0);
-        Lobbys[1].setLocation(0.5, 101.85, 19.5, 0, 0);
-        Lobbys[2].setLocation(3.5, 101.85, 19.5, 0, 0);
-        Lobbys[3].setLocation(-2.5, 102.15, 19.5, 0, 0);
-        Lobbys[4].setLocation(0.5, 102.15, 19.5, 0, 0);
-        Lobbys[5].setLocation(3.5, 102.15, 19.5, 0, 0);
+        Lobbys[0].setLocation(114.5, 113.85, -24.5, 0, 0);
+        Lobbys[1].setLocation(114.5, 113.85, -21.5, 0, 0);
+        Lobbys[2].setLocation(114.5, 113.85, -18.5, 0, 0);
+        Lobbys[3].setLocation(114.5, 114.15, -24.5, 0, 0);
+        Lobbys[4].setLocation(114.5, 114.15, -21.5, 0, 0);
+        Lobbys[5].setLocation(114.5, 114.15, -18.5, 0, 0);
         Lobbys[0].setCustomName("§bStickDuel");
         Lobbys[1].setCustomName("§bMLGRush 2x1");
         Lobbys[2].setCustomName("§bMLGRush 4x1");
@@ -90,16 +90,16 @@ public class EntityList {
         entityPlayer[0].getProfile().getProperties().put("textures", new Property("textures", VEPEXtextures, VEPEXsignature));
         entityPlayer[1].getProfile().getProperties().put("textures", new Property("textures", TFGTEXTURES, TFGSIGNATURES));
         entityPlayer[2].getProfile().getProperties().put("textures", new Property("textures", RNStextures, RNSsignature));
-        entityPlayer[0].setLocation(-2.5, 100, 19.5, 180, 0);
-        entityPlayer[1].setLocation(0.5, 100, 19.5, 180, 0);
-        entityPlayer[2].setLocation(3.5, 100, 19.5, 179, 0);
+        entityPlayer[0].setLocation(114.5, 112, -24.5, 269, 0);
+        entityPlayer[1].setLocation(114.5, 112, -21.5, 269, 0);
+        entityPlayer[2].setLocation(114.5, 112, -18.5, 269, 0);
         for (EntityPlayer value : entityPlayer) {
             LobbyNPCPackets.add(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, value));
             LobbyNPCPackets.add(new PacketPlayOutNamedEntitySpawn(value));
         }
-        LobbyNPCPackets.add(new PacketPlayOutEntityHeadRotation(entityPlayer[0], (byte) 128));
-        LobbyNPCPackets.add(new PacketPlayOutEntityHeadRotation(entityPlayer[1], (byte) 128));
-        LobbyNPCPackets.add(new PacketPlayOutEntityHeadRotation(entityPlayer[2], (byte) 128));
+        LobbyNPCPackets.add(new PacketPlayOutEntityHeadRotation(entityPlayer[0], (byte) 192));
+        LobbyNPCPackets.add(new PacketPlayOutEntityHeadRotation(entityPlayer[1], (byte) 192));
+        LobbyNPCPackets.add(new PacketPlayOutEntityHeadRotation(entityPlayer[2], (byte) 192));
         LobbyNPCPackets.add(new PacketPlayOutScoreboardTeam(NoNameTag, 1));
         LobbyNPCPackets.add(new PacketPlayOutScoreboardTeam(NoNameTag, 0));
         LobbyNPCPackets.add(new PacketPlayOutScoreboardTeam(NoNameTag, Collections.singletonList(" "), 3));
