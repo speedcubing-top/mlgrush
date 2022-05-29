@@ -23,7 +23,7 @@ public class ServerEvent {
     @ServerEventHandler
     public void SocketEvent(SocketEvent e) {
         String[] rs = e.rs;
-        if (rs[0].equals("o") && rs[1].equals("1")) {
+        if (rs[0].equals("online") && rs[1].equals("1")) {
             speedcubingServer.AllPlayers = Integer.parseInt(rs[2]);
             for (Player p : Bukkit.getOnlinePlayers()) {
                 User user = User.getUser(p.getUniqueId());
