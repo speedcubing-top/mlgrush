@@ -62,11 +62,11 @@ public class PlayerMove implements Listener {
                         StickDuel.Fell(player, time);
                     break;
                 case "world":
-                    if (Math.abs(to.getX()) > 1001 || Math.abs(to.getZ()) > 1001)
+                    if (Math.abs(to.getX()) > 101 || Math.abs(to.getZ()) > 101)
                         player.teleport(e.getFrom());
-                    if (to.getY() <= 0) {
+                    if (to.getY() <= 80) {
                         player.closeInventory();
-                        PlayerUtils.teleport(((CraftPlayer) player).getHandle().playerConnection, 129.5, 111, -21.5, 90, 0);
+                        PlayerUtils.teleport(((CraftPlayer) player).getHandle().playerConnection, 0.5, 100, 0.5, 0, 0);
                     }
                     break;
             }

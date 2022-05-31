@@ -385,7 +385,7 @@ public class MLGRush2x1 {
         Time.remove(room);
         Preference.remove(room);
         Kill.remove(room);
-        Location lb = new Location(Bukkit.getWorld("world"), 129.5, 111, -21.5, 90, 0);
+        Location lb = new Location(Bukkit.getWorld("world"),  0.5, 100, 0.5, 0,0);
         players[quitter].teleport(lb);
         for (UUID id : Spectators.get(room)) {
             Player p = Bukkit.getPlayer(id);

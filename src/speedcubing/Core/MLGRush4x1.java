@@ -57,7 +57,7 @@ public class MLGRush4x1 {
         Set<UUID> spec = Spectators.get(room);
         Players.remove(room);
         Spectators.remove(room);
-        Location lb = new Location(Bukkit.getWorld("world"), 129.5, 111, -21.5, 90, 0);
+        Location lb = new Location(Bukkit.getWorld("world"), 0.5, 100, 0.5, 0, 0);
         for (UUID id : players) {
             if (id != null) {
                 if (Arrays.asList(players).indexOf(id) != quitter) {
