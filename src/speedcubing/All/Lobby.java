@@ -71,7 +71,7 @@ public class Lobby {
                 {sidebar[4]},
                 {sidebar[3]},
                 {sidebar[2]},
-                {"", sidebar[1], Integer.toString(speedcubingServer.AllPlayers)},
+                {"", sidebar[1], "loading..."},
                 {sidebar[0]},
         }, new int[]{4, 3, 2, 1, 0});
         player.setScoreboard(scoreboard);
