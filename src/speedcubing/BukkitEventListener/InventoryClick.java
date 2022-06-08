@@ -39,10 +39,8 @@ public class InventoryClick implements Listener {
                 if (player.getGameMode() == GameMode.SURVIVAL || player.getGameMode() == GameMode.ADVENTURE)
                     e.setCancelled(true);
             } else if (holder == Core.KitEditorHolder) { // KitEditor
-                if (RawSlot <= 35 || (e.getAction() == InventoryAction.PICKUP_HALF && e.getCurrentItem().getAmount() != 1)) {
+                if (RawSlot < 36 || (e.getCursor().getAmount() > 1 && (e.getAction() == InventoryAction.PICKUP_HALF || e.getAction() == InventoryAction.PLACE_ONE)))
                     e.setCancelled(true);
-                    player.updateInventory();
-                }
                 switch (RawSlot) {
                     case 3:
                         player.playSound(player.getLocation(), Sound.CLICK, 1F, 1F);
