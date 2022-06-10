@@ -1,5 +1,6 @@
 package speedcubing;
 
+import speedcubing.server.speedcubingServer;
 import speedcubing.spigot.Event.ServerEventManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
@@ -14,6 +15,9 @@ import speedcubing.Core.MLGRush4x1;
 import speedcubing.Core.StickDuel;
 import speedcubing.List.EntityList;
 import speedcubing.List.ItemStackList;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Main extends JavaPlugin implements CommandExecutor {
 
@@ -52,5 +56,11 @@ public class Main extends JavaPlugin implements CommandExecutor {
         new StickDuel().Load();
         new BlockEditor().Load();
         ServerEventManager.registerListeners(new ServerEvent());
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                speedcubingServer.tcp.sendClean(25576 - Bukkit.getPort() % 2, "online|3|" + Bukkit.getOnlinePlayers().size());
+            }
+        }, 0, 1000);
     }
 }
