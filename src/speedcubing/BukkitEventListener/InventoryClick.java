@@ -1,5 +1,6 @@
 package speedcubing.BukkitEventListener;
 
+import org.bukkit.event.inventory.InventoryDragEvent;
 import speedcubing.server.libs.User;
 import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
 import org.bukkit.Bukkit;
@@ -26,10 +27,17 @@ import java.util.Map;
 import java.util.UUID;
 
 public class InventoryClick implements Listener {
+    @EventHandler
+    public void InventoryDragEvent(InventoryDragEvent e) {
+        if (e.getCursor() != null && e.getCursor().getAmount() != 1)
+            e.setCancelled(true);
+    }
 
     @EventHandler
     public void InventoryClickEvent(InventoryClickEvent e) {
         int RawSlot = e.getRawSlot();
+        if (e.getAction() == InventoryAction.PICKUP_HALF || e.getAction() == InventoryAction.PLACE_ONE)
+            e.setCancelled(true);
         if (RawSlot != -999) {
             Player player = (Player) e.getWhoClicked();
             UUID uuid = player.getUniqueId();
@@ -39,7 +47,7 @@ public class InventoryClick implements Listener {
                 if (player.getGameMode() == GameMode.SURVIVAL || player.getGameMode() == GameMode.ADVENTURE)
                     e.setCancelled(true);
             } else if (holder == Core.KitEditorHolder) { // KitEditor
-                if (RawSlot < 36 || (e.getCursor().getAmount() > 1 && (e.getAction() == InventoryAction.PICKUP_HALF || e.getAction() == InventoryAction.PLACE_ONE)))
+                if (RawSlot < 36)
                     e.setCancelled(true);
                 switch (RawSlot) {
                     case 3:
