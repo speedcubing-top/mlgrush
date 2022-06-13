@@ -1,7 +1,7 @@
 package speedcubing;
 
+import speedcubing.lib.event.LibEventManager;
 import speedcubing.server.speedcubingServer;
-import speedcubing.spigot.Event.ServerEventManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.WorldCreator;
@@ -55,7 +55,7 @@ public class Main extends JavaPlugin implements CommandExecutor {
         new MLGRush4x1().Load();
         new StickDuel().Load();
         new BlockEditor().Load();
-        ServerEventManager.registerListeners(new ServerEvent());
+        LibEventManager.registerListeners(new ServerEvent());
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {

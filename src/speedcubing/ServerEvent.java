@@ -9,18 +9,18 @@ import speedcubing.Core.MLGRush2x1;
 import speedcubing.Core.StickDuel;
 import speedcubing.List.EntityList;
 import speedcubing.lib.bukkit.packetwrapper.OutPlayerListHeaderFooter;
+import speedcubing.lib.event.LibEventHandler;
 import speedcubing.lib.utils.Console;
 import speedcubing.lib.utils.Reflections;
 import speedcubing.server.events.SocketEvent;
+import speedcubing.server.events.packet.PlayInChatEvent;
+import speedcubing.server.events.packet.PlayInUseEntityEvent;
 import speedcubing.server.libs.GlobalString;
 import speedcubing.server.libs.User;
 import speedcubing.server.speedcubingServer;
-import speedcubing.spigot.Event.ServerEventHandler;
-import speedcubing.spigot.Event.events.PlayInChatEvent;
-import speedcubing.spigot.Event.events.PlayInUseEntityEvent;
 
 public class ServerEvent {
-    @ServerEventHandler
+    @LibEventHandler
     public void SocketEvent(SocketEvent e) {
         String[] rs = e.rs;
         if (rs[0].equals("online") && rs[1].equals("1")) {
@@ -35,7 +35,7 @@ public class ServerEvent {
         }
     }
 
-    @ServerEventHandler
+    @LibEventHandler
     public void PlayInChatEvent(PlayInChatEvent e) {
         String message = e.packet.a();
         if (message.charAt(0) != '/') {
@@ -57,7 +57,7 @@ public class ServerEvent {
         }
     }
 
-    @ServerEventHandler
+    @LibEventHandler
     public void PlayInUseEntityEvent(PlayInUseEntityEvent e) {
         Player player = e.player;
         PacketPlayInUseEntity packet = e.packet;
