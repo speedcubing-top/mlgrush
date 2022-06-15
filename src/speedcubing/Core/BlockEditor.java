@@ -1,6 +1,6 @@
 package speedcubing.Core;
 
-import speedcubing.lib.bukkit.ItemUtils;
+import speedcubing.lib.bukkit.inventory.ItemUtils;
 import speedcubing.server.libs.GlobalString;
 import speedcubing.server.libs.User;
 import org.bukkit.Bukkit;

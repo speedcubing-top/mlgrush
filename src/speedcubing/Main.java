@@ -1,7 +1,5 @@
 package speedcubing;
 
-import speedcubing.lib.event.LibEventManager;
-import speedcubing.server.speedcubingServer;
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.WorldCreator;
@@ -15,6 +13,8 @@ import speedcubing.Core.MLGRush4x1;
 import speedcubing.Core.StickDuel;
 import speedcubing.List.EntityList;
 import speedcubing.List.ItemStackList;
+import speedcubing.lib.eventbus.LibEventManager;
+import speedcubing.server.speedcubingServer;
 
 import java.util.Timer;
 import java.util.TimerTask;
