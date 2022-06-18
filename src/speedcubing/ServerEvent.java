@@ -20,7 +20,7 @@ import speedcubing.server.speedcubingServer;
 public class ServerEvent {
     @LibEventHandler
     public void SocketEvent(SocketEvent e) {
-        String[] rs = e.rs;
+        String[] rs = e.receive.split("\\|");
         if (rs[0].equals("online") && rs[1].equals("1")) {
             for (Player p : Bukkit.getOnlinePlayers()) {
                 User user = User.getUser(p.getUniqueId());
