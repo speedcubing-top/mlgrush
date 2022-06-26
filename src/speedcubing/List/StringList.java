@@ -1,5 +1,7 @@
 package speedcubing.List;
+
 import speedcubing.server.config;
+
 /**
  *
  **/
@@ -130,16 +132,16 @@ public class StringList {
             {"§5", "§8» §b", "§a线上玩家", "§8", "§6" + config.SERVERIP, "§3MLGRush"}
     };
     public static String[][] MLGRushSideBar = {
-            {"§0", " §7▶ ", " §7▶ ", "§3", "§6" + config.SERVERIP, "§3MLGRush 2x1 §7▶§b %h%%m%%s%"},
-            {"§0", " §7▶ ", " §7▶ ", "§3", "§6" + config.SERVERIP, "§3MLGRush 2x1 §7▶§b %h%%m%%s%"},
-            {"§0", " §7▶ ", " §7▶ ", "§3", "§6" + config.SERVERIP, "§3MLGRush 2x1 §7▶§b %h%%m%%s%"},
-            {"§0", " §7▶ ", " §7▶ ", "§3", "§6" + config.SERVERIP, "§3MLGRush 2x1 §7▶§b %h%%m%%s%"}
+            {"§3MLGRush 2x1 §7▶§b %h%%m%%s%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"},
+            {"§3MLGRush 2x1 §7▶§b %h%%m%%s%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"},
+            {"§3MLGRush 2x1 §7▶§b %h%%m%%s%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"},
+            {"§3MLGRush 2x1 §7▶§b %h%%m%%s%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"}
     };
     public static String[][] StickDuelSideBar = {
-            {"§0", " §7▶ ", " §7▶ ", "§3", "§6" + config.SERVERIP, "§3StickDuel §7▶§b %h%%m%%s%"},
-            {"§0", " §7▶ ", " §7▶ ", "§3", "§6" + config.SERVERIP, "§3StickDuel §7▶§b %h%%m%%s%"},
-            {"§0", " §7▶ ", " §7▶ ", "§3", "§6" + config.SERVERIP, "§3StickDuel §7▶§b %h%%m%%s%"},
-            {"§0", " §7▶ ", " §7▶ ", "§3", "§6" + config.SERVERIP, "§3StickDuel §7▶§b %h%%m%%s%"}
+            {"§3StickDuel §7▶§b %h%%m%%s%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"},
+            {"§3StickDuel §7▶§b %h%%m%%s%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"},
+            {"§3StickDuel §7▶§b %h%%m%%s%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"},
+            {"§3StickDuel §7▶§b %h%%m%%s%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"}
     };
 
     public static String[] JoinSpectate = {
