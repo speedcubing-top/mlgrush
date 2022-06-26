@@ -3,10 +3,11 @@ package speedcubing;
 import net.minecraft.server.v1_8_R3.PacketPlayInUseEntity;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Team;
 import speedcubing.Core.MLGRush2x1;
 import speedcubing.Core.StickDuel;
 import speedcubing.List.EntityList;
+import speedcubing.List.StringList;
+import speedcubing.lib.bukkit.SideBar;
 import speedcubing.lib.bukkit.event.PlayInChatEvent;
 import speedcubing.lib.bukkit.event.PlayInUseEntityEvent;
 import speedcubing.lib.eventbus.LibEventHandler;
@@ -22,13 +23,9 @@ public class ServerEvent {
     public void SocketEvent(SocketEvent e) {
         String[] rs = e.receive.split("\\|");
         if (rs[0].equals("online") && rs[1].equals("1")) {
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                User user = User.getUser(p.getUniqueId());
-                if (user != null) {
-                    Team team = p.getScoreboard().getTeam(speedcubing.List.StringList.LobbySideBar[user.lang][1]);
-                    if (team != null)
-                        team.setSuffix(rs[2]);
-                }
+            for (SideBar s : SideBar.getSidebars()) {
+                if (s.player.getWorld().getName().equals("world"))
+                    s.setLine(StringList.LobbySideBar[User.getUser(s.player.getUniqueId()).lang][1] + rs[2], 4);
             }
         }
     }

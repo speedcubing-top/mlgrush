@@ -1,10 +1,6 @@
 package speedcubing.Core;
 
 
-import speedcubing.lib.bukkit.PlayerUtils;
-import speedcubing.lib.bukkit.SideBarAPI;
-import speedcubing.server.libs.GlobalString;
-import speedcubing.server.libs.User;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.EntityArmorStand;
 import net.minecraft.server.v1_8_R3.PacketPlayOutEntityMetadata;
@@ -13,13 +9,15 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Scoreboard;
 import speedcubing.All.Lobby;
 import speedcubing.List.EntityList;
 import speedcubing.List.ItemStackList;
 import speedcubing.List.StringList;
 import speedcubing.Main;
+import speedcubing.lib.bukkit.PlayerUtils;
+import speedcubing.lib.bukkit.SideBar;
+import speedcubing.server.libs.GlobalString;
+import speedcubing.server.libs.User;
 import speedcubing.server.speedcubingServer;
 
 import java.util.*;
@@ -98,15 +96,15 @@ public class StickDuel {
         player.teleport(new Location(Bukkit.getWorld("StickDuel"), 0.5, 110, Core.roomToBed(room), 0, 0));
         int x = Time.get(room);
         UUID[] playeruuid = Players.get(room);
-        Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-        Objective objective = scoreboard.registerNewObjective("sidebar", "dummy");
-        objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         String[] sidebar = StringList.StickDuelSideBar[lang];
-        objective.setDisplayName(sidebar[5].replace("%h%", x / 3600 == 0 ? "" : x / 3600 + ":").replace("%m%", String.format("%02d", (x % 3600) / 60) + ":").replace("%s%", String.format("%02d", x % 60)));
         Integer[] score = Score.get(room);
         String[] suffix = (score[0].equals(score[1])) ? new String[]{"§e" + score[0], "§e" + score[1]} : (score[0] > score[1] ? new String[]{"§a" + score[0], "§c" + score[1]} : new String[]{"§c" + score[0], "§a" + score[1]});
-        SideBarAPI.sidebarTeams(scoreboard, new String[][]{{sidebar[4]}, {sidebar[3]}, {"§2§f", speedcubingServer.getFormat(User.getUser(playeruuid[0]).rank)[1] + Bukkit.getPlayer(playeruuid[0]).getName() + sidebar[2] + suffix[0]}, {"§1§f", speedcubingServer.getFormat(User.getUser(playeruuid[1]).rank)[1] + Bukkit.getPlayer(playeruuid[1]).getName() + sidebar[1] + suffix[1]}, {sidebar[0]},}, new int[]{4, 3, 2, 1, 0});
-        player.setScoreboard(scoreboard);
+        new SideBar(player, sidebar[5].replace("%h%", x / 3600 == 0 ? "" : x / 3600 + ":").replace("%m%", String.format("%02d", (x % 3600) / 60) + ":").replace("%s%", String.format("%02d", x % 60)))
+                .staticLine(sidebar[4], 4)
+                .staticLine(sidebar[3], 3)
+                .changeableLine(speedcubingServer.getFormat(User.getUser(playeruuid[0]).rank)[1] + Bukkit.getPlayer(playeruuid[0]).getName() + sidebar[2] + suffix[0], 2)
+                .changeableLine(speedcubingServer.getFormat(User.getUser(playeruuid[1]).rank)[1] + Bukkit.getPlayer(playeruuid[1]).getName() + sidebar[1] + suffix[1], 1)
+                .staticLine(sidebar[0], 0).create();
         player.getInventory().clear();
         player.getInventory().setItem(8, ItemStackList.HubSlime[lang]);
         Set<UUID> targets = new HashSet<>();
@@ -164,13 +162,9 @@ public class StickDuel {
                 Player p = Bukkit.getPlayer(id);
                 int lang = User.getUser(id).lang;
                 String[] sidebar = StringList.StickDuelSideBar[lang];
-                String[] split = SideBarAPI.prefixSuffixSplit(formats[0] + sidebar[2] + suffix[0]);
-                String[] split2 = SideBarAPI.prefixSuffixSplit(formats[1] + sidebar[1] + suffix[1]);
-                Scoreboard scoreboard = p.getScoreboard();
-                scoreboard.getTeam("§2§f").setPrefix(split[0]);
-                scoreboard.getTeam("§2§f").setSuffix(split[1]);
-                scoreboard.getTeam("§1§f").setPrefix(split2[0]);
-                scoreboard.getTeam("§1§f").setSuffix(split2[1]);
+                SideBar.getSidebar(p)
+                        .setLine(formats[0] + sidebar[2] + suffix[0], 3)
+                        .setLine(formats[1] + sidebar[1] + suffix[1], 4);
                 PlayerUtils.sendActionBar(((CraftPlayer) p).getHandle().playerConnection, actionbar[room]);
                 p.sendMessage(StringList.StickDuelKill[lang]
                         .replace("%format0%", loserformat[1])
@@ -238,19 +232,13 @@ public class StickDuel {
                 inventory.setItem(ints[1], ItemStackList.Blocks[ints[4]][lang]);
                 inventory.setItem(ints[2], ItemStackList.Pickaxe[lang]);
                 PlayerUtils.sendActionBar(((CraftPlayer) p).getHandle().playerConnection, actionbar[room]);
-                Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-                Objective objective = scoreboard.registerNewObjective("sidebar", "dummy");
-                objective.setDisplaySlot(DisplaySlot.SIDEBAR);
                 String[] sidebar = StringList.StickDuelSideBar[lang];
-                objective.setDisplayName(sidebar[5].replace("%h%", "").replace("%m%", "00:").replace("%s%", "00"));
-                SideBarAPI.sidebarTeams(scoreboard, new String[][]{
-                        {sidebar[4]},
-                        {sidebar[3]},
-                        {"§2§f", formats[0] + players[0].getName() + sidebar[1] + "§e0"},
-                        {"§1§f", formats[1] + players[1].getName() + sidebar[1] + "§e0"},
-                        {sidebar[0]}
-                }, new int[]{4, 3, 2, 1, 0});
-                p.setScoreboard(scoreboard);
+                new SideBar(p, sidebar[5].replace("%h%", "").replace("%m%", "00:").replace("%s%", "00"))
+                        .staticLine(sidebar[4], 4)
+                        .staticLine(sidebar[3], 3)
+                        .changeableLine(formats[0] + players[0].getName() + sidebar[1] + "§e0", 2)
+                        .changeableLine(formats[1] + players[1].getName() + sidebar[1] + "§e0", 1)
+                        .staticLine(sidebar[0], 0).create();
             }
 
             Blocks.put(room, new HashSet<>());

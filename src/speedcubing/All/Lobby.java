@@ -1,27 +1,23 @@
 package speedcubing.All;
 
 
-import speedcubing.lib.bukkit.PlayerUtils;
-import speedcubing.lib.bukkit.SideBarAPI;
-import speedcubing.server.libs.User;
-import speedcubing.server.speedcubingServer;
 import net.minecraft.server.v1_8_R3.Packet;
 import net.minecraft.server.v1_8_R3.PacketPlayOutSpawnEntityLiving;
 import net.minecraft.server.v1_8_R3.PlayerConnection;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Scoreboard;
 import speedcubing.Core.Core;
 import speedcubing.List.EntityList;
 import speedcubing.List.ItemStackList;
 import speedcubing.List.StringList;
+import speedcubing.lib.bukkit.PlayerUtils;
+import speedcubing.lib.bukkit.SideBar;
+import speedcubing.server.libs.User;
+import speedcubing.server.speedcubingServer;
 
 import java.util.*;
 
@@ -61,21 +57,13 @@ public class Lobby {
         for (PacketPlayOutSpawnEntityLiving packet : EntityList.spawnpackets) {
             connection.sendPacket(packet);
         }
-
-        Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
         String[] sidebar = StringList.LobbySideBar[User.getUser(player.getUniqueId()).lang];
-        Objective objective = scoreboard.registerNewObjective("sidebar", "dummy");
-        objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-        objective.setDisplayName(sidebar[5]);
-        SideBarAPI.sidebarTeams(scoreboard, new String[][]{
-                {sidebar[4]},
-                {sidebar[3]},
-                {sidebar[2]},
-                {"", sidebar[1], "loading..."},
-                {sidebar[0]},
-        }, new int[]{4, 3, 2, 1, 0});
-        player.setScoreboard(scoreboard);
-
+        new SideBar(player, sidebar[5])
+                .staticLine(sidebar[4], 4)
+                .staticLine(sidebar[3], 3)
+                .staticLine(sidebar[2], 2)
+                .changeableLine(sidebar[1] + "loading...", 1)
+                .staticLine(sidebar[0], 0).create();
         PlayerUtils.sendActionBar(connection, "");
         player.setGameMode(GameMode.ADVENTURE);
     }
