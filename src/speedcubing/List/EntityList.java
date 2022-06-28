@@ -23,9 +23,11 @@ public class EntityList {
 
         for (int i = 0; i < npcs.length; i++) {
             npcs[i] = new NPC("", null, true);
+            npcs[i].world.add("world");
         }
         for (int i = 0; i < Lobbys.length; i++) {
             Lobbys[i] = new Hologram("", 0, 0, 0, 0, 0);
+            Lobbys[i].world.add("world");
         }
         Lobbys[0].setLocation(-2.5, 101.85, 19.5, 0, 0);
         Lobbys[1].setLocation(0.5, 101.85, 19.5, 0, 0);
