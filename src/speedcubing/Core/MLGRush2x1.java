@@ -1,12 +1,9 @@
 package speedcubing.Core;
 
 import net.minecraft.server.v1_8_R3.BlockPosition;
-import net.minecraft.server.v1_8_R3.EntityArmorStand;
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntityMetadata;
 import net.minecraft.server.v1_8_R3.WorldServer;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -19,6 +16,7 @@ import speedcubing.List.StringList;
 import speedcubing.Main;
 import speedcubing.lib.bukkit.PlayerUtils;
 import speedcubing.lib.bukkit.SideBar;
+import speedcubing.lib.bukkit.entity.Hologram;
 import speedcubing.server.libs.GlobalString;
 import speedcubing.server.libs.User;
 import speedcubing.server.speedcubingServer;
@@ -93,24 +91,20 @@ public class MLGRush2x1 {
         if (!QueueCoolDown.contains(uuid)) {
             player.playSound(player.getLocation(), Sound.NOTE_PLING, 1F, 1F);
             QueueCoolDown.add(uuid);
-            EntityArmorStand stand = EntityList.Lobbys[4];
+            Hologram stand = EntityList.Lobbys[4];
             if (Queue == null) {
                 Core.QuitAllQueue(uuid);
                 player.closeInventory();
                 player.sendMessage(StringList.MLGRushQueue[User.getUser(uuid).lang]);
                 Queue = uuid;
-                stand.setCustomName("§a1/2");
+                stand.setName("§a1/2");
             } else {
-                stand.setCustomName("§a0/2");
+                stand.setName("§a0/2");
                 if (Queue.equals(uuid))
                     player.sendMessage(StringList.MLGRushUnQueue[User.getUser(uuid).lang]);
                 else
                     gameStart(uuid, Queue, 0);
                 Queue = null;
-            }
-            PacketPlayOutEntityMetadata packet = new PacketPlayOutEntityMetadata(stand.getId(), stand.getDataWatcher(), true);
-            for (Player p : Bukkit.getWorld("world").getPlayers()) {
-                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
             }
             new Timer().schedule(new TimerTask() {
                 @Override
@@ -208,14 +202,14 @@ public class MLGRush2x1 {
                         .setLine(formats[0] + sidebar[3] + suffix[0], 3)
                         .setLine(formats[1] + sidebar[4] + suffix[1], 4);
                 p.sendMessage(StringList.MLGRushBedbreak[lang].replace("%player%", name2).replace("%player2%", breakerName));
-                PlayerUtils.sendActionBar(((CraftPlayer) p).getHandle().playerConnection, actionbar[room]);
+                PlayerUtils.sendActionBar(p, actionbar[room]);
             }
 
             int[] Map = MapLocations(Core.PlayerMap.get(uuid));
             int t = 1;
             for (Player p : players2) {
                 Core.PlacedBlocks.put(p.getUniqueId(), 0);
-                PlayerUtils.teleport(((CraftPlayer) p).getHandle().playerConnection, 0.5 + Map[0] * t, Map[1] + 1, 0.5 + Core.roomToBed(room) + t * Map[3], 180 - 90 * t, 0);
+                p.teleport(new Location(p.getWorld(), 0.5 + Map[0] * t, Map[1] + 1, 0.5 + Core.roomToBed(room) + t * Map[3], 180 - 90 * t, 0));
                 Core.resetItems(p);
                 t -= 2;
             }
@@ -278,7 +272,7 @@ public class MLGRush2x1 {
                 inventory.setItem(ints[0], ItemStackList.Sticks[ints[3]][lang]);
                 inventory.setItem(ints[1], ItemStackList.Blocks[ints[4]][lang]);
                 inventory.setItem(ints[2], ItemStackList.Pickaxe[lang]);
-                PlayerUtils.sendActionBar(((CraftPlayer) p).getHandle().playerConnection, actionbar[room]);
+                PlayerUtils.sendActionBar(p, actionbar[room]);
                 String[] sidebar = StringList.MLGRushSideBar[lang];
                 new SideBar(p, sidebar[0].replace("%h%", "").replace("%m%", "00:").replace("%s%", "00"))
                         .staticLine(sidebar[1], 4)
@@ -315,7 +309,7 @@ public class MLGRush2x1 {
                     for (UUID id : targets) {
                         if (id != null) {
                             Player p = Bukkit.getPlayer(id);
-                            PlayerUtils.sendActionBar(((CraftPlayer) p).getHandle().playerConnection, actionbar[r]);
+                            PlayerUtils.sendActionBar(p, actionbar[r]);
                             p.getScoreboard().getObjective(DisplaySlot.SIDEBAR).setDisplayName(StringList.MLGRushSideBar[User.getUser(id).lang][0].replace("%h%", x / 3600 == 0 ? "" : x / 3600 + ":").replace("%m%", String.format("%02d", (x % 3600) / 60) + ":").replace("%s%", String.format("%02d", x % 60)));
                         }
                     }
@@ -446,7 +440,7 @@ public class MLGRush2x1 {
         WorldServer mlgrush2x1 = ((CraftWorld) Bukkit.getWorld("MLGRush2x1")).getHandle();
         for (int y = Map[2]; y >= Map[1]; y--) {
             if (mlgrush2x1.getType(new BlockPosition(Map[0] * t[1], y, z + t[1] * Map[3])) != net.minecraft.server.v1_8_R3.Blocks.AIR.getBlockData()) {
-                PlayerUtils.teleport(((CraftPlayer) player).getHandle().playerConnection, 0.5 + Map[0] * t[1], y + 1, z + 0.5 + t[1] * Map[3], 180 - 90 * t[1], 0);
+                player.teleport(new Location(player.getWorld(), 0.5 + Map[0] * t[1], y + 1, z + 0.5 + t[1] * Map[3], 180 - 90 * t[1], 0));
                 break;
             }
         }

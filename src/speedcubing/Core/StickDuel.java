@@ -48,24 +48,19 @@ public class StickDuel {
         if (!QueueCoolDown.contains(uuid)) {
             player.playSound(player.getLocation(), Sound.NOTE_PLING, 1F, 1F);
             QueueCoolDown.add(uuid);
-            EntityArmorStand stand = EntityList.Lobbys[3];
             if (Queue == null) {
                 Core.QuitAllQueue(uuid);
                 player.closeInventory();
                 player.sendMessage(StringList.StickDuelQueue[User.getUser(uuid).lang]);
                 Queue = uuid;
-                stand.setCustomName("§a1/2");
+                EntityList.Lobbys[3].setName("§a1/2");
             } else {
-                stand.setCustomName("§a0/2");
+                EntityList.Lobbys[3].setName("§a0/2");
                 if (Queue.equals(uuid))
                     player.sendMessage(StringList.StickDuelUnQueue[User.getUser(uuid).lang]);
                 else
                     gameStart(uuid, Queue, 0);
                 Queue = null;
-            }
-            PacketPlayOutEntityMetadata packet = new PacketPlayOutEntityMetadata(stand.getId(), stand.getDataWatcher(), true);
-            for (Player p : Bukkit.getWorld("world").getPlayers()) {
-                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
             }
             new Timer().schedule(new TimerTask() {
                 @Override
@@ -165,7 +160,7 @@ public class StickDuel {
                 SideBar.getSidebar(p)
                         .setLine(formats[0] + sidebar[3] + suffix[0], 3)
                         .setLine(formats[1] + sidebar[4] + suffix[1], 4);
-                PlayerUtils.sendActionBar(((CraftPlayer) p).getHandle().playerConnection, actionbar[room]);
+                PlayerUtils.sendActionBar(p, actionbar[room]);
                 p.sendMessage(StringList.StickDuelKill[lang]
                         .replace("%format0%", loserformat[1])
                         .replace("%name0%", player.getName())
@@ -179,7 +174,7 @@ public class StickDuel {
         }
         int pos = killer.getLocation().getX() > 0 ? -1 : 1;
         int[] Map = MapLocations(room);
-        PlayerUtils.teleport(((CraftPlayer) player).getHandle().playerConnection, 0.5 + Map[0] * pos, 101, Core.randomToBed(player.getLocation().getZ()) + 0.5 + pos * Map[1], 180 - 90 * pos, 0);
+        player.teleport(new Location(player.getWorld(), 0.5 + Map[0] * pos, 101, Core.randomToBed(player.getLocation().getZ()) + 0.5 + pos * Map[1], 180 - 90 * pos, 0));
         ResetBlocks(room);
     }
 
@@ -231,7 +226,7 @@ public class StickDuel {
                 inventory.setItem(ints[0], ItemStackList.Sticks[ints[3]][lang]);
                 inventory.setItem(ints[1], ItemStackList.Blocks[ints[4]][lang]);
                 inventory.setItem(ints[2], ItemStackList.Pickaxe[lang]);
-                PlayerUtils.sendActionBar(((CraftPlayer) p).getHandle().playerConnection, actionbar[room]);
+                PlayerUtils.sendActionBar(p, actionbar[room]);
                 String[] sidebar = StringList.StickDuelSideBar[lang];
                 new SideBar(p, sidebar[0].replace("%h%", "").replace("%m%", "00:").replace("%s%", "00"))
                         .staticLine(sidebar[1], 4)
@@ -260,7 +255,7 @@ public class StickDuel {
                             if (id != null) {
                                 Player p = Bukkit.getPlayer(id);
                                 p.getScoreboard().getObjective(DisplaySlot.SIDEBAR).setDisplayName(StringList.StickDuelSideBar[User.getUser(id).lang][0].replace("%h%", x / 3600 == 0 ? "" : x / 3600 + ":").replace("%m%", String.format("%02d", (x % 3600) / 60) + ":").replace("%s%", String.format("%02d", x % 60)));
-                                PlayerUtils.sendActionBar(((CraftPlayer) p).getHandle().playerConnection, actionbar[r]);
+                                PlayerUtils.sendActionBar(p, actionbar[r]);
                             }
                         }
                         x++;

@@ -2,6 +2,7 @@ package speedcubing.All;
 
 
 import net.minecraft.server.v1_8_R3.Packet;
+import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
 import net.minecraft.server.v1_8_R3.PacketPlayOutSpawnEntityLiving;
 import net.minecraft.server.v1_8_R3.PlayerConnection;
 import org.bukkit.GameMode;
@@ -16,6 +17,8 @@ import speedcubing.List.ItemStackList;
 import speedcubing.List.StringList;
 import speedcubing.lib.bukkit.PlayerUtils;
 import speedcubing.lib.bukkit.SideBar;
+import speedcubing.lib.bukkit.entity.Hologram;
+import speedcubing.lib.bukkit.entity.NPC;
 import speedcubing.server.libs.User;
 import speedcubing.server.speedcubingServer;
 
@@ -43,19 +46,20 @@ public class Lobby {
         player.getInventory().setHeldItemSlot(0);
         Lobby.Items(player);
         PlayerConnection connection = ((CraftPlayer) player).getHandle().playerConnection;
-        for (Packet p : EntityList.LobbyNPCPackets) {
-            connection.sendPacket(p);
+        for (NPC npc : EntityList.npcs) {
+            npc.setListenerValues(connection).spawn().rollBackListenerValues();
         }
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                for (Packet p : EntityList.LobbyNPCDelayedPackets) {
-                    connection.sendPacket(p);
+                for (NPC npc : EntityList.npcs) {
+                    connection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, npc.entityPlayer));
                 }
             }
         }, 4000);
-        for (PacketPlayOutSpawnEntityLiving packet : EntityList.spawnpackets) {
-            connection.sendPacket(packet);
+        for (Hologram hologram : EntityList.Lobbys) {
+            hologram.listener.add(connection);
+            hologram.setListenerValues(connection).spawn().rollBackListenerValues();
         }
         String[] sidebar = StringList.LobbySideBar[User.getUser(player.getUniqueId()).lang];
         new SideBar(player, sidebar[5])
@@ -64,7 +68,7 @@ public class Lobby {
                 .staticLine(sidebar[2], 2)
                 .changeableLine(sidebar[1] + "loading...", 1)
                 .staticLine(sidebar[0], 0).create();
-        PlayerUtils.sendActionBar(connection, "");
+        PlayerUtils.sendActionBar(player, "");
         player.setGameMode(GameMode.ADVENTURE);
     }
 

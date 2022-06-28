@@ -2,6 +2,7 @@ package speedcubing;
 
 import net.minecraft.server.v1_8_R3.PacketPlayInUseEntity;
 import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import speedcubing.Core.MLGRush2x1;
 import speedcubing.Core.StickDuel;

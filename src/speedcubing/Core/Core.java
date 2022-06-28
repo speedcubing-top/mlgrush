@@ -1,14 +1,8 @@
 package speedcubing.Core;
 
-import speedcubing.lib.bukkit.inventory.InventoryUtils;
-import speedcubing.server.libs.GlobalString;
-import speedcubing.server.libs.User;
-import net.minecraft.server.v1_8_R3.EntityArmorStand;
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntityMetadata;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -16,6 +10,9 @@ import org.bukkit.inventory.ItemStack;
 import speedcubing.All.Lobby;
 import speedcubing.List.EntityList;
 import speedcubing.List.ItemStackList;
+import speedcubing.lib.bukkit.inventory.InventoryUtils;
+import speedcubing.server.libs.GlobalString;
+import speedcubing.server.libs.User;
 
 import java.util.*;
 
@@ -156,21 +153,11 @@ public class Core {
     public static void QuitAllQueue(UUID uuid) {
         if (MLGRush2x1.Queue != null && MLGRush2x1.Queue.equals(uuid)) {
             MLGRush2x1.Queue = null;
-            EntityArmorStand stand = EntityList.Lobbys[4];
-            stand.setCustomName("§a0/2");
-            PacketPlayOutEntityMetadata packet = new PacketPlayOutEntityMetadata(stand.getId(), stand.getDataWatcher(), true);
-            for (Player p : Bukkit.getWorld("world").getPlayers()) {
-                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
-            }
+            EntityList.Lobbys[4].setName("§a0/2");
         }
         if (speedcubing.Core.StickDuel.Queue != null && speedcubing.Core.StickDuel.Queue.equals(uuid)) {
             speedcubing.Core.StickDuel.Queue = null;
-            EntityArmorStand stand = EntityList.Lobbys[3];
-            stand.setCustomName("§a0/2");
-            PacketPlayOutEntityMetadata packet = new PacketPlayOutEntityMetadata(stand.getId(), stand.getDataWatcher(), true);
-            for (Player p : Bukkit.getWorld("world").getPlayers()) {
-                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
-            }
+            EntityList.Lobbys[3].setName("§a0/2");
         }
     }
 

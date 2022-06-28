@@ -66,7 +66,7 @@ public class PlayerMove implements Listener {
                         player.teleport(e.getFrom());
                     if (to.getY() <= 80) {
                         player.closeInventory();
-                        PlayerUtils.teleport(((CraftPlayer) player).getHandle().playerConnection, 0.5, 100, 0.5, 0, 0);
+                        player.teleport(new Location(player.getWorld(), 0.5, 100, 0.5, 0, 0));
                     }
                     break;
             }
