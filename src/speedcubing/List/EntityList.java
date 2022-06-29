@@ -1,5 +1,8 @@
 package speedcubing.List;
 
+import net.minecraft.server.v1_8_R3.PacketPlayInUseEntity;
+import speedcubing.Core.MLGRush2x1;
+import speedcubing.Core.StickDuel;
 import speedcubing.lib.bukkit.entity.Hologram;
 import speedcubing.lib.bukkit.entity.NPC;
 
@@ -22,10 +25,12 @@ public class EntityList {
 
 
         for (int i = 0; i < npcs.length; i++) {
-            npcs[i] = new NPC("", null, true);
+            npcs[i] = new NPC("", null, true).hideNametag().setAutoSpawn(true);
+            npcs[i].world.add("world");
         }
         for (int i = 0; i < Lobbys.length; i++) {
-            Lobbys[i] = new Hologram("", 0, 0, 0, 0, 0);
+            Lobbys[i] = new Hologram("", 0, 0, 0, 0, 0).setAutoSpawn(true);
+            Lobbys[i].world.add("world");
         }
         Lobbys[0].setLocation(-2.5, 101.85, 19.5, 0, 0);
         Lobbys[1].setLocation(0.5, 101.85, 19.5, 0, 0);
@@ -39,9 +44,18 @@ public class EntityList {
         Lobbys[3].setName("§a0/2");
         Lobbys[4].setName("§a0/2");
         Lobbys[5].setName("§4Maintenance");
-        npcs[0].setSkin(VEPEXtextures, VEPEXsignature);
-        npcs[1].setSkin(TFGTEXTURES, TFGSIGNATURES);
-        npcs[2].setSkin(RNStextures, RNSsignature);
+        npcs[0].setSpawnBodyYaw(180).setSkin(VEPEXtextures, VEPEXsignature).setClickEvent(((player, action) -> {
+            if (player.getItemInHand().getType() == org.bukkit.Material.AIR && action.equals(PacketPlayInUseEntity.EnumEntityUseAction.INTERACT))
+                StickDuel.Queue(player);
+        }));
+        npcs[1].setSpawnBodyYaw(180).setSkin(TFGTEXTURES, TFGSIGNATURES).setClickEvent(((player, action) -> {
+            if (player.getItemInHand().getType() == org.bukkit.Material.AIR && action.equals(PacketPlayInUseEntity.EnumEntityUseAction.INTERACT))
+                MLGRush2x1.queue(player);
+        }));
+        npcs[2].setSpawnBodyYaw(179).setSkin(RNStextures, RNSsignature).setClickEvent(((player, action) -> {
+            if (player.getItemInHand().getType() == org.bukkit.Material.AIR && action.equals(PacketPlayInUseEntity.EnumEntityUseAction.INTERACT))
+                player.sendMessage("§cThis gamemode is under maintenance.");
+        }));
         npcs[0].setLocation(-2.5, 100, 19.5, 128, 0);
         npcs[1].setLocation(0.5, 100, 19.5, 128, 0);
         npcs[2].setLocation(3.5, 100, 19.5, 128, 0);
