@@ -23,17 +23,16 @@ import java.util.*;
 
 public class Lobby {
     public static void Join(Player player, boolean externalMessage) {
-        UUID uuid = player.getUniqueId();
         String name = player.getName();
-        String[] format = speedcubingServer.getFormat(User.getUser(uuid).rank);
-        int lang = User.getUser(uuid).lang;
+        String[] format = speedcubingServer.getFormat(User.getUser(player).rank);
+        int lang = User.getUser(player).lang;
         if (externalMessage)
             player.sendMessage(StringList.LobbyJoinMessage[lang]
                     .replace("%f0%", format[0])
                     .replace("%f1%", format[2])
                     .replace("%name%", name));
         for (Player p : player.getWorld().getPlayers()) {
-            p.sendMessage(StringList.LobbyJoinMessage[User.getUser(p.getUniqueId()).lang]
+            p.sendMessage(StringList.LobbyJoinMessage[User.getUser(p).lang]
                     .replace("%f0%", format[0])
                     .replace("%f1%", format[2])
                     .replace("%name%", name));
@@ -51,7 +50,7 @@ public class Lobby {
                 }
             }
         }, 4000);
-        String[] sidebar = StringList.LobbySideBar[User.getUser(player.getUniqueId()).lang];
+        String[] sidebar = StringList.LobbySideBar[User.getUser(player).lang];
         new SideBar(player, sidebar[5])
                 .staticLine(sidebar[4], 4)
                 .staticLine(sidebar[3], 3)
@@ -63,7 +62,7 @@ public class Lobby {
     }
 
     public static void Items(Player player) {
-        int lang = User.getUser(player.getUniqueId()).lang;
+        int lang = User.getUser(player).lang;
         player.setItemOnCursor(new ItemStack(Material.AIR));
         PlayerInventory inventory = player.getInventory();
         inventory.clear();

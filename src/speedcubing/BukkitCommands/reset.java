@@ -1,23 +1,17 @@
 package speedcubing.BukkitCommands;
 
-import speedcubing.server.libs.User;
-import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import speedcubing.Core.Core;
 import speedcubing.Core.MLGRush2x1;
-import speedcubing.Core.MLGRush4x1;
-import speedcubing.Core.StickDuel;
 import speedcubing.List.StringList;
+import speedcubing.server.libs.User;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class reset implements CommandExecutor, TabCompleter {
 
@@ -25,17 +19,17 @@ public class reset implements CommandExecutor, TabCompleter {
         Player player = (Player) sender;
         if (args.length == 0) {
             if (player.getAllowFlight())
-                player.sendMessage(StringList.MLGRushInvalidWorld[User.getUser(player.getUniqueId()).lang]);
+                player.sendMessage(StringList.MLGRushInvalidWorld[User.getUser(player).lang]);
             else
                 switch (player.getWorld().getName()) {
                     case "MLGRush2x1":
-                        MLGRush2x1.resetBlocks(Core.PlayerRoom.get(player.getUniqueId()));
+                        MLGRush2x1.resetBlocks(Core.PlayerRoom.get(player));
                         break;
                     case "MLGRush4x1":
 //                        MLGRush4x1.resetBlocks(Core.randomToRoom(player.getLocation().getZ()));
                         break;
                     default:
-                        player.sendMessage(StringList.MLGRushInvalidWorld[User.getUser(player.getUniqueId()).lang]);
+                        player.sendMessage(StringList.MLGRushInvalidWorld[User.getUser(player).lang]);
                         break;
                 }
         } else

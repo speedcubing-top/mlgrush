@@ -68,7 +68,7 @@ public class MLGRush4x1 {
         for (UUID id : spec) {
             Player p = Bukkit.getPlayer(id);
             p.setAllowFlight(false);
-            p.sendMessage(StringList.MLGRushGameEnd[User.getUser(id).lang]);
+            p.sendMessage(StringList.MLGRushGameEnd[User.getUser(p).lang]);
             p.teleport(lb);
         }
         Blocks.remove(room);
@@ -163,18 +163,18 @@ public class MLGRush4x1 {
             player.getInventory().clear();
             player.getInventory().setItem(8, ItemStackList.HubSlime[lang]);
             int R = room;
-            String[] format = speedcubingServer.getFormat(User.getUser(uuid).rank);
+            String[] format = speedcubingServer.getFormat(User.getUser(player).rank);
             List<UUID> queue = Queue[room];
             String size = Integer.toString(queue.size());
             Bukkit.getScheduler().runTask(Main.getPlugin(Main.class), () -> player.teleport(new Location(Bukkit.getWorld("MLGRush4x1"), 1000, 100, Core.roomToBed(R), 0, 0)));
-            queue.forEach(id -> Bukkit.getPlayer(id).sendMessage(StringList.MLGRushJoinQueue[User.getUser(id).lang]
+            queue.forEach(id -> Bukkit.getPlayer(id).sendMessage(StringList.MLGRushJoinQueue[User.getUser(Bukkit.getPlayer(id)).lang]
                     .replace("%format0%", format[1])
                     .replace("%name%", player.getName())
                     .replace("%format2%", format[2])
                     .replace("%int0%", size)));
             switch (queue.size()) {
                 case 3:
-                    queue.forEach(id -> Bukkit.getPlayer(id).sendMessage(StringList.MLGRushGameStartCountDown[User.getUser(id).lang]));
+                    queue.forEach(id -> Bukkit.getPlayer(id).sendMessage(StringList.MLGRushGameStartCountDown[User.getUser(Bukkit.getPlayer(id)).lang]));
                     QueueCounter.put(room, new TimerTask() {
                         int c = 20;
 

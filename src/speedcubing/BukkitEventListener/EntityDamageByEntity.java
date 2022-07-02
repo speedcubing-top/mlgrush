@@ -54,7 +54,7 @@ public class EntityDamageByEntity implements Listener {
                             MLGRush2x1.gameStart(damagerUniqueId, victimUniqueId, 0);
                         Lobby.DeleteChallenge(damagerUniqueId);
                         Lobby.DeleteChallenge(victimUniqueId);
-                    } else damager.openInventory(ItemStackList.Challenger[User.getUser(damagerUniqueId).lang]);
+                    } else damager.openInventory(ItemStackList.Challenger[User.getUser(damager).lang]);
                 }
                 break;
             case "MLGRush4x1":
@@ -92,7 +92,7 @@ public class EntityDamageByEntity implements Listener {
                         double x = vector.getX() * horizontalMultiplier;
                         double y = vector.getY() * verticalMultiplier;
                         double z = vector.getZ() * horizontalMultiplier;
-                        User user = User.getUser(uuid);
+                        User user = User.getUser(victim);
                         if (user.velocities != null) {
                             x = x * user.velocities[0];
                             y = y * user.velocities[1];

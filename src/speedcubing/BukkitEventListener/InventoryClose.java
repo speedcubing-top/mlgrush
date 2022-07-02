@@ -20,7 +20,7 @@ public class InventoryClose implements Listener {
             UUID uuid = player.getUniqueId();
             if (Core.iseditingkit.contains(uuid)) {
                 Core.iseditingkit.remove(uuid);
-                player.sendMessage(GlobalString.UnSavedSettings[User.getUser(uuid).lang]);
+                player.sendMessage(GlobalString.UnSavedSettings[User.getUser(player).lang]);
                 Lobby.Items(player);
             }
         }
