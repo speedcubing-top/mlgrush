@@ -23,7 +23,7 @@ public class reset implements CommandExecutor, TabCompleter {
             else
                 switch (player.getWorld().getName()) {
                     case "MLGRush2x1":
-                        MLGRush2x1.resetBlocks(Core.PlayerRoom.get(player));
+                        MLGRush2x1.resetBlocks(Core.PlayerRoom.get(player.getUniqueId()));
                         break;
                     case "MLGRush4x1":
 //                        MLGRush4x1.resetBlocks(Core.randomToRoom(player.getLocation().getZ()));
