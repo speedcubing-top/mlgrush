@@ -5,9 +5,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import speedcubing.Core.Core;
 import speedcubing.Core.MLGRush2x1;
 import speedcubing.List.StringList;
+import speedcubing.Member;
 import speedcubing.server.libs.User;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class reset implements CommandExecutor, TabCompleter {
             else
                 switch (player.getWorld().getName()) {
                     case "MLGRush2x1":
-                        MLGRush2x1.resetBlocks(Core.PlayerRoom.get(player.getUniqueId()));
+                        Member.getMember(player).game.resetBlocks();
                         break;
                     case "MLGRush4x1":
 //                        MLGRush4x1.resetBlocks(Core.randomToRoom(player.getLocation().getZ()));

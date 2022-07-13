@@ -8,9 +8,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import speedcubing.Core.Core;
 import speedcubing.Core.MLGRush2x1;
-import speedcubing.Core.StickDuel;
+import speedcubing.Member;
 
 public class BlockBreak implements Listener {
 
@@ -26,14 +25,14 @@ public class BlockBreak implements Listener {
                     e.setCancelled(true);
                     if (!player.getAllowFlight()) {
                         Block block = e.getBlock();
-                        int room = Core.PlayerRoom.get(player.getUniqueId());
+                        Member member = Member.getMember(player);
                         BlockPosition position = new BlockPosition(block.getX(), block.getY(), block.getZ());
-                        if (MLGRush2x1.Blocks.get(room).contains(position)) {
+                        if (member.game.Blocks.contains(position)) {
                             MLGRush2x1.Diff.remove(position);
-                            MLGRush2x1.Blocks.get(room).remove(position);
+                            member.game.Blocks.remove(position);
                             block.setType(Material.AIR);
                         } else if (block.getType().equals(Material.BED_BLOCK))
-                            MLGRush2x1.breakBed(player, block.getX());
+                            ((MLGRush2x1) member.game).breakBed(player, block.getX());
                     }
                 }
                 break;
@@ -56,10 +55,10 @@ public class BlockBreak implements Listener {
                 if (player.getGameMode() == GameMode.SURVIVAL) {
                     e.setCancelled(true);
                     Block block = e.getBlock();
-                    int room = Core.PlayerRoom.get(player.getUniqueId());
+                    Member member = Member.getMember(player);
                     BlockPosition pos = new BlockPosition(block.getX(), block.getY(), block.getZ());
-                    if (StickDuel.Blocks.get(room).contains(pos)) {
-                        StickDuel.Blocks.get(room).remove(pos);
+                    if (member.game.Blocks.contains(pos)) {
+                        member.game.Blocks.remove(pos);
                         block.setType(Material.AIR);
                     }
                 }

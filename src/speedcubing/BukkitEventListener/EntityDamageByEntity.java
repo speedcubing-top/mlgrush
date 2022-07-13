@@ -1,8 +1,6 @@
 package speedcubing.BukkitEventListener;
 
 
-import speedcubing.server.libs.User;
-import speedcubing.server.speedcubingServer;
 import net.minecraft.server.v1_8_R3.PacketPlayOutEntityVelocity;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -17,17 +15,13 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerVelocityEvent;
 import org.bukkit.util.Vector;
 import speedcubing.All.Lobby;
-import speedcubing.Core.Core;
 import speedcubing.Core.MLGRush2x1;
 import speedcubing.Core.StickDuel;
 import speedcubing.List.ItemStackList;
-
-import java.util.*;
+import speedcubing.Member;
+import speedcubing.server.libs.User;
 
 public class EntityDamageByEntity implements Listener {
-
-    public static Map<UUID, UUID> LastDamage = new HashMap<>();
-    public static Set<UUID> oldKb = new HashSet<>();
 
     @EventHandler
     public void EntityDamageByEntityEvent(EntityDamageByEntityEvent e) {
@@ -37,21 +31,21 @@ public class EntityDamageByEntity implements Listener {
             return;
         Player damager = (Player) e.getDamager();
         Player victim = (Player) e.getEntity();
-        if ((damager.getGameMode()== GameMode.SURVIVAL || damager.getGameMode() == GameMode.ADVENTURE) && damager.getAllowFlight()) {
+        if ((damager.getGameMode() == GameMode.SURVIVAL || damager.getGameMode() == GameMode.ADVENTURE) && damager.getAllowFlight()) {
             e.setCancelled(true);
             return;
         }
         switch (victim.getWorld().getName()) {
             case "world":
                 if (damager.getItemInHand().getType() == Material.GOLD_SWORD) {
-                    UUID victimUniqueId = victim.getUniqueId();
-                    UUID damagerUniqueId = damager.getUniqueId();
-                    LastDamage.put(damagerUniqueId, victimUniqueId);
-                    if (Core.Challenge.containsKey(damagerUniqueId) && Core.Challenge.get(damagerUniqueId).contains(victimUniqueId)) {
-                        if (Core.StickDuel.containsKey(damagerUniqueId) && Core.StickDuel.get(damagerUniqueId).equals(victimUniqueId))
-                            StickDuel.gameStart(damagerUniqueId, victimUniqueId, 0);
+                    Member victimUniqueId = Member.getMember(victim);
+                    Member damagerUniqueId = Member.getMember(damager);
+                    damagerUniqueId.LastDamage = victimUniqueId;
+                    if (damagerUniqueId.Challenge.contains(victimUniqueId)) {
+                        if (damagerUniqueId.StickDuel != null && damagerUniqueId.StickDuel.equals(victimUniqueId))
+                            new StickDuel(damagerUniqueId, victimUniqueId, 0);
                         else
-                            MLGRush2x1.gameStart(damagerUniqueId, victimUniqueId, 0);
+                            new MLGRush2x1(damagerUniqueId, victimUniqueId, 0);
                         Lobby.DeleteChallenge(damagerUniqueId);
                         Lobby.DeleteChallenge(victimUniqueId);
                     } else damager.openInventory(ItemStackList.Challenger[User.getUser(damager).lang]);
@@ -63,8 +57,8 @@ public class EntityDamageByEntity implements Listener {
                 break;
             case "MLGRush2x1": {
                 if (!damager.getAllowFlight()) {
-                    UUID uuid = victim.getUniqueId();
-                    if (victim.getMaximumNoDamageTicks() != 0 && oldKb.contains(uuid) && victim.getNoDamageTicks() <= victim.getMaximumNoDamageTicks() / 2) {
+                    Member member = Member.getMember(victim);
+                    if (victim.getMaximumNoDamageTicks() != 0 && member.oldKb && victim.getNoDamageTicks() <= victim.getMaximumNoDamageTicks() / 2) {
                         double xDiff = damager.getLocation().getX() - victim.getLocation().getX();
                         double zDiff = damager.getLocation().getZ() - victim.getLocation().getZ();
                         float horizontalDistance = (float) Math.sqrt(xDiff * xDiff + zDiff * zDiff);
@@ -100,16 +94,14 @@ public class EntityDamageByEntity implements Listener {
                         }
                         (((CraftPlayer) victim).getHandle()).playerConnection.sendPacket(new PacketPlayOutEntityVelocity(victim.getEntityId(), x, y, z));
                     }
-                    int room = Core.PlayerRoom.get(uuid);
-                    MLGRush2x1.Kill.get(room)[MLGRush2x1.Players.get(room)[0].equals(uuid) ? 0 : 1] = time;
+                    ((MLGRush2x1) member.game).Kill[((MLGRush2x1) member.game).Players[0].equals(member) ? 0 : 1] = time;
                 }
             }
             break;
             case "StickDuel":
-                if (!damager.getAllowFlight()) {
-                    int room = Core.PlayerRoom.get(victim.getUniqueId());
-                    StickDuel.Kill.get(room)[StickDuel.Players.get(room)[0].equals(victim.getUniqueId()) ? 0 : 1] = time;
-                }
+                Member member = Member.getMember(victim);
+                if (!damager.getAllowFlight())
+                    ((StickDuel) member.game).Kill[((StickDuel) member.game).Players[0].equals(member) ? 0 : 1] = time;
                 break;
         }
 
@@ -119,7 +111,7 @@ public class EntityDamageByEntity implements Listener {
     public void dwdw(PlayerVelocityEvent e) {
         Player player = e.getPlayer();
         EntityDamageEvent lastDamageCause = player.getLastDamageCause();
-        if (lastDamageCause instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) lastDamageCause).getDamager() instanceof Player && player.getMaximumNoDamageTicks() != 0 && oldKb.contains(player.getUniqueId()))
+        if (lastDamageCause instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) lastDamageCause).getDamager() instanceof Player && player.getMaximumNoDamageTicks() != 0 && Member.getMember(player).oldKb)
             e.setCancelled(true);
     }
 }

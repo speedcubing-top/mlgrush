@@ -9,10 +9,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import speedcubing.Core.Core;
 import speedcubing.Core.MLGRush2x1;
-import speedcubing.Core.MLGRush4x1;
-import speedcubing.Core.StickDuel;
 import speedcubing.List.ItemStackList;
-import speedcubing.server.libs.User;
+import speedcubing.Member;
 
 import java.util.UUID;
 
@@ -35,17 +33,16 @@ public class BlockPlace implements Listener {
                     if (y > 112 || y < 85 || Math.abs(z - Core.randomToBed(z)) > 30 || Math.abs(x) > 50)
                         e.setCancelled(true);
                     else {
-                        int room = Core.PlayerRoom.get(uuid);
-                        BlockPosition position = new BlockPosition(x, y, z);
-                        MLGRush2x1.Blocks.get(room).add(position);
-                        Core.PlacedBlocks.put(uuid, Core.PlacedBlocks.get(uuid) + 1);
-                        if (Core.PlacedBlocks.get(uuid) > 32) {
-                            Core.PlacedBlocks.put(uuid, 0);
-                            Integer[] i = Core.integerCache.get(uuid);
-                            player.getInventory().setItem(i[1], ItemStackList.Blocks[i[4]][User.getUser(player).lang]);
+                        Member member = Member.getMember(player);
+                        member.game.Blocks.add(new BlockPosition(x, y, z));
+                        member.PlacedBlocks += 1;
+                        if (member.PlacedBlocks > 32) {
+                            member.PlacedBlocks = 0;
+                            int[] i = member.integerCache;
+                            player.getInventory().setItem(i[1], ItemStackList.Blocks[i[4]][member.lang]);
                         }
-                        if (MLGRush2x1.Preference.get(room)[3]) {
-                            MLGRush2x1.Diff.put(position, 0);
+                        if (((MLGRush2x1) member.game).Preference[3]) {
+                            MLGRush2x1.Diff.put(new BlockPosition(x, y, z), 0);
                             MLGRush2x1.id++;
                         }
                     }
@@ -54,12 +51,13 @@ public class BlockPlace implements Listener {
                     if (y > 112 || y < 85 || Math.abs(z - Core.randomToBed(z)) > 30 || Math.abs(x) > 50)
                         e.setCancelled(true);
                     else {
-                        StickDuel.Blocks.get(Core.PlayerRoom.get(uuid)).add(new BlockPosition(block.getX(), block.getY(), z));
-                        Core.PlacedBlocks.put(uuid, Core.PlacedBlocks.get(uuid) + 1);
-                        if (Core.PlacedBlocks.get(uuid) > 32) {
-                            Core.PlacedBlocks.put(uuid, 0);
-                            Integer[] i = Core.integerCache.get(uuid);
-                            player.getInventory().setItem(i[1], ItemStackList.Blocks[i[4]][User.getUser(player).lang]);
+                        Member member = Member.getMember(player);
+                        member.game.Blocks.add(new BlockPosition(x, y, z));
+                        member.PlacedBlocks += 1;
+                        if (member.PlacedBlocks > 32) {
+                            member.PlacedBlocks = 0;
+                            int[] i = member.integerCache;
+                            player.getInventory().setItem(i[1], ItemStackList.Blocks[i[4]][member.lang]);
                         }
                     }
                     break;
@@ -67,12 +65,12 @@ public class BlockPlace implements Listener {
                     if (y > 112 || y < 85 || Math.abs(z - Core.randomToBed(z)) > 50 || Math.abs(x) > 50)
                         e.setCancelled(true);
                     else {
-                        Core.PlacedBlocks.put(uuid, Core.PlacedBlocks.get(uuid) + 1);
-                        MLGRush4x1.Blocks.get(Core.PlayerRoom.get(uuid)).add(new BlockPosition(block.getX(), y, z));
-                        if (Core.PlacedBlocks.get(uuid) > 48) {
-                            Core.PlacedBlocks.put(uuid, 0);
-                            player.getInventory().setItem(Core.integerCache.get(uuid)[1], ItemStackList.Blocks[Core.integerCache.get(uuid)[4]][User.getUser(player).lang]);
-                        }
+//                        Core.PlacedBlocks.put(uuid, Core.PlacedBlocks.get(uuid) + 1);
+//                        MLGRush4x1.Blocks.get(Core.PlayerRoom.get(uuid)).add(new BlockPosition(block.getX(), y, z));
+//                        if (Core.PlacedBlocks.get(uuid) > 48) {
+//                            Core.PlacedBlocks.put(uuid, 0);
+//                            player.getInventory().setItem(Core.integerCache.get(uuid)[1], ItemStackList.Blocks[Core.integerCache.get(uuid)[4]][User.getUser(player).lang]);
+//                        }
                     }
                     break;
             }

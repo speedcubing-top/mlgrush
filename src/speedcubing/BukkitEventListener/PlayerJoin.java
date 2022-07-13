@@ -1,25 +1,16 @@
 package speedcubing.BukkitEventListener;
 
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import speedcubing.All.Lobby;
-import speedcubing.Core.Core;
-import speedcubing.lib.utils.SQL.SQLUtils;
-import speedcubing.server.speedcubingServer;
-
-import java.util.UUID;
+import speedcubing.Member;
 
 public class PlayerJoin implements Listener {
 
     @EventHandler
     public void PlayerJoinEvent(PlayerJoinEvent e) {
-        Player player = e.getPlayer();
-        UUID uuid = player.getUniqueId();
-        Lobby.Join(player, true);
-        new Thread(() -> Core.integerCache.put(uuid, SQLUtils.getIntArray(speedcubingServer.connection.select("playersdata", "mlgrush_stick,mlgrush_block,mlgrush_pickaxe,mlgrush_stickskin,mlgrush_blockskin,mlgrush_autoreset,mlgrush_hitdelay,mlgrush_falldamage,mlgrush_autoremove,mlgrush_oldkb", "uuid='" + uuid + "'")))).start();
-    }
+        new Member(e.getPlayer());
+     }
 }
 
 

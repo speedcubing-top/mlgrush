@@ -5,8 +5,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
-import speedcubing.Core.Core;
 import speedcubing.Core.MLGRush2x1;
+import speedcubing.Member;
 
 public class EntityDamage implements Listener {
     @EventHandler
@@ -20,7 +20,7 @@ public class EntityDamage implements Listener {
             switch (entity.getWorld().getName()) {
                 case "MLGRush2x1":
                     EntityDamageEvent.DamageCause cause = e.getCause();
-                    if (cause == EntityDamageEvent.DamageCause.FALL && !MLGRush2x1.Preference.get(Core.PlayerRoom.get(entity.getUniqueId()))[2])
+                    if (cause == EntityDamageEvent.DamageCause.FALL && !((MLGRush2x1) Member.getMember((Player) entity).game).Preference[2])
                         e.setCancelled(true);
                     else if (cause == EntityDamageEvent.DamageCause.SUFFOCATION)
                         e.setCancelled(true);

@@ -9,7 +9,6 @@ import speedcubing.BukkitCommands.reset;
 import speedcubing.BukkitEventListener.*;
 import speedcubing.Core.BlockEditor;
 import speedcubing.Core.MLGRush2x1;
-import speedcubing.Core.MLGRush4x1;
 import speedcubing.Core.StickDuel;
 import speedcubing.List.EntityList;
 import speedcubing.List.ItemStackList;
@@ -51,9 +50,8 @@ public class Main extends JavaPlugin implements CommandExecutor {
         Bukkit.getPluginCommand("reset").setTabCompleter(new reset());
         new ItemStackList().Load();
         new EntityList().Load();
-        new MLGRush2x1().Load();
-        new MLGRush4x1().Load();
-        new StickDuel().Load();
+        MLGRush2x1.Load();
+        StickDuel.Load();
         new BlockEditor().Load();
         LibEventManager.registerListeners(new ServerEvent());
         new Timer().schedule(new TimerTask() {

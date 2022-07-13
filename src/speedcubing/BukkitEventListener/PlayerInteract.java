@@ -1,6 +1,5 @@
 package speedcubing.BukkitEventListener;
 
-import speedcubing.server.libs.User;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -11,14 +10,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import speedcubing.Core.Core;
 import speedcubing.Core.MLGRush2x1;
 import speedcubing.Core.StickDuel;
 import speedcubing.List.ItemStackList;
 import speedcubing.List.StringList;
+import speedcubing.Member;
+import speedcubing.server.libs.User;
 import speedcubing.server.speedcubingServer;
-
-import java.util.UUID;
 
 public class PlayerInteract implements Listener {
 
@@ -55,35 +53,33 @@ public class PlayerInteract implements Listener {
                     switch (player.getWorld().getName()) {
                         case "MLGRush2x1": {
                             player.teleport(new Location(Bukkit.getWorld("world"), 0.5, 100, 0.5, 0, 0));
-                            UUID uuid = player.getUniqueId();
+                            Member member = Member.getMember(player);
                             player.setAllowFlight(false);
-                            int room = Core.Spectate.get(uuid);
-                            MLGRush2x1.Spectators.get(room).remove(uuid);
-                            Core.Spectate.remove(uuid);
+                            member.game.Spectators.remove(member);
+                            member.Spectate = -1;
                             String str = speedcubingServer.getFormat(User.getUser(player).rank)[1] + player.getName();
-                            for (UUID id : MLGRush2x1.Spectators.get(room)) {
-                                Bukkit.getPlayer(id).sendMessage(StringList.LeaveSpectate[User.getUser(Bukkit.getPlayer(id)).lang].replace("%player%", str));
+                            for (Member m : member.game.Spectators) {
+                                m.player.sendMessage(StringList.LeaveSpectate[m.lang].replace("%player%", str));
                             }
-                            for (UUID id : MLGRush2x1.Players.get(room)) {
-                                Bukkit.getPlayer(id).sendMessage(StringList.LeaveSpectate[User.getUser(Bukkit.getPlayer(id)).lang].replace("%player%", str));
-                                Bukkit.getPlayer(id).showPlayer(player);
+                            for (Member m : ((MLGRush2x1) member.game).Players) {
+                                m.player.sendMessage(StringList.LeaveSpectate[m.lang].replace("%player%", str));
+                                m.player.showPlayer(player);
                             }
                         }
                         break;
                         case "StickDuel": {
                             player.teleport(new Location(Bukkit.getWorld("world"), 0.5, 100, 0.5, 0, 0));
-                            UUID uuid = player.getUniqueId();
                             player.setAllowFlight(false);
-                            int room = Core.Spectate.get(uuid);
-                            StickDuel.Spectators.get(room).remove(uuid);
-                            Core.Spectate.remove(uuid);
+                            Member member = Member.getMember(player);
+                            member.game.Spectators.remove(member);
+                            member.Spectate = -1;
                             String str = speedcubingServer.getFormat(User.getUser(player).rank)[1] + player.getName();
-                            for (UUID id : StickDuel.Spectators.get(room)) {
-                                Bukkit.getPlayer(id).sendMessage(StringList.LeaveSpectate[User.getUser(Bukkit.getPlayer(id)).lang].replace("%player%", str));
+                            for (Member m : member.game.Spectators) {
+                                m.player.sendMessage(StringList.LeaveSpectate[m.lang].replace("%player%", str));
                             }
-                            for (UUID id : StickDuel.Players.get(room)) {
-                                Bukkit.getPlayer(id).sendMessage(StringList.LeaveSpectate[User.getUser(Bukkit.getPlayer(id)).lang].replace("%player%", str));
-                                Bukkit.getPlayer(id).showPlayer(player);
+                            for (Member m : ((StickDuel) member.game).Players) {
+                                m.player.sendMessage(StringList.LeaveSpectate[m.lang].replace("%player%", str));
+                                m.player.showPlayer(player);
                             }
                         }
                         break;

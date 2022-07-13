@@ -1,10 +1,7 @@
 package speedcubing.BukkitEventListener;
 
-import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,15 +12,12 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import speedcubing.Core.BlockEditor;
 import speedcubing.Core.Core;
-import speedcubing.Core.MLGRush2x1;
-import speedcubing.Core.StickDuel;
 import speedcubing.List.ItemStackList;
 import speedcubing.List.StringList;
+import speedcubing.Member;
 import speedcubing.server.libs.User;
 import speedcubing.server.speedcubingServer;
 
-import java.util.HashSet;
-import java.util.Map;
 import java.util.UUID;
 
 public class InventoryClick implements Listener {
@@ -62,35 +56,35 @@ public class InventoryClick implements Listener {
             } else if (holder == Core.StickSkinHolder) {
                 Core.saveStickEditor(player, RawSlot);
             } else if (holder == Core.specHolder) { // Spectate
-                e.setCancelled(true);
-                for (Map.Entry<Integer, Integer> entry : Core.specMenu2x1.entrySet()) {
-                    if (entry.getValue() == RawSlot) {
-                        int room = entry.getKey();
-                        PacketPlayOutPlayerInfo add = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, ((CraftPlayer) player).getHandle());
-                        for (UUID id : MLGRush2x1.Players.get(room)) {
-                            Player p = Bukkit.getPlayer(id);
-                            p.hidePlayer(player);
-                            ((CraftPlayer) p).getHandle().playerConnection.sendPacket(add);
-                        }
-                        MLGRush2x1.joinSpec(player, room);
-                        player.closeInventory();
-                        return;
-                    }
-                }
-                for (Map.Entry<Integer, Integer> entry : Core.specMenustick.entrySet()) {
-                    if (entry.getValue() == RawSlot) {
-                        int room = entry.getKey();
-                        PacketPlayOutPlayerInfo add = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, ((CraftPlayer) player).getHandle());
-                        for (UUID id : StickDuel.Players.get(room)) {
-                            Player p = Bukkit.getPlayer(id);
-                            p.hidePlayer(player);
-                            ((CraftPlayer) p).getHandle().playerConnection.sendPacket(add);
-                        }
-                        StickDuel.JoinSpec(player, room);
-                        player.closeInventory();
-                        return;
-                    }
-                }
+//                e.setCancelled(true);
+//                for (Map.Entry<Integer, Integer> entry : Core.specMenu2x1.entrySet()) {
+//                    if (entry.getValue() == RawSlot) {
+//                        int room = entry.getKey();
+//                        PacketPlayOutPlayerInfo add = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, ((CraftPlayer) player).getHandle());
+//                        for (UUID id : MLGRush2x1.Players.get(room)) {
+//                            Player p = Bukkit.getPlayer(id);
+//                            p.hidePlayer(player);
+//                            ((CraftPlayer) p).getHandle().playerConnection.sendPacket(add);
+//                        }
+//                        MLGRush2x1.joinSpec(player, room);
+//                        player.closeInventory();
+//                        return;
+//                    }
+//                }
+//                for (Map.Entry<Integer, Integer> entry : Core.specMenustick.entrySet()) {
+//                    if (entry.getValue() == RawSlot) {
+//                        int room = entry.getKey();
+//                        PacketPlayOutPlayerInfo add = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, ((CraftPlayer) player).getHandle());
+//                        for (UUID id : StickDuel.Players.get(room)) {
+//                            Player p = Bukkit.getPlayer(id);
+//                            p.hidePlayer(player);
+//                            ((CraftPlayer) p).getHandle().playerConnection.sendPacket(add);
+//                        }
+//                        StickDuel.JoinSpec(player, room);
+//                        player.closeInventory();
+//                        return;
+//                    }
+//                }
                 if (Core.specMenu4x1.containsValue(RawSlot))
                     player.closeInventory();
             } else if (holder == Core.GadgetsHolder) { // Gadgets
@@ -110,37 +104,37 @@ public class InventoryClick implements Listener {
                 switch (RawSlot) {
                     case 20: {
                         player.playSound(player.getLocation(), Sound.CLICK, 1F, 1F);
-                        int b = Core.integerCache.get(uuid)[9];
+                        int b = Member.getMember(player).integerCache[9];
                         e.getClickedInventory().setItem(20, ItemStackList.preferButton[b][User.getUser(player).lang]);
-                        Core.integerCache.get(uuid)[9] = 1 - b;
+                        Member.getMember(player).integerCache[9] = 1 - b;
                     }
                     break;
                     case 21: {
                         player.playSound(player.getLocation(), Sound.CLICK, 1F, 1F);
-                        int b = Core.integerCache.get(uuid)[5];
+                        int b = Member.getMember(player).integerCache[5];
                         e.getClickedInventory().setItem(21, ItemStackList.preferButton[b][User.getUser(player).lang]);
-                        Core.integerCache.get(uuid)[5] = 1 - b;
+                        Member.getMember(player).integerCache[5] = 1 - b;
                     }
                     break;
                     case 22: {
                         player.playSound(player.getLocation(), Sound.CLICK, 1F, 1F);
-                        int b = Core.integerCache.get(uuid)[6];
+                        int b = Member.getMember(player).integerCache[6];
                         e.getClickedInventory().setItem(22, ItemStackList.preferButton[b][User.getUser(player).lang]);
-                        Core.integerCache.get(uuid)[6] = 1 - b;
+                        Member.getMember(player).integerCache[6] = 1 - b;
                     }
                     break;
                     case 23: {
                         player.playSound(player.getLocation(), Sound.CLICK, 1F, 1F);
-                        int b = Core.integerCache.get(uuid)[7];
+                        int b = Member.getMember(player).integerCache[7];
                         e.getClickedInventory().setItem(23, ItemStackList.preferButton[b][User.getUser(player).lang]);
-                        Core.integerCache.get(uuid)[7] = 1 - b;
+                        Member.getMember(player).integerCache[7] = 1 - b;
                     }
                     break;
                     case 24: {
                         player.playSound(player.getLocation(), Sound.CLICK, 1F, 1F);
-                        int b = Core.integerCache.get(uuid)[8];
+                        int b = Member.getMember(player).integerCache[8];
                         e.getClickedInventory().setItem(24, ItemStackList.preferButton[b][User.getUser(player).lang]);
-                        Core.integerCache.get(uuid)[8] = 1 - b;
+                        Member.getMember(player).integerCache[8] = 1 - b;
                     }
                     break;
                 }
@@ -158,9 +152,9 @@ public class InventoryClick implements Listener {
                 }
             } else if (holder == Core.ChallengerHolder) { // Challenge
                 e.setCancelled(true);
-                UUID lastdamager = EntityDamageByEntity.LastDamage.get(player.getUniqueId());
-                Player lastdamage = Bukkit.getPlayer(lastdamager);
-                if (lastdamage == null) {
+                Member member = Member.getMember(player);
+                Member lastdamager = member.LastDamage;
+                if (lastdamager.player == null) {
                     player.closeInventory();
                     return;
                 }
@@ -168,39 +162,35 @@ public class InventoryClick implements Listener {
                 switch (RawSlot) {
                     case 11:
                         player.closeInventory();
-                        if (!Core.Challenge.containsKey(lastdamager))
-                            Core.Challenge.put(lastdamager, new HashSet<>());
-                        if (Core.Challenge.containsKey(lastdamager) && Core.Challenge.get(lastdamager).contains(uuid)) {
-                            if (Core.StickDuel.containsKey(lastdamager) && Core.StickDuel.get(lastdamager).equals(uuid)) {
-                                Core.Challenge.get(lastdamager).add(uuid);
-                                Core.StickDuel.remove(lastdamager);
-                                player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", speedcubingServer.getFormat(User.getUser(lastdamage).rank)[1] + lastdamage.getName()).replace("%gametype%", "§bMLGRush 2x1"));
-                                lastdamage.sendMessage(StringList.ChallengeFrom[User.getUser(lastdamage).lang].replace("%player%", speedcubingServer.getFormat(User.getUser(player).rank)[1] + player.getName()).replace("%gametype%", "§bMLGRush 2x1"));
+                        if (lastdamager.Challenge.contains(member)) {
+                            if (lastdamager.LastDamage != null && lastdamager.LastDamage.equals(member)) {
+                                lastdamager.Challenge.add(member);
+                                lastdamager.StickDuel = null;
+                                player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", speedcubingServer.getFormat(lastdamager.rank)[1] + lastdamager.player.getName()).replace("%gametype%", "§bMLGRush 2x1"));
+                                lastdamager.player.sendMessage(StringList.ChallengeFrom[lastdamager.lang].replace("%player%", speedcubingServer.getFormat(User.getUser(player).rank)[1] + player.getName()).replace("%gametype%", "§bMLGRush 2x1"));
                             } else
-                                player.sendMessage(StringList.AlreadyChallenged[lang].replace("%player%", speedcubingServer.getFormat(User.getUser(lastdamage).rank)[1] + lastdamage.getName()).replace("%gametype%", "§bMLGRush 2x1"));
+                                player.sendMessage(StringList.AlreadyChallenged[lang].replace("%player%", speedcubingServer.getFormat(lastdamager.rank)[1] + lastdamager.player.getName()).replace("%gametype%", "§bMLGRush 2x1"));
                         } else {
-                            Core.Challenge.get(lastdamager).add(uuid);
-                            player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", speedcubingServer.getFormat(User.getUser(lastdamage).rank)[1] + lastdamage.getName()).replace("%gametype%", "§bMLGRush 2x1"));
-                            lastdamage.sendMessage(StringList.ChallengeFrom[User.getUser(lastdamage).lang].replace("%player%", speedcubingServer.getFormat(User.getUser(player).rank)[1] + player.getName()).replace("%gametype%", "§bMLGRush 2x1"));
+                            lastdamager.Challenge.add(member);
+                            player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", speedcubingServer.getFormat(lastdamager.rank)[1] + lastdamager.player.getName()).replace("%gametype%", "§bMLGRush 2x1"));
+                            lastdamager.player.sendMessage(StringList.ChallengeFrom[lastdamager.lang].replace("%player%", speedcubingServer.getFormat(User.getUser(player).rank)[1] + player.getName()).replace("%gametype%", "§bMLGRush 2x1"));
                         }
                         break;
                     case 15:
                         player.closeInventory();
-                        if (!Core.Challenge.containsKey(lastdamager))
-                            Core.Challenge.put(lastdamager, new HashSet<>());
-                        if (Core.Challenge.containsKey(lastdamager) && Core.Challenge.get(lastdamager).contains(uuid)) {
-                            if (!(Core.StickDuel.containsKey(lastdamager) && Core.StickDuel.get(lastdamager).equals(uuid))) {
-                                Core.Challenge.get(lastdamager).add(uuid);
-                                Core.StickDuel.put(lastdamager, uuid);
-                                player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", speedcubingServer.getFormat(User.getUser(lastdamage).rank)[1] + lastdamage.getName()).replace("%gametype%", "§bStickDuel"));
-                                lastdamage.sendMessage(StringList.ChallengeFrom[User.getUser(lastdamage).lang].replace("%player%", speedcubingServer.getFormat(User.getUser(player).rank)[1] + player.getName()).replace("%gametype%", "§bStickDuel"));
+                        if (lastdamager.Challenge.contains(member)) {
+                            if (lastdamager.LastDamage.equals(member)) {
+                                lastdamager.Challenge.add(member);
+                                lastdamager.StickDuel = member;
+                                player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", speedcubingServer.getFormat(lastdamager.rank)[1] + lastdamager.player.getName()).replace("%gametype%", "§bStickDuel"));
+                                lastdamager.player.sendMessage(StringList.ChallengeFrom[lastdamager.lang].replace("%player%", speedcubingServer.getFormat(User.getUser(player).rank)[1] + player.getName()).replace("%gametype%", "§bStickDuel"));
                             } else
-                                player.sendMessage(StringList.AlreadyChallenged[lang].replace("%player%", speedcubingServer.getFormat(User.getUser(lastdamage).rank)[1] + lastdamage.getName()).replace("%gametype%", "§bStickDuel"));
+                                player.sendMessage(StringList.AlreadyChallenged[lang].replace("%player%", speedcubingServer.getFormat(lastdamager.rank)[1] + lastdamager.player.getName()).replace("%gametype%", "§bStickDuel"));
                         } else {
-                            Core.Challenge.get(lastdamager).add(uuid);
-                            Core.StickDuel.put(lastdamager, uuid);
-                            player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", speedcubingServer.getFormat(User.getUser(lastdamage).rank)[1] + lastdamage.getName()).replace("%gametype%", "§bStickDuel"));
-                            lastdamage.sendMessage(StringList.ChallengeFrom[User.getUser(lastdamage).lang].replace("%player%", speedcubingServer.getFormat(User.getUser(player).rank)[1] + player.getName()).replace("%gametype%", "§bStickDuel"));
+                            lastdamager.Challenge.add(member);
+                            lastdamager.StickDuel = member;
+                            player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", speedcubingServer.getFormat(lastdamager.rank)[1] + lastdamager.player.getName()).replace("%gametype%", "§bStickDuel"));
+                            lastdamager.player.sendMessage(StringList.ChallengeFrom[lastdamager.lang].replace("%player%", speedcubingServer.getFormat(User.getUser(player).rank)[1] + player.getName()).replace("%gametype%", "§bStickDuel"));
                         }
                         break;
                 }

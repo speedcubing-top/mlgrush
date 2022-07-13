@@ -5,21 +5,18 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import speedcubing.All.Lobby;
-import speedcubing.Core.Core;
-import speedcubing.Core.MLGRush2x1;
-import speedcubing.Core.StickDuel;
-
-import java.util.UUID;
+import speedcubing.Member;
 
 public class PlayerChangedWorld implements Listener {
     @EventHandler
     public void PlayerChangedWorldEvent(PlayerChangedWorldEvent e) {
         Player player = e.getPlayer();
-        UUID uuid = player.getUniqueId();
+        Member member = Member.getMember(player);
         switch (e.getFrom().getName()) {
             case "MLGRush2x1":
-                if (Core.PlayerRoom.containsKey(uuid))
-                    MLGRush2x1.gameEnd(uuid);
+            case "StickDuel":
+                if (member.inGame)
+                    member.game.gameEnd(member);
                 Lobby.Join(player, false);
                 break;
             case "MLGRush4x1":
@@ -60,11 +57,6 @@ public class PlayerChangedWorld implements Listener {
 //                        }
 //                    }
 //                }
-                break;
-            case "StickDuel":
-                if (Core.PlayerRoom.containsKey(uuid)) {
-                    StickDuel.GameEnd(uuid);
-                }
                 break;
         }
     }

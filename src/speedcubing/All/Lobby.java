@@ -9,17 +9,18 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import speedcubing.Core.Core;
 import speedcubing.List.EntityList;
 import speedcubing.List.ItemStackList;
 import speedcubing.List.StringList;
+import speedcubing.Member;
 import speedcubing.lib.bukkit.PlayerUtils;
 import speedcubing.lib.bukkit.SideBar;
 import speedcubing.lib.bukkit.entity.NPC;
 import speedcubing.server.libs.User;
 import speedcubing.server.speedcubingServer;
 
-import java.util.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Lobby {
     public static void Join(Player player, boolean externalMessage) {
@@ -73,16 +74,15 @@ public class Lobby {
         player.updateInventory();
     }
 
-    public static void DeleteChallenge(UUID id) {
-        Core.Challenge.remove(id);
-        Core.StickDuel.remove(id);
-        for (Map.Entry<UUID, Set<UUID>> entry : Core.Challenge.entrySet()) {
-            Core.Challenge.get(entry.getKey()).remove(id);
+    public static void DeleteChallenge(Member member) {
+        member.Challenge.clear();
+        member.StickDuel = null;
+        for (Member m : Member.users.values()) {
+            m.Challenge.remove(member);
         }
-        for (Map.Entry<UUID, UUID> entry : Core.StickDuel.entrySet()) {
-            UUID key = entry.getKey();
-            if (Core.StickDuel.get(key).equals(id))
-                Core.StickDuel.remove(key);
+        for (Member m : Member.users.values()) {
+            if (m.StickDuel != null && m.StickDuel.equals(member))
+                m.StickDuel = null;
         }
     }
 }

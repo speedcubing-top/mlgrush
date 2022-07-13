@@ -7,6 +7,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import speedcubing.All.Lobby;
 import speedcubing.Core.Core;
 import speedcubing.Core.MLGRush2x1;
+import speedcubing.Member;
 import speedcubing.server.speedcubingServer;
 
 import java.util.UUID;
@@ -16,16 +17,16 @@ public class PlayerQuit implements Listener {
     @EventHandler
     public void PlayerQuitEvent(PlayerQuitEvent e) {
         Player player = e.getPlayer();
-        UUID uuid = player.getUniqueId();
+        Member member = Member.getMember(player);
         if (player.getWorld().getName().equals("MLGRush2x1"))
-            MLGRush2x1.gameEnd(uuid);
+            member.game.gameEnd(member);
         else {
-            Core.QuitAllQueue(uuid);
-            Lobby.DeleteChallenge(uuid);
-            Core.iseditingkit.remove(uuid);
+            member.QuitAllQueue();
+            Lobby.DeleteChallenge(member);
+            member.iseditingkit = false;
         }
         new Thread(() -> {
-            Integer[] x = Core.integerCache.get(uuid);
+            int[] x = member.integerCache;
             speedcubingServer.connection.update("playersdata",
                     "mlgrush_stick=" + x[0] +
                             ",mlgrush_block=" + x[1] +
@@ -37,9 +38,7 @@ public class PlayerQuit implements Listener {
                             ",mlgrush_falldamage=" + x[7] +
                             ",mlgrush_autoremove=" + x[8] +
                             ",mlgrush_oldkb=" + x[9]
-                    , "uuid='" + uuid + "'");
-            Core.integerCache.remove(uuid);
+                    , "uuid='" + player.getUniqueId() + "'");
         }).start();
-        EntityDamageByEntity.LastDamage.remove(uuid);
     }
 }

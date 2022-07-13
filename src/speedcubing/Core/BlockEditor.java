@@ -1,5 +1,6 @@
 package speedcubing.Core;
 
+import speedcubing.Member;
 import speedcubing.lib.bukkit.inventory.ItemUtils;
 import speedcubing.server.libs.GlobalString;
 import speedcubing.server.libs.User;
@@ -40,12 +41,11 @@ public class BlockEditor {
     public static void select(InventoryHolder holder, InventoryClickEvent e, int RawSlot, Player player) {
         if (holder == BlockHolder) {
             e.setCancelled(true);
-            if (RawSlot >= 12 && RawSlot <=12+ ItemStackList.categoryblockeditor.length) {
+            if (RawSlot >= 12 && RawSlot <= 12 + ItemStackList.categoryblockeditor.length) {
                 e.setCancelled(true);
                 switch (RawSlot) {
                     case 12: {
                         player.playSound(player.getLocation(), Sound.NOTE_PLING, 1F, 1F);
-                        UUID uuid = player.getUniqueId();
                         int lang = User.getUser(player).lang;
                         Inventory inv = Bukkit.createInventory(sandstoneholder, 27, ItemStackList.sandstoneedit[lang]);
                         for (int i = 0; i < 3; i++) {
@@ -54,21 +54,20 @@ public class BlockEditor {
                         for (int i = 3; i < 6; i++) {
                             inv.setItem(i + 11, ItemStackList.sandstoneeditor[i][lang]);
                         }
-                        int set = Core.integerCache.get(uuid)[4];
+                        int set = Member.getMember(player).integerCache[4];
                         if (set < 6)
-                            inv.setItem((set < 3) ? set + 10 : set + 11, ItemUtils.glow(ItemUtils.setLore(ItemStackList.sandstoneeditor[set][lang].clone(),GlobalString.selected[lang])));
+                            inv.setItem((set < 3) ? set + 10 : set + 11, ItemUtils.glow(ItemUtils.setLore(ItemStackList.sandstoneeditor[set][lang].clone(), GlobalString.selected[lang])));
                         player.openInventory(inv);
                     }
                     break;
                     case 13: {
                         player.playSound(player.getLocation(), Sound.NOTE_PLING, 1F, 1F);
-                        UUID uuid = player.getUniqueId();
                         int lang = User.getUser(player).lang;
                         Inventory inv = Bukkit.createInventory(quartzeditor, 27, ItemStackList.quartzedit[lang]);
                         for (int i = 0; i < ItemStackList.quartzeditor.length; i++) {
                             inv.setItem(i + 12, ItemStackList.quartzeditor[i][lang]);
                         }
-                        int index = Core.integerCache.get(uuid)[4] - ItemStackList.sandstoneeditor.length;
+                        int index = Member.getMember(player).integerCache[4] - ItemStackList.sandstoneeditor.length;
                         if (index < ItemStackList.quartzeditor.length && index >= 0)
                             inv.setItem(index + 12, ItemUtils.glow(ItemUtils.setLore(ItemStackList.quartzeditor[index][lang].clone(), GlobalString.selected[lang])));
                         player.openInventory(inv);
@@ -76,13 +75,12 @@ public class BlockEditor {
                     break;
                     case 14: {
                         player.playSound(player.getLocation(), Sound.NOTE_PLING, 1F, 1F);
-                        UUID uuid = player.getUniqueId();
                         int lang = User.getUser(player).lang;
                         Inventory inv = Bukkit.createInventory(clayeditor, 27, ItemStackList.clayedit[lang]);
                         for (int i = 0; i < ItemStackList.clayeditor.length; i++) {
                             inv.setItem(i, ItemStackList.clayeditor[i][lang]);
                         }
-                        int index = Core.integerCache.get(uuid)[4] - (ItemStackList.sandstoneeditor.length + ItemStackList.quartzeditor.length);
+                        int index = Member.getMember(player).integerCache[4] - (ItemStackList.sandstoneeditor.length + ItemStackList.quartzeditor.length);
                         if (index < ItemStackList.clayeditor.length && index >= 0)
                             inv.setItem(index, ItemUtils.glow(ItemUtils.setLore(ItemStackList.clayeditor[index][lang].clone(), GlobalString.selected[lang])));
                         player.openInventory(inv);
@@ -95,9 +93,8 @@ public class BlockEditor {
             if (RawSlot > 9 && RawSlot < 17 && RawSlot != 13) {
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1F, 1F);
                 int x = RawSlot > 12 ? RawSlot - 11 : RawSlot - 10;
-                UUID uuid = player.getUniqueId();
                 int lang = User.getUser(player).lang;
-                Core.integerCache.get(uuid)[4] = x;
+                Member.getMember(player).integerCache[4] = x;
                 player.closeInventory();
                 player.sendMessage(GlobalString.SavedSettings[lang]);
             }
@@ -106,12 +103,9 @@ public class BlockEditor {
             if (RawSlot <= 14 && RawSlot >= 12) {
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1F, 1F);
                 int x = RawSlot + ItemStackList.sandstoneeditor.length - 12;
-                UUID uuid = player.getUniqueId();
                 int lang = User.getUser(player).lang;
-                Core.integerCache.get(uuid)[4] = x;
+                Member.getMember(player).integerCache[4] = x;
                 player.closeInventory();
-
-
                 player.sendMessage(GlobalString.SavedSettings[lang]);
             }
         } else if (holder == clayeditor) {
@@ -119,9 +113,8 @@ public class BlockEditor {
             if (RawSlot < 17) {
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1F, 1F);
                 int x = RawSlot + ItemStackList.sandstoneeditor.length + ItemStackList.quartzeditor.length;
-                UUID uuid = player.getUniqueId();
                 int lang = User.getUser(player).lang;
-                Core.integerCache.get(uuid)[4] = x;
+                Member.getMember(player).integerCache[4] = x;
                 player.closeInventory();
                 player.sendMessage(GlobalString.SavedSettings[lang]);
             }
