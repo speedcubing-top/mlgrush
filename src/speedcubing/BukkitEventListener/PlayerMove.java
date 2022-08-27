@@ -28,7 +28,7 @@ public class PlayerMove implements Listener {
                         player.teleport(e.getFrom());
                     if (player.getLocation().getX() < 500)
                         if (!player.getAllowFlight() && to.getY() <= 85)
-                            Member.getMember(player).fell();
+                            Member.getMember(player).game.fell(player);
                 }
                 break;
                 case "MLGRush2x1":
@@ -42,7 +42,7 @@ public class PlayerMove implements Listener {
                         else if (to.getY() >= 150)
                             player.teleport(e.getFrom());
                     } else if (!player.getAllowFlight() && to.getY() <= 85)
-                        Member.getMember(player).fell();
+                        Member.getMember(player).game.fell(player);
                     break;
                 case "world":
                     if (Math.abs(to.getX()) > 101 || Math.abs(to.getZ()) > 101)

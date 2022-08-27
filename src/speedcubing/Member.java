@@ -13,21 +13,18 @@ import speedcubing.server.speedcubingServer;
 
 import java.util.*;
 
-public class Member extends User {
-
+public class Member {
     public static Map<Integer, Member> users = new HashMap<>();
 
     public static Member getMember(CommandSender sender) {
-        return getMember((Player) sender);
-    }
-
-    public static Member getMember(Player player) {
-        return getMember(User.getUser(player).id);
+        return getMember(User.getUser(sender).id);
     }
 
     public static Member getMember(int id) {
         return users.get(id);
     }
+
+    public final User user;
 
     //Challenge
     public final Set<Member> Challenge = new HashSet<>();
@@ -45,8 +42,8 @@ public class Member extends User {
     public boolean inGame;
 
     public Member(Player player) {
-        super(player.getUniqueId());
-        users.put(id, this);
+        this.user = User.getUser(player);
+        users.put(user.id, this);
         Lobby.Join(player, true);
         UUID uuid = player.getUniqueId();
         new Thread(() -> integerCache = ArrayUtils.toPrimitive(SQLUtils.getIntArray(speedcubingServer.connection.select("playersdata", "mlgrush_stick,mlgrush_block,mlgrush_pickaxe,mlgrush_stickskin,mlgrush_blockskin,mlgrush_autoreset,mlgrush_hitdelay,mlgrush_falldamage,mlgrush_autoremove,mlgrush_oldkb", "uuid='" + uuid + "'")))).start();
@@ -62,8 +59,5 @@ public class Member extends User {
             speedcubing.Core.StickDuel.Queue = null;
             EntityList.Lobbys[3].setName("§a0/2");
         }
-    }
-    public void fell() {
-        game.fell(player);
     }
 }

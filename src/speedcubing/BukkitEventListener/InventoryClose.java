@@ -18,7 +18,7 @@ public class InventoryClose implements Listener {
             Member member = Member.getMember(player);
             if (member.iseditingkit) {
                 member.iseditingkit = false;
-                player.sendMessage(GlobalString.UnSavedSettings[member.lang]);
+                player.sendMessage(GlobalString.UnSavedSettings[member.user.lang]);
                 Lobby.Items(player);
             }
         }

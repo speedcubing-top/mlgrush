@@ -59,11 +59,11 @@ public class PlayerInteract implements Listener {
                             member.Spectate = -1;
                             String str = speedcubingServer.getFormat(User.getUser(player).rank)[1] + player.getName();
                             for (Member m : member.game.Spectators) {
-                                m.player.sendMessage(StringList.LeaveSpectate[m.lang].replace("%player%", str));
+                                m.user.player.sendMessage(StringList.LeaveSpectate[m.user.lang].replace("%player%", str));
                             }
                             for (Member m : ((MLGRush2x1) member.game).Players) {
-                                m.player.sendMessage(StringList.LeaveSpectate[m.lang].replace("%player%", str));
-                                m.player.showPlayer(player);
+                                m.user.player.sendMessage(StringList.LeaveSpectate[m.user.lang].replace("%player%", str));
+                                m.user.player.showPlayer(player);
                             }
                         }
                         break;
@@ -75,11 +75,11 @@ public class PlayerInteract implements Listener {
                             member.Spectate = -1;
                             String str = speedcubingServer.getFormat(User.getUser(player).rank)[1] + player.getName();
                             for (Member m : member.game.Spectators) {
-                                m.player.sendMessage(StringList.LeaveSpectate[m.lang].replace("%player%", str));
+                                m.user.player.sendMessage(StringList.LeaveSpectate[m.user.lang].replace("%player%", str));
                             }
                             for (Member m : ((StickDuel) member.game).Players) {
-                                m.player.sendMessage(StringList.LeaveSpectate[m.lang].replace("%player%", str));
-                                m.player.showPlayer(player);
+                                m.user.player.sendMessage(StringList.LeaveSpectate[m.user.lang].replace("%player%", str));
+                                m.user.player.showPlayer(player);
                             }
                         }
                         break;

@@ -39,7 +39,7 @@ public class BlockPlace implements Listener {
                         if (member.PlacedBlocks > 32) {
                             member.PlacedBlocks = 0;
                             int[] i = member.integerCache;
-                            player.getInventory().setItem(i[1], ItemStackList.Blocks[i[4]][member.lang]);
+                            player.getInventory().setItem(i[1], ItemStackList.Blocks[i[4]][member.user.lang]);
                         }
                         if (((MLGRush2x1) member.game).Preference[3]) {
                             MLGRush2x1.Diff.put(new BlockPosition(x, y, z), 0);
@@ -57,7 +57,7 @@ public class BlockPlace implements Listener {
                         if (member.PlacedBlocks > 32) {
                             member.PlacedBlocks = 0;
                             int[] i = member.integerCache;
-                            player.getInventory().setItem(i[1], ItemStackList.Blocks[i[4]][member.lang]);
+                            player.getInventory().setItem(i[1], ItemStackList.Blocks[i[4]][member.user.lang]);
                         }
                     }
                     break;
