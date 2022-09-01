@@ -1,5 +1,5 @@
 name: MLGRush
-main: speedcubing.Main
+main: top.speedcubing.mlgrush.Main
 version: 1.0
 commands:
   reset:
