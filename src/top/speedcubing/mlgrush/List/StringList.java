@@ -132,16 +132,16 @@ public class StringList {
             {"§5", "§8» §b", "§a线上玩家", "§8", "§6" + config.SERVERIP, "§3MLGRush"}
     };
     public static String[][] MLGRushSideBar = {
-            {"§3MLGRush 2x1 §7▶§b %h%%m%%s%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"},
-            {"§3MLGRush 2x1 §7▶§b %h%%m%%s%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"},
-            {"§3MLGRush 2x1 §7▶§b %h%%m%%s%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"},
-            {"§3MLGRush 2x1 §7▶§b %h%%m%%s%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"}
+            {"§3MLGRush 2x1 §7▶§b %t%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"},
+            {"§3MLGRush 2x1 §7▶§b %t%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"},
+            {"§3MLGRush 2x1 §7▶§b %t%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"},
+            {"§3MLGRush 2x1 §7▶§b %t%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"}
     };
     public static String[][] StickDuelSideBar = {
-            {"§3StickDuel §7▶§b %h%%m%%s%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"},
-            {"§3StickDuel §7▶§b %h%%m%%s%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"},
-            {"§3StickDuel §7▶§b %h%%m%%s%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"},
-            {"§3StickDuel §7▶§b %h%%m%%s%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"}
+            {"§3StickDuel §7▶§b %t%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"},
+            {"§3StickDuel §7▶§b %t%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"},
+            {"§3StickDuel §7▶§b %t%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"},
+            {"§3StickDuel §7▶§b %t%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"}
     };
 
     public static String[] JoinSpectate = {

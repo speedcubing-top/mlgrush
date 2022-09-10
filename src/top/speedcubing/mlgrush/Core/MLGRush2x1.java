@@ -1,11 +1,5 @@
 package top.speedcubing.mlgrush.Core;
 
-import top.speedcubing.mlgrush.Core.MLGRushCategory.MLGRushDuels;
-import top.speedcubing.mlgrush.List.EntityList;
-import top.speedcubing.mlgrush.List.ItemStackList;
-import top.speedcubing.mlgrush.List.StringList;
-import top.speedcubing.mlgrush.Main;
-import top.speedcubing.mlgrush.Member;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.WorldServer;
 import org.bukkit.*;
@@ -14,14 +8,22 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.scoreboard.DisplaySlot;
-import top.speedcubing.mlgrush.All.Lobby;
 import top.speedcubing.lib.bukkit.PlayerUtils;
 import top.speedcubing.lib.bukkit.SideBar;
 import top.speedcubing.lib.bukkit.entity.Hologram;
+import top.speedcubing.lib.utils.TimeFormatter;
+import top.speedcubing.mlgrush.All.Lobby;
+import top.speedcubing.mlgrush.Core.MLGRushCategory.MLGRushDuels;
+import top.speedcubing.mlgrush.List.EntityList;
+import top.speedcubing.mlgrush.List.ItemStackList;
+import top.speedcubing.mlgrush.List.StringList;
+import top.speedcubing.mlgrush.Main;
+import top.speedcubing.mlgrush.Member;
 import top.speedcubing.server.libs.User;
 import top.speedcubing.server.speedcubingServer;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class MLGRush2x1 extends MLGRushDuels {
     public static Inventory[] InventoryMap2x1 = new Inventory[4];
@@ -111,7 +113,7 @@ public class MLGRush2x1 extends MLGRushDuels {
                 inventory.setItem(ints[2], ItemStackList.Pickaxe[p.user.lang]);
                 PlayerUtils.sendActionBar(p.user.player, actionbar);
                 String[] sidebar = StringList.MLGRushSideBar[p.user.lang];
-                new SideBar(p.user.player, sidebar[0].replace("%h%", "").replace("%m%", "00:").replace("%s%", "00"))
+                new SideBar(p.user.player, sidebar[0].replace("%t%", "00:00"))
                         .staticLine(sidebar[1], 4)
                         .staticLine(sidebar[2], 3)
                         .changeableLine(formats[0] + players[0].getName() + sidebar[3] + "§e0", 2)
@@ -131,6 +133,7 @@ public class MLGRush2x1 extends MLGRushDuels {
             }
             TimerTask = new TimerTask() {
                 int x = 0;
+
                 @Override
                 public void run() {
                     Time = x;
@@ -140,7 +143,7 @@ public class MLGRush2x1 extends MLGRushDuels {
                     for (Member m : targets) {
                         if (m != null) {
                             PlayerUtils.sendActionBar(m.user.player, actionbar);
-                            m.user.player.getScoreboard().getObjective(DisplaySlot.SIDEBAR).setDisplayName(StringList.MLGRushSideBar[m.user.lang][0].replace("%h%", x / 3600 == 0 ? "" : x / 3600 + ":").replace("%m%", String.format("%02d", (x % 3600) / 60) + ":").replace("%s%", String.format("%02d", x % 60)));
+                            m.user.player.getScoreboard().getObjective(DisplaySlot.SIDEBAR).setDisplayName(StringList.MLGRushSideBar[m.user.lang][0].replace("%t%", new TimeFormatter(x, TimeUnit.SECONDS).format("%H%:", true).format("%m%:%s%", false).toString()));
                         }
                     }
                     x++;
