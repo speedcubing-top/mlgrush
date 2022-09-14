@@ -1,5 +1,6 @@
 package top.speedcubing.mlgrush;
 
+import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.WorldCreator;
@@ -21,6 +22,7 @@ import java.util.TimerTask;
 public class Main extends JavaPlugin implements CommandExecutor {
 
     public void onEnable() {
+        MinecraftServer.getServer().getPropertyManager().setProperty("server-name", "mlgrush");
         Bukkit.getPluginManager().registerEvents(new EntityDamage(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerJoin(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerChangedWorld(), this);
