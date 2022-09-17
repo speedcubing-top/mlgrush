@@ -9,6 +9,7 @@ import top.speedcubing.lib.bukkit.SideBar;
 import top.speedcubing.lib.bukkit.event.PlayInEvent;
 import top.speedcubing.lib.eventbus.LibEventHandler;
 import top.speedcubing.lib.utils.Console;
+import top.speedcubing.server.events.CubingTickEvent;
 import top.speedcubing.server.events.SocketEvent;
 import top.speedcubing.server.events.player.HubEvent;
 import top.speedcubing.server.events.player.NickEvent;
@@ -19,14 +20,14 @@ import top.speedcubing.server.libs.User;
 import top.speedcubing.server.speedcubingServer;
 
 public class ServerEvent {
+
+    int a;
     @LibEventHandler
-    public void SocketEvent(SocketEvent e) {
-        String[] rs = e.receive.split("\\|");
-        if (rs[0].equals("online") && rs[1].equals("1")) {
-            for (SideBar s : SideBar.getSidebars()) {
-                if (s.player.getWorld().getName().equals("world"))
-                    s.setLine(StringList.LobbySideBar[User.getUser(s.player).lang][1] + rs[2], 4);
-            }
+    public void CubingTickEvent(CubingTickEvent e) {
+        a = speedcubingServer.getOnlineCount();
+        for (SideBar s : SideBar.getSidebars()) {
+            if (s.player.getWorld().getName().equals("world"))
+                s.setLine(StringList.LobbySideBar[User.getUser(s.player).lang][4] + a, 4);
         }
     }
 

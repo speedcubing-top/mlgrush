@@ -14,10 +14,6 @@ import top.speedcubing.mlgrush.Core.MLGRush2x1;
 import top.speedcubing.mlgrush.Core.StickDuel;
 import top.speedcubing.mlgrush.List.EntityList;
 import top.speedcubing.mlgrush.List.ItemStackList;
-import top.speedcubing.server.speedcubingServer;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Main extends JavaPlugin implements CommandExecutor {
 
@@ -56,11 +52,5 @@ public class Main extends JavaPlugin implements CommandExecutor {
         StickDuel.Load();
         new BlockEditor().Load();
         LibEventManager.registerListeners(new ServerEvent());
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                speedcubingServer.tcp.sendClean(25576 - Bukkit.getPort() % 2, "online|3|" + Bukkit.getOnlinePlayers().size());
-            }
-        }, 0, 1000);
     }
 }
