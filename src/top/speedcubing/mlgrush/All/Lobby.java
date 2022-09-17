@@ -56,7 +56,7 @@ public class Lobby {
                 .staticLine(sidebar[4], 4)
                 .staticLine(sidebar[3], 3)
                 .staticLine(sidebar[2], 2)
-                .changeableLine(sidebar[1] + "loading...", 1)
+                .changeableLine(sidebar[1] + speedcubingServer.getOnlineCount(), 1)
                 .staticLine(sidebar[0], 0).create();
         PlayerUtils.sendActionBar(player, "");
         player.setGameMode(GameMode.ADVENTURE);
