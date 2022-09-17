@@ -27,7 +27,7 @@ public class ServerEvent {
         a = speedcubingServer.getOnlineCount();
         for (SideBar s : SideBar.getSidebars()) {
             if (s.player.getWorld().getName().equals("world"))
-                s.setLine(StringList.LobbySideBar[User.getUser(s.player).lang][4] + a, 4);
+                s.setLine(StringList.LobbySideBar[User.getUser(s.player).lang][1] + a, 4);
         }
     }
 
