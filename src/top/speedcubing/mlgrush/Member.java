@@ -7,7 +7,6 @@ import top.speedcubing.mlgrush.All.Lobby;
 import top.speedcubing.mlgrush.Core.MLGRush2x1;
 import top.speedcubing.mlgrush.Core.MLGRushCategory.MLGRushGame;
 import top.speedcubing.mlgrush.List.EntityList;
-import top.speedcubing.lib.utils.SQL.SQLUtils;
 import top.speedcubing.server.libs.User;
 import top.speedcubing.server.speedcubingServer;
 
@@ -46,7 +45,7 @@ public class Member {
         users.put(user.id, this);
         Lobby.Join(player, true);
         UUID uuid = player.getUniqueId();
-        new Thread(() -> integerCache = ArrayUtils.toPrimitive(SQLUtils.getIntArray(speedcubingServer.connection.select("playersdata", "mlgrush_stick,mlgrush_block,mlgrush_pickaxe,mlgrush_stickskin,mlgrush_blockskin,mlgrush_autoreset,mlgrush_hitdelay,mlgrush_falldamage,mlgrush_autoremove,mlgrush_oldkb", "uuid='" + uuid + "'")))).start();
+        new Thread(() -> integerCache = ArrayUtils.toPrimitive(speedcubingServer.connection.select("mlgrush_stick,mlgrush_block,mlgrush_pickaxe,mlgrush_stickskin,mlgrush_blockskin,mlgrush_autoreset,mlgrush_hitdelay,mlgrush_falldamage,mlgrush_autoremove,mlgrush_oldkb").from("playersdata").where("uuid='" + uuid + "'").getIntArray())).start();
     }
 
 
