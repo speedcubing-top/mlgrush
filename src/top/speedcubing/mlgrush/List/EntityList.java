@@ -6,13 +6,9 @@ import top.speedcubing.lib.bukkit.entity.NPC;
 import top.speedcubing.mlgrush.Core.MLGRush2x1;
 import top.speedcubing.mlgrush.Core.StickDuel;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class EntityList {
     public static Hologram[] Lobbys = new Hologram[6];
     public static NPC[] npcs = new NPC[3];
-    public static List<Integer> NPCS = new ArrayList<>();
 
     public void Load() {
 

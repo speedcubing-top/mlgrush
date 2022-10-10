@@ -25,10 +25,10 @@ public class ServerEvent {
     @LibEventHandler
     public void CubingTickEvent(CubingTickEvent e) {
         a = speedcubingServer.getOnlineCount();
-        Member.users.values().forEach(m -> {
-            if (m.user.player.getWorld().getName().equals("world"))
-                SideBar.getSidebar(m.user.player).setLineByScore(StringList.LobbySideBar[m.user.lang][1] + a, 4);
-        });
+        for (SideBar s : SideBar.getSidebars()) {
+            if (s.player.getWorld().getName().equals("world"))
+                s.setLine(StringList.LobbySideBar[User.getUser(s.player).lang][1] + a, 4);
+        }
     }
 
     @LibEventHandler
