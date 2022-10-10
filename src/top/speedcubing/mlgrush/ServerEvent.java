@@ -4,13 +4,12 @@ import net.minecraft.server.v1_8_R3.PacketPlayInChat;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import top.speedcubing.mlgrush.List.StringList;
 import top.speedcubing.lib.bukkit.SideBar;
 import top.speedcubing.lib.bukkit.event.PlayInEvent;
 import top.speedcubing.lib.eventbus.LibEventHandler;
 import top.speedcubing.lib.utils.Console;
+import top.speedcubing.mlgrush.List.StringList;
 import top.speedcubing.server.events.CubingTickEvent;
-import top.speedcubing.server.events.SocketEvent;
 import top.speedcubing.server.events.player.HubEvent;
 import top.speedcubing.server.events.player.NickEvent;
 import top.speedcubing.server.events.player.SkinEvent;
@@ -22,13 +21,14 @@ import top.speedcubing.server.speedcubingServer;
 public class ServerEvent {
 
     int a;
+
     @LibEventHandler
     public void CubingTickEvent(CubingTickEvent e) {
         a = speedcubingServer.getOnlineCount();
-        for (SideBar s : SideBar.getSidebars()) {
-            if (s.player.getWorld().getName().equals("world"))
-                s.setLine(StringList.LobbySideBar[User.getUser(s.player).lang][1] + a, 4);
-        }
+        Member.users.values().forEach(m -> {
+            if (m.user.player.getWorld().getName().equals("world"))
+                SideBar.getSidebar(m.user.player).setLineByScore(StringList.LobbySideBar[m.user.lang][1] + a, 4);
+        });
     }
 
     @LibEventHandler

@@ -1,10 +1,10 @@
 package top.speedcubing.mlgrush.List;
 
 import net.minecraft.server.v1_8_R3.PacketPlayInUseEntity;
-import top.speedcubing.mlgrush.Core.MLGRush2x1;
-import top.speedcubing.mlgrush.Core.StickDuel;
 import top.speedcubing.lib.bukkit.entity.Hologram;
 import top.speedcubing.lib.bukkit.entity.NPC;
+import top.speedcubing.mlgrush.Core.MLGRush2x1;
+import top.speedcubing.mlgrush.Core.StickDuel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +25,11 @@ public class EntityList {
 
 
         for (int i = 0; i < npcs.length; i++) {
-            npcs[i] = new NPC("", null, true).hideNametag().setAutoSpawn(true);
+            npcs[i] = new NPC("", null, true, true, true).hideNametag();
             npcs[i].world.add("world");
         }
         for (int i = 0; i < Lobbys.length; i++) {
-            Lobbys[i] = new Hologram("").setAutoSpawn(true);
+            Lobbys[i] = new Hologram("", true, true);
             Lobbys[i].world.add("world");
         }
         Lobbys[0].setLocation(-2.5, 101.85, 19.5, 0, 0);
