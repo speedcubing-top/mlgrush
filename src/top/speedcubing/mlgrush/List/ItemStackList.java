@@ -1,15 +1,20 @@
 package top.speedcubing.mlgrush.List;
 
-import top.speedcubing.lib.bukkit.inventory.InventoryUtils;
-import top.speedcubing.lib.bukkit.inventory.ItemBuilder;
-import top.speedcubing.server.libs.GlobalString;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import top.speedcubing.lib.bukkit.inventory.InventoryBuilder;
+import top.speedcubing.lib.bukkit.inventory.ItemBuilder;
+import top.speedcubing.mlgrush.All.Lobby;
+import top.speedcubing.mlgrush.Core.BlockEditor;
 import top.speedcubing.mlgrush.Core.Core;
-import top.speedcubing.mlgrush.Core.MLGRush2x1;
+import top.speedcubing.mlgrush.Core.Game.MLGRush2x1;
+import top.speedcubing.mlgrush.Member;
+import top.speedcubing.server.libs.GlobalString;
+import top.speedcubing.server.libs.User;
 
 public class ItemStackList {
 
@@ -38,12 +43,14 @@ public class ItemStackList {
     public static ItemStack[][] sandstoneeditor = new ItemStack[6][4];
     public static ItemStack[][] quartzeditor = new ItemStack[3][4];
     public static ItemStack[][] clayeditor = new ItemStack[17][4];
-
+    public static ItemStack[] unQueue = new ItemStack[4];
 
     public static final String[] blockedit = {"§bBlock Skin", "§bBlock Skin", "§bBlock Skin", "§bBlock Skin"};
     public static final String[] sandstoneedit = {"§bCategory: Sandstone", "§bCategory: Sandstone", "§bCategory: Sandstone", "§bCategory: Sandstone"};
     public static final String[] quartzedit = {"§bCategory: Quartz Blocks", "§bCategory: Quartz Blocks", "§bCategory: Quartz Blocks", "§bCategory: Quartz Blocks"};
     public static final String[] clayedit = {"§bCategory: Clay", "§bCategory: Clay", "§bCategory: Clay", "§bCategory: Clay"};
+
+    public static Inventory[] duelMenu = new Inventory[4];
 
     public void Load() {
         Invalid();
@@ -60,6 +67,38 @@ public class ItemStackList {
     }
 
     private void Lobby() {
+        String[] title = {"§bJoin Queue", "§bJoin Queue", "§bJoin Queue", "§bJoin Queue"};
+        for (int i = 0; i < 4; i++) {
+            duelMenu[i] = new InventoryBuilder(18, title[i])
+                    .setItem(new ItemBuilder(Material.SANDSTONE).name("Normal").lore(StringList.Lores[i][0], StringList.Lores[i][1].replace("%int%", "0"), StringList.Lores[i][2].replace("%int%", "0")).build(), 0)
+                    .setItem(new ItemBuilder(Material.SANDSTONE).name("Inclined").lore(StringList.Lores[i][0], StringList.Lores[i][1].replace("%int%", "0"), StringList.Lores[i][2].replace("%int%", "0")).build(), 1)
+                    .setAllClickEvent((p, e) -> {
+                        if (e.getRawSlot() < MLGRush2x1.inst.maps) {
+                            int map = e.getRawSlot();
+                            Member member = Member.getMember(p);
+                            p.playSound(p.getLocation(), Sound.NOTE_PLING, 1F, 1F);
+                            Member waiter = MLGRush2x1.inst.Queue[map];
+                            if (waiter != null) {
+                                if (waiter != member) {
+                                    new MLGRush2x1(member, MLGRush2x1.inst.Queue[map], map);
+                                    member.user.sendLangMessage(StringList.MLGRushOpponentFound);
+                                    member.QuitAllQueue();
+                                    MLGRush2x1.inst.Queue[map] = member;
+                                } else {
+                                    member.QuitAllQueue();
+                                    Lobby.Items(p);
+                                }
+                                MLGRush2x1.inst.lore(map, 0, false);
+                            } else {
+                                member.user.sendLangMessage(StringList.MLGRushQueue);
+                                member.QuitAllQueue();
+                                MLGRush2x1.inst.Queue[map] = member;
+                                MLGRush2x1.inst.lore(map, 1, false);
+                            }
+                            p.closeInventory();
+                        }
+                    }).getInventory();
+        }
         String[] Challenge = {"§6Challenger", "§6Challenger", "§6Challenger", "§6Challenger"};
         String[] spec = {"§bSpectate", "§bSpectate", "§bSpectate", "§bSpectate"};
         String[] gad = {"§bGadgets", "§bGadgets", "§bGadgets", "§bGadgets"};
@@ -72,6 +111,7 @@ public class ItemStackList {
         }
     }
 
+
     private void Invalid() {
         String[] display = {"§4Sie können die Elemente hier nicht einstellen!", "§4You can't set the items here!", "§4你不能將物品設定於此處!", "§4你不能将物品设定于此处!"};
         for (int i = 0; i < 4; i++) {
@@ -81,13 +121,19 @@ public class ItemStackList {
 
     private void MLGRush() {
         {
+            String[] unqueue = {"§4Click to unqueue", "§4Click to unqueue", "§4Click to unqueue", "§4Click to unqueue"};
+            for (int i = 0; i < 4; i++) {
+                unQueue[i] = new ItemBuilder(Material.REDSTONE).name(unqueue[i]).build();
+            }
+        }
+        {
             String[] title = {"§cMLGRush karten", "§cMLGRush maps", "§cMLGRush 地圖", "§cMLGRush 地图"};
             String[] MAP0 = {"§bBedwars", "§bBedwars", "§bBedwars", "§bBedwars"};
             String[] MAP1 = {"§b5cpsboi", "§b5cpsboi", "§b5cpsboi", "§b5cpsboi"};
-            for (int i = 0; i < 4; i++) {
-                MLGRush2x1.InventoryMap2x1[i] = Bukkit.createInventory(MLGRush2x1.Map2x1Holder, 27, title[i]);
-                MLGRush2x1.InventoryMap2x1[i].setItem(10, new ItemBuilder(Material.BED).name(MAP0[i]).build());
-                MLGRush2x1.InventoryMap2x1[i].setItem(11, new ItemBuilder(Material.BRICK).name(MAP1[i]).build());
+            for (int i = 0; i < 4; i++) { // ?
+                MLGRush2x1.InventoryMap2x1[i] = new InventoryBuilder(27, title[i])
+                        .setItem(new ItemBuilder(Material.BED).name(MAP0[i]).build(), 10)
+                        .setItem(new ItemBuilder(Material.BRICK).name(MAP1[i]).build(), 11).getInventory();
             }
         }
         {
@@ -95,9 +141,15 @@ public class ItemStackList {
             String[] inv = {"§bInventar", "§bInventory", "§b物品欄", "§b物品栏"};
             String[] prefedit = {"§bPreferences", "§bPreferences", "§bPreferences", "§bPreferences"};
             for (int i = 0; i < 4; i++) {
-                Settings[i] = Bukkit.createInventory(Core.SettingsHolder, 27, title[i]);
-                Settings[i].setItem(11, new ItemBuilder(Material.CHEST).durability(3).name(inv[i]).build());
-                Settings[i].setItem(15, new ItemBuilder(Material.DIODE).name(prefedit[i]).build());
+                Settings[i] = new InventoryBuilder(27, title[i])
+                        .setItem(new ItemBuilder(Material.CHEST).durability(3).name(inv[i]).build(), (p, e) -> {
+                            p.playSound(p.getLocation(), Sound.CLICK, 1F, 1F);
+                            Core.openKitEditor(p);
+                        }, 11)
+                        .setItem(new ItemBuilder(Material.DIODE).name(prefedit[i]).build(), (p, e) -> {
+                            p.playSound(p.getLocation(), Sound.CLICK, 1F, 1F);
+                            Core.openPreference(p);
+                        }, 15).getInventory();
             }
         }
         {
@@ -105,10 +157,27 @@ public class ItemStackList {
             String[] save = {"§aÄnderungen speichern", "§aSave Changes", "§a儲存設定", "§a储存设置"};
             String[] unsave = {"§cnicht gespeicherte Änderungen", "§cUnSave Changes", "§c不儲存設定", "§c不储存设置"};
             for (int i = 0; i < 4; i++) {
-                InventoryKitEditor[i] = Bukkit.createInventory(Core.KitEditorHolder, 9, title[i]);
-                InventoryUtils.fillItem(InventoryKitEditor[i], 0, 9, new ItemBuilder(Material.STAINED_GLASS_PANE).durability(7).name("§a").build());
-                InventoryKitEditor[i].setItem(3, new ItemBuilder(Material.INK_SACK).durability(10).name(save[i]).build());
-                InventoryKitEditor[i].setItem(5, new ItemBuilder(Material.INK_SACK).durability(1).name(unsave[i]).build());
+                InventoryKitEditor[i] = new InventoryBuilder(9, title[i])
+                        .setItem(new ItemBuilder(Material.STAINED_GLASS_PANE).durability(7).name("§a").build(), 0, 8)
+                        .setItem(new ItemBuilder(Material.INK_SACK).durability(10).name(save[i]).build(), 3)
+                        .setItem(new ItemBuilder(Material.INK_SACK).durability(1).name(unsave[i]).build(), 5)
+                        .setClickEvent((p, e) -> {
+                            p.playSound(p.getLocation(), Sound.CLICK, 1F, 1F);
+                            Core.saveKitEditor(p, e.getCursor(), User.getUser(p).lang);
+                        }, 3)
+                        .setClickEvent((p, e) -> {
+                            p.playSound(p.getLocation(), Sound.CLICK, 1F, 1F);
+                            p.closeInventory();
+                        }, 5)
+                        .setClickable(true, 36, 44)
+                        .setCloseInventory((p, e) -> {
+                            Member member = Member.getMember(p);
+                            if (member.iseditingkit) {
+                                member.iseditingkit = false;
+                                p.sendMessage(GlobalString.UnSavedSettings[member.user.lang]);
+                                Lobby.Items(p);
+                            }
+                        }).getInventory();
             }
         }
         {
@@ -284,9 +353,15 @@ public class ItemStackList {
                         Blocks[j][i] = blocks[j];
                     }
                 }
-                Gadgets[i] = Bukkit.createInventory(Core.GadgetsHolder, 27, title[i]);
-                Gadgets[i].setItem(11, new ItemBuilder(Material.BLAZE_ROD).name(stick[i]).build());
-                Gadgets[i].setItem(15, new ItemBuilder(Material.SANDSTONE).name(block[i]).build());
+                Gadgets[i] = new InventoryBuilder(27, title[i])
+                        .setItem(new ItemBuilder(Material.BLAZE_ROD).name(stick[i]).build(), (p, e) -> {
+                            p.playSound(p.getLocation(), Sound.CLICK, 1F, 1F);
+                            Core.openStickEditor(p);
+                        }, 11)
+                        .setItem(new ItemBuilder(Material.SANDSTONE).name(block[i]).build(), (p, e) -> {
+                            p.playSound(p.getLocation(), Sound.CLICK, 1F, 1F);
+                            BlockEditor.createMainPage(p);
+                        }, 15).getInventory();
                 specinventory[i] = Bukkit.createInventory(Core.specHolder, 54, spec[i]);
             }
         }

@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import top.speedcubing.mlgrush.Core.MLGRush2x1;
+import top.speedcubing.mlgrush.Core.Game.MLGRush2x1;
 import top.speedcubing.mlgrush.Member;
 
 public class BlockBreak implements Listener {
@@ -28,7 +28,7 @@ public class BlockBreak implements Listener {
                         Member member = Member.getMember(player);
                         BlockPosition position = new BlockPosition(block.getX(), block.getY(), block.getZ());
                         if (member.game.Blocks.contains(position)) {
-                            MLGRush2x1.Diff.remove(position);
+                            MLGRush2x1.inst.Diff.remove(position);
                             member.game.Blocks.remove(position);
                             block.setType(Material.AIR);
                         } else if (block.getType().equals(Material.BED_BLOCK))

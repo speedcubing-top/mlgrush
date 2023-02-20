@@ -3,8 +3,7 @@ package top.speedcubing.mlgrush.List;
 import net.minecraft.server.v1_8_R3.PacketPlayInUseEntity;
 import top.speedcubing.lib.bukkit.entity.Hologram;
 import top.speedcubing.lib.bukkit.entity.NPC;
-import top.speedcubing.mlgrush.Core.MLGRush2x1;
-import top.speedcubing.mlgrush.Core.StickDuel;
+import top.speedcubing.mlgrush.Member;
 
 public class EntityList {
     public static Hologram[] Lobbys = new Hologram[6];
@@ -31,22 +30,18 @@ public class EntityList {
         Lobbys[0].setLocation(-2.5, 101.85, 19.5, 0, 0);
         Lobbys[1].setLocation(0.5, 101.85, 19.5, 0, 0);
         Lobbys[2].setLocation(3.5, 101.85, 19.5, 0, 0);
-        Lobbys[3].setLocation(-2.5, 102.15, 19.5, 0, 0);
-        Lobbys[4].setLocation(0.5, 102.15, 19.5, 0, 0);
-        Lobbys[5].setLocation(3.5, 102.15, 19.5, 0, 0);
         Lobbys[0].setName("§bStickDuel");
         Lobbys[1].setName("§bMLGRush 2x1");
         Lobbys[2].setName("§bMLGRush 4x1");
-        Lobbys[3].setName("§a0/2");
-        Lobbys[4].setName("§a0/2");
-        Lobbys[5].setName("§4Maintenance");
         npcs[0].setSpawnBodyYaw(180).setSkin(VEPEXtextures, VEPEXsignature).setClickEvent(((player, action) -> {
-            if (player.getItemInHand().getType() == org.bukkit.Material.AIR && action.equals(PacketPlayInUseEntity.EnumEntityUseAction.INTERACT))
-                StickDuel.Queue(player);
+            if (player.getItemInHand().getType() == org.bukkit.Material.AIR && action.equals(PacketPlayInUseEntity.EnumEntityUseAction.INTERACT)) {
+
+            }
         }));
         npcs[1].setSpawnBodyYaw(180).setSkin(TFGTEXTURES, TFGSIGNATURES).setClickEvent(((player, action) -> {
-            if (player.getItemInHand().getType() == org.bukkit.Material.AIR && action.equals(PacketPlayInUseEntity.EnumEntityUseAction.INTERACT))
-                MLGRush2x1.queue(player);
+            if (player.getItemInHand().getType() == org.bukkit.Material.AIR && action.equals(PacketPlayInUseEntity.EnumEntityUseAction.INTERACT)) {
+                player.openInventory(ItemStackList.duelMenu[Member.getMember(player).user.lang]);
+            }
         }));
         npcs[2].setSpawnBodyYaw(179).setSkin(RNStextures, RNSsignature).setClickEvent(((player, action) -> {
             if (player.getItemInHand().getType() == org.bukkit.Material.AIR && action.equals(PacketPlayInUseEntity.EnumEntityUseAction.INTERACT))

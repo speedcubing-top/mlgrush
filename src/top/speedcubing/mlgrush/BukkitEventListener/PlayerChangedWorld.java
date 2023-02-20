@@ -15,7 +15,7 @@ public class PlayerChangedWorld implements Listener {
         switch (e.getFrom().getName()) {
             case "MLGRush2x1":
             case "StickDuel":
-                if (member.inGame)
+                if (member.game != null)
                     member.game.gameEnd(member);
                 Lobby.Join(player, false);
                 break;

@@ -1,8 +1,6 @@
 package top.speedcubing.mlgrush.BukkitEventListener;
 
 
-import top.speedcubing.mlgrush.Core.Core;
-import top.speedcubing.mlgrush.Member;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -10,12 +8,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import top.speedcubing.mlgrush.Member;
 
 public class PlayerMove implements Listener {
 
     @EventHandler
     public void PlayerMoveEvent(PlayerMoveEvent e) {
-        double time = System.currentTimeMillis();
         Player player = e.getPlayer();
         World world = player.getWorld();
         if (player.getGameMode() == GameMode.SURVIVAL || player.getGameMode() == GameMode.ADVENTURE) {
@@ -24,7 +22,8 @@ public class PlayerMove implements Listener {
                 case "MLGRush4x1": {
                     double z = to.getZ();
                     double x = to.getX();
-                    if (Math.abs(z - Core.randomToBed(z)) > 51 || (Math.abs(x) > 51 && x < 500))
+                    Member member = Member.getMember(player);
+                    if (Math.abs(z - member.game.coord - 0.5) > 51 || (Math.abs(x - member.game.map * 500 - 0.5) > 51))
                         player.teleport(e.getFrom());
                     if (player.getLocation().getX() < 500)
                         if (!player.getAllowFlight() && to.getY() <= 85)
@@ -33,15 +32,16 @@ public class PlayerMove implements Listener {
                 break;
                 case "MLGRush2x1":
                 case "StickDuel":
+                    Member member = Member.getMember(player);
+                    boolean flag = Math.abs(to.getZ() - member.game.coord - 0.5) > 51 || (Math.abs(to.getX() - member.game.map * 500 - 0.5) > 51);
                     if (player.getAllowFlight()) {
-                        double z = to.getZ();
-                        if (Math.abs(z - Core.randomToBed(z)) > 31 || Math.abs(to.getX()) > 51)
+                        if (flag)
                             player.teleport(e.getFrom());
                         else if (to.getY() <= 85)
-                            player.teleport(new Location(player.getWorld(), 0.5, 100, Core.randomToBed(z), 0, 0));
+                            player.teleport(new Location(player.getWorld(), 0.5, 100, member.game.coord, 0, 0));
                         else if (to.getY() >= 150)
                             player.teleport(e.getFrom());
-                    } else if (!player.getAllowFlight() && to.getY() <= 85)
+                    } else if (flag || to.getY() <= 85)
                         Member.getMember(player).game.fell(player);
                     break;
                 case "world":

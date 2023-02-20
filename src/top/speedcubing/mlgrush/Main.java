@@ -10,8 +10,8 @@ import top.speedcubing.lib.eventbus.LibEventManager;
 import top.speedcubing.mlgrush.BukkitCommands.reset;
 import top.speedcubing.mlgrush.BukkitEventListener.*;
 import top.speedcubing.mlgrush.Core.BlockEditor;
-import top.speedcubing.mlgrush.Core.MLGRush2x1;
-import top.speedcubing.mlgrush.Core.StickDuel;
+import top.speedcubing.mlgrush.Core.Game.MLGRush2x1;
+import top.speedcubing.mlgrush.Core.Game.StickDuel;
 import top.speedcubing.mlgrush.List.EntityList;
 import top.speedcubing.mlgrush.List.ItemStackList;
 import top.speedcubing.server.speedcubingServer;
@@ -25,7 +25,6 @@ public class Main extends JavaPlugin implements CommandExecutor {
         Bukkit.getPluginManager().registerEvents(new PlayerChangedWorld(), this);
         Bukkit.getPluginManager().registerEvents(new EntityDamageByEntity(), this);
         Bukkit.getPluginManager().registerEvents(new InventoryClick(), this);
-        Bukkit.getPluginManager().registerEvents(new InventoryClose(), this);
         Bukkit.getPluginManager().registerEvents(new BlockBreak(), this);
         Bukkit.getPluginManager().registerEvents(new BlockPlace(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerDropItem(), this);
@@ -49,8 +48,6 @@ public class Main extends JavaPlugin implements CommandExecutor {
         Bukkit.getPluginCommand("reset").setTabCompleter(new reset());
         new ItemStackList().Load();
         new EntityList().Load();
-        MLGRush2x1.Load();
-        StickDuel.Load();
         new BlockEditor().Load();
         LibEventManager.registerListeners(new ServerEvent());
         speedcubingServer.canRestart = false;

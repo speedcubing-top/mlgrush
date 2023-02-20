@@ -19,11 +19,9 @@ import top.speedcubing.server.speedcubingServer;
 
 public class ServerEvent {
 
-    int a;
-
     @LibEventHandler
     public void CubingTickEvent(CubingTickEvent e) {
-        a = speedcubingServer.getOnlineCount();
+        int a = speedcubingServer.getOnlineCount();
         for (SideBar s : SideBar.getSidebars()) {
             if (s.player.getWorld().getName().equals("world"))
                 s.setLine(StringList.LobbySideBar[User.getUser(s.player).lang][1] + a, 4);
@@ -31,13 +29,13 @@ public class ServerEvent {
     }
 
     @LibEventHandler
-    public void PlayInChatEvent(PlayInEvent e) {
+    public void PlayInEvent(PlayInEvent e) {
         if (e.packet instanceof PacketPlayInChat) {
             String message = ((PacketPlayInChat) e.packet).a();
             if (message.charAt(0) != '/') {
                 e.isCancelled = true;
                 String[] formats = speedcubingServer.getFormat(Member.getMember(e.player).user.rank);
-                Chat.globalChat(Bukkit.getOnlinePlayers(), e.player, GlobalString.MessageFormat, message, formats[0] + e.player, formats[2]);
+                Chat.globalChat(Bukkit.getOnlinePlayers(), e.player, GlobalString.MessageFormat, message, formats[0] + e.player.getName(), formats[2]);
             }
         }
     }

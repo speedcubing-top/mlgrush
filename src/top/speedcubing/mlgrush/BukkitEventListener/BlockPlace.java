@@ -7,19 +7,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
-import top.speedcubing.mlgrush.Core.Core;
-import top.speedcubing.mlgrush.Core.MLGRush2x1;
+import top.speedcubing.mlgrush.Core.Game.MLGRush2x1;
 import top.speedcubing.mlgrush.List.ItemStackList;
 import top.speedcubing.mlgrush.Member;
-
-import java.util.UUID;
 
 public class BlockPlace implements Listener {
     @EventHandler
     public void BlockPlaceEvent(BlockPlaceEvent e) {
         Block block = e.getBlock();
         Player player = e.getPlayer();
-        UUID uuid = player.getUniqueId();
         if (player.getGameMode() == GameMode.SURVIVAL) {
             if (player.getAllowFlight()) {
                 e.setCancelled(true);
@@ -30,10 +26,10 @@ public class BlockPlace implements Listener {
             int z = block.getZ();
             switch (player.getWorld().getName()) {
                 case "MLGRush2x1":
-                    if (y > 112 || y < 85 || Math.abs(z - Core.randomToBed(z)) > 30 || Math.abs(x) > 50)
+                    Member member = Member.getMember(player);
+                    if (y > MLGRush2x1.MapLocations(member.game.map)[2] || y < 85 || Math.abs(z - member.game.coord) > 30 || Math.abs(x - member.game.map * 500) > 30)
                         e.setCancelled(true);
                     else {
-                        Member member = Member.getMember(player);
                         member.game.Blocks.add(new BlockPosition(x, y, z));
                         member.PlacedBlocks += 1;
                         if (member.PlacedBlocks > 32) {
@@ -41,17 +37,15 @@ public class BlockPlace implements Listener {
                             int[] i = member.integerCache;
                             player.getInventory().setItem(i[1], ItemStackList.Blocks[i[4]][member.user.lang]);
                         }
-                        if (((MLGRush2x1) member.game).Preference[3]) {
-                            MLGRush2x1.Diff.put(new BlockPosition(x, y, z), 0);
-                            MLGRush2x1.id++;
-                        }
+                        if (member.game.Preference[3])
+                            MLGRush2x1.inst.Diff.put(new BlockPosition(x, y, z), 0);
                     }
                     break;
                 case "StickDuel":
-                    if (y > 112 || y < 85 || Math.abs(z - Core.randomToBed(z)) > 30 || Math.abs(x) > 50)
+                    member = Member.getMember(player);
+                    if (y > 112 || y < 85 || Math.abs(z - member.game.coord) > 30 || Math.abs(x - member.game.map * 500) > 30)
                         e.setCancelled(true);
                     else {
-                        Member member = Member.getMember(player);
                         member.game.Blocks.add(new BlockPosition(x, y, z));
                         member.PlacedBlocks += 1;
                         if (member.PlacedBlocks > 32) {
@@ -62,16 +56,16 @@ public class BlockPlace implements Listener {
                     }
                     break;
                 case "MLGRush4x1":
-                    if (y > 112 || y < 85 || Math.abs(z - Core.randomToBed(z)) > 50 || Math.abs(x) > 50)
-                        e.setCancelled(true);
-                    else {
+//                    if (y > 112 || y < 85 || Math.abs(z - member.game.coord) > 50 || Math.abs(x) > 50)
+//                        e.setCancelled(true);
+//                    else {
 //                        Core.PlacedBlocks.put(uuid, Core.PlacedBlocks.get(uuid) + 1);
 //                        MLGRush4x1.Blocks.get(Core.PlayerRoom.get(uuid)).add(new BlockPosition(block.getX(), y, z));
 //                        if (Core.PlacedBlocks.get(uuid) > 48) {
 //                            Core.PlacedBlocks.put(uuid, 0);
 //                            player.getInventory().setItem(Core.integerCache.get(uuid)[1], ItemStackList.Blocks[Core.integerCache.get(uuid)[4]][User.getUser(player).lang]);
 //                        }
-                    }
+//                    }
                     break;
             }
         }

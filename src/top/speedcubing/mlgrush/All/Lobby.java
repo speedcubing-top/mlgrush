@@ -1,10 +1,6 @@
 package top.speedcubing.mlgrush.All;
 
 
-import top.speedcubing.mlgrush.List.EntityList;
-import top.speedcubing.mlgrush.List.ItemStackList;
-import top.speedcubing.mlgrush.List.StringList;
-import top.speedcubing.mlgrush.Member;
 import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
 import net.minecraft.server.v1_8_R3.PlayerConnection;
 import org.bukkit.GameMode;
@@ -16,6 +12,10 @@ import org.bukkit.inventory.PlayerInventory;
 import top.speedcubing.lib.bukkit.PlayerUtils;
 import top.speedcubing.lib.bukkit.SideBar;
 import top.speedcubing.lib.bukkit.entity.NPC;
+import top.speedcubing.mlgrush.List.EntityList;
+import top.speedcubing.mlgrush.List.ItemStackList;
+import top.speedcubing.mlgrush.List.StringList;
+import top.speedcubing.mlgrush.Member;
 import top.speedcubing.server.libs.User;
 import top.speedcubing.server.speedcubingServer;
 
@@ -64,7 +64,6 @@ public class Lobby {
 
     public static void Items(Player player) {
         int lang = User.getUser(player).lang;
-        player.setItemOnCursor(new ItemStack(Material.AIR));
         PlayerInventory inventory = player.getInventory();
         inventory.clear();
         inventory.setItem(0, ItemStackList.LobbyItems[0][lang]);
@@ -72,17 +71,5 @@ public class Lobby {
         inventory.setItem(8, ItemStackList.LobbyItems[2][lang]);
         inventory.setItem(4, ItemStackList.LobbyItems[3][lang]);
         player.updateInventory();
-    }
-
-    public static void DeleteChallenge(Member member) {
-        member.Challenge.clear();
-        member.StickDuel = null;
-        for (Member m : Member.users.values()) {
-            m.Challenge.remove(member);
-        }
-        for (Member m : Member.users.values()) {
-            if (m.StickDuel != null && m.StickDuel.equals(member))
-                m.StickDuel = null;
-        }
     }
 }

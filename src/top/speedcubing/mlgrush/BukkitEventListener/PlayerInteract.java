@@ -10,8 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import top.speedcubing.mlgrush.Core.MLGRush2x1;
-import top.speedcubing.mlgrush.Core.StickDuel;
+import top.speedcubing.mlgrush.All.Lobby;
 import top.speedcubing.mlgrush.List.ItemStackList;
 import top.speedcubing.mlgrush.List.StringList;
 import top.speedcubing.mlgrush.Member;
@@ -59,11 +58,11 @@ public class PlayerInteract implements Listener {
                             member.Spectate = -1;
                             String str = speedcubingServer.getFormat(User.getUser(player).rank)[1] + player.getName();
                             for (Member m : member.game.Spectators) {
-                                m.user.player.sendMessage(StringList.LeaveSpectate[m.user.lang].replace("%player%", str));
+                                m.user.bSendMessage(StringList.LeaveSpectate[m.user.lang].replace("%player%", str));
                             }
-                            for (Member m : ((MLGRush2x1) member.game).Players) {
-                                m.user.player.sendMessage(StringList.LeaveSpectate[m.user.lang].replace("%player%", str));
-                                m.user.player.showPlayer(player);
+                            for (Member m : member.game.Players) {
+                                m.user.bSendMessage(StringList.LeaveSpectate[m.user.lang].replace("%player%", str));
+                                m.user.bShowPlayer(player);
                             }
                         }
                         break;
@@ -75,11 +74,11 @@ public class PlayerInteract implements Listener {
                             member.Spectate = -1;
                             String str = speedcubingServer.getFormat(User.getUser(player).rank)[1] + player.getName();
                             for (Member m : member.game.Spectators) {
-                                m.user.player.sendMessage(StringList.LeaveSpectate[m.user.lang].replace("%player%", str));
+                                m.user.bSendMessage(StringList.LeaveSpectate[m.user.lang].replace("%player%", str));
                             }
-                            for (Member m : ((StickDuel) member.game).Players) {
-                                m.user.player.sendMessage(StringList.LeaveSpectate[m.user.lang].replace("%player%", str));
-                                m.user.player.showPlayer(player);
+                            for (Member m : member.game.Players) {
+                                m.user.bSendMessage(StringList.LeaveSpectate[m.user.lang].replace("%player%", str));
+                                m.user.bShowPlayer(player);
                             }
                         }
                         break;

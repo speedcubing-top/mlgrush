@@ -6,6 +6,7 @@ import top.speedcubing.server.config;
  *
  **/
 public class StringList {
+    public static String[][] Lores = {{" ", "§fIn Fights: §b%int%", "§fQueued: §b%int%"}, {" ", "§fIn Fights: §b%int%", "§fQueued: §b%int%"}, {" ", "§fIn Fights: §b%int%", "§fQueued: §b%int%"}, {" ", "§fIn Fights: §b%int%", "§fQueued: §b%int%"}};
 
     public static String[] LobbyJoinMessage = {
             "%f0%%name%%f1% has joined the Lobby!",

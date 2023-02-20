@@ -4,13 +4,17 @@ import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import top.speedcubing.mlgrush.All.Lobby;
-import top.speedcubing.mlgrush.Core.MLGRush2x1;
-import top.speedcubing.mlgrush.Core.MLGRushCategory.MLGRushGame;
+import top.speedcubing.mlgrush.Core.Game.Duel;
+import top.speedcubing.mlgrush.Core.Game.MLGRush2x1;
+import top.speedcubing.mlgrush.Core.Game.StickDuel;
 import top.speedcubing.mlgrush.List.EntityList;
 import top.speedcubing.server.libs.User;
 import top.speedcubing.server.speedcubingServer;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class Member {
     public static Map<Integer, Member> users = new HashMap<>();
@@ -27,36 +31,46 @@ public class Member {
 
     //Challenge
     public final Set<Member> Challenge = new HashSet<>();
-    public Member StickDuel;
+    public Member stick;
     //spec
     public int Spectate;
     public int PlacedBlocks;
     public boolean iseditingkit;
 
-    public MLGRushGame game;
+    public Duel game;
     public int[] integerCache;
-
     public Member LastDamage;
-    public boolean oldKb;
-    public boolean inGame;
 
     public Member(Player player) {
         this.user = User.getUser(player);
         users.put(user.id, this);
         Lobby.Join(player, true);
-        UUID uuid = player.getUniqueId();
-        new Thread(() -> integerCache = ArrayUtils.toPrimitive(speedcubingServer.connection.select("mlgrush_stick,mlgrush_block,mlgrush_pickaxe,mlgrush_stickskin,mlgrush_blockskin,mlgrush_autoreset,mlgrush_hitdelay,mlgrush_falldamage,mlgrush_autoremove,mlgrush_oldkb").from("playersdata").where("uuid='" + uuid + "'").getIntArray())).start();
+        new Thread(() -> integerCache = ArrayUtils.toPrimitive(speedcubingServer.connection.select("mlgrush_stick,mlgrush_block,mlgrush_pickaxe,mlgrush_stickskin,mlgrush_blockskin,mlgrush_autoreset,mlgrush_hitdelay,mlgrush_falldamage,mlgrush_autoremove,mlgrush_oldkb").from("playersdata").where("id=" + user.id).getIntArray())).start();
     }
 
 
     public void QuitAllQueue() {
-        if (MLGRush2x1.Queue != null && MLGRush2x1.Queue.equals(this)) {
-            MLGRush2x1.Queue = null;
-            EntityList.Lobbys[4].setName("§a0/2");
+        for (int i = 0; i < MLGRush2x1.inst.maps; i++) {
+            if (MLGRush2x1.inst.Queue[i] == this) {
+                MLGRush2x1.inst.Queue[i] = null;
+                MLGRush2x1.inst.lore(i, 0, false);
+            }
         }
-        if (top.speedcubing.mlgrush.Core.StickDuel.Queue != null && top.speedcubing.mlgrush.Core.StickDuel.Queue.equals(this)) {
-            top.speedcubing.mlgrush.Core.StickDuel.Queue = null;
-            EntityList.Lobbys[3].setName("§a0/2");
+        for (int i = 0; i < StickDuel.inst.maps; i++) {
+            if (StickDuel.inst.Queue[i] == this) {
+                StickDuel.inst.Queue[i] = null;
+                StickDuel.inst.lore(i, 0, false);
+            }
+        }
+    }
+
+    public void DeleteChallenge() {
+        Challenge.clear();
+        stick = null;
+        for (Member m : Member.users.values()) {
+            m.Challenge.remove(this);
+            if (m.stick != null && m.stick.equals(this))
+                m.stick = null;
         }
     }
 }

@@ -1,20 +1,19 @@
-package top.speedcubing.mlgrush.Core;
+package top.speedcubing.mlgrush.Core.Game;
 
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.WorldServer;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.scoreboard.DisplaySlot;
 import top.speedcubing.lib.bukkit.PlayerUtils;
 import top.speedcubing.lib.bukkit.SideBar;
-import top.speedcubing.lib.bukkit.entity.Hologram;
-import top.speedcubing.lib.utils.TimeFormatter;
-import top.speedcubing.mlgrush.All.Lobby;
-import top.speedcubing.mlgrush.Core.MLGRushCategory.MLGRushDuels;
-import top.speedcubing.mlgrush.List.EntityList;
+import top.speedcubing.lib.bukkit.WorldUtils;
+import top.speedcubing.mlgrush.Core.Core;
 import top.speedcubing.mlgrush.List.ItemStackList;
 import top.speedcubing.mlgrush.List.StringList;
 import top.speedcubing.mlgrush.Main;
@@ -23,90 +22,39 @@ import top.speedcubing.server.libs.User;
 import top.speedcubing.server.speedcubingServer;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
-public class MLGRush2x1 extends MLGRushDuels {
+public class MLGRush2x1 extends Duel {
+    public static DuelCore inst = new DuelCore("MLGRush2x1");
+
     public static Inventory[] InventoryMap2x1 = new Inventory[4];
     public static final InventoryHolder Map2x1Holder = () -> null;
-
-    public static Member Queue = null;
-
-    public static boolean[] Rooms = new boolean[100];
-    public static final Set<Member> QueueCoolDown = new HashSet<>();
-
-    public static HashMap<BlockPosition, Integer> Diff = new HashMap<>();
-    public static int id = 0;
-
     public static Material[][] mapsymbols = {{Material.STICK, Material.SANDSTONE}, {Material.STICK}};
-    public final Member[] Players2;
-    public boolean[] Preference;
 
-    public static void Load() {
-        for (int i = 0; i < 100; i++) {
-            Rooms[i] = true;
-        }
-        org.bukkit.World world = Bukkit.getWorld("MLGRush2x1");
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(Main.class), () -> {
-            Set<BlockPosition> ba = new HashSet<>();
-            for (Map.Entry<BlockPosition, Integer> x : Diff.entrySet()) {
-                int age = x.getValue();
-                if (age == 100) {
-                    BlockPosition b = x.getKey();
-                    world.getBlockAt(b.getX(), b.getY(), b.getZ()).setType(Material.REDSTONE_BLOCK);
-                } else if (age == 120) {
-                    BlockPosition b = x.getKey();
-                    world.getBlockAt(b.getX(), b.getY(), b.getZ()).setType(Material.AIR);
-                    ba.add(b);
-                }
-            }
-            for (BlockPosition b : ba) {
-                Diff.remove(b);
-            }
-            for (BlockPosition x : Diff.keySet()) {
-                Diff.put(x, Diff.get(x) + 1);
-            }
-        }, 0, 1);
-    }
+    public final Member[] Players2;
 
     public MLGRush2x1(Member member1, Member member2, int map) {
-        int room = -1;
-        for (int h = 0; h < 100; h++) {
-            if (Rooms[h]) {
-                room = h;
-                break;
-            }
-        }
-        Rooms[room] = false;
-        this.room = room;
-        this.map = map;
+        super(map, "MLGRush2x1");
+        MLGRush2x1.inst.lore(map, inst.Rooms[map].size(), true);
         Players = new Random().nextBoolean() ? new Member[]{member1, member2} : new Member[]{member2, member1};
         Players2 = new Random().nextBoolean() ? new Member[]{member1, member2} : new Member[]{member2, member1};
         Player[] players = {Players[0].user.player, Players[1].user.player};
         String[] formats = {speedcubingServer.getFormat(User.getUser(players[0]).rank)[1], speedcubingServer.getFormat(User.getUser(players[1]).rank)[1]};
         actionbar = formats[0] + players[0].getName() + " §e0 §8x §e0 " + formats[1] + players[1].getName();
-        World world = Bukkit.getWorld("MLGRush2x1");
         int[] Map = MapLocations(map);
-        double z = Core.roomToBed(room);
         Bukkit.getScheduler().runTask(Main.getPlugin(Main.class), () -> {
-            Players2[0].user.player.teleport(new Location(world, Map[0] + 0.5, Map[1] + 1, z + 0.5 + Map[3], 90, 0));
-            Players2[1].user.player.teleport(new Location(world, Map[0] * -1 + 0.5, Map[1] + 1, z + 0.5 - Map[3], 270, 0));
+            Players2[0].user.bTeleport(new Location(world, 500 * map + Map[0] + 0.5, Map[1] + 1, coord + 0.5 + Map[3] + Map[6], Map[4], 0));
+            Players2[1].user.bTeleport(new Location(world, 500 * map + Map[0] * -1 + 0.5, Map[1] + 1, coord + 0.5 - Map[3], Map[5], 0));
             int[] settings = new int[5];
             for (Member p : Players) {
-                p.game = this;
-                p.user.player.setGameMode(GameMode.SURVIVAL);
-                p.user.player.sendMessage(StringList.MLGRushOpponentFound[p.user.lang]);
-                Lobby.DeleteChallenge(p);
+                p.user.bSendMessage(StringList.MLGRushOpponentFound[p.user.lang]);
 //                Core.QuitAllGame(p);
-                p.QuitAllQueue();
-                p.inGame = true;
-                p.PlacedBlocks = 0;
                 int[] ints = p.integerCache;
                 settings[0] += ints[5];
                 settings[1] += ints[6];
                 settings[2] += ints[7];
                 settings[3] += ints[8];
                 settings[4] += ints[9];
-                Inventory inventory = p.user.player.getInventory();
+                Inventory inventory = p.user.bGetInventory();
                 inventory.clear();
                 inventory.setItem(ints[0], ItemStackList.Sticks[ints[3]][p.user.lang]);
                 inventory.setItem(ints[1], ItemStackList.Blocks[ints[4]][p.user.lang]);
@@ -120,36 +68,7 @@ public class MLGRush2x1 extends MLGRushDuels {
                         .changeableLine(formats[1] + players[1].getName() + sidebar[4] + "§e0", 1)
                         .staticLine(sidebar[5], 0).create();
             }
-
-            Preference = new boolean[]{settings[0] > 1, settings[1] > 1, settings[2] > 1, settings[3] > 1, settings[4] > 1};
-            if (settings[1] > 1) {
-                for (Player p : players) {
-                    p.setMaximumNoDamageTicks(0);
-                }
-            }
-            if (settings[4] > 1) {
-                Players[0].oldKb = true;
-                Players[1].oldKb = true;
-            }
-            TimerTask = new TimerTask() {
-                int x = 0;
-
-                @Override
-                public void run() {
-                    Time = x;
-                    Set<Member> targets = new HashSet<>();
-                    targets.addAll(Arrays.asList(Players));
-                    targets.addAll(Spectators);
-                    for (Member m : targets) {
-                        if (m != null) {
-                            PlayerUtils.sendActionBar(m.user.player, actionbar);
-                            m.user.player.getScoreboard().getObjective(DisplaySlot.SIDEBAR).setDisplayName(StringList.MLGRushSideBar[m.user.lang][0].replace("%t%", new TimeFormatter(x, TimeUnit.SECONDS).format("%H%:", true).format("%m%:%s%", false).toString()));
-                        }
-                    }
-                    x++;
-                }
-            };
-            new Timer().schedule(TimerTask, 0, 1000);
+            initStage2(settings, players, StringList.MLGRushSideBar, Players);
 //            int size = Core.specMenu2x1.size();
 //            int size2 = Core.specMenustick.size();
 //            int size3 = Core.specMenu4x1.size();
@@ -180,49 +99,11 @@ public class MLGRush2x1 extends MLGRushDuels {
     public static int[] MapLocations(int map) {
         switch (map) {
             case 0:
-                return new int[]{13, 99, 112, 0};
+                return new int[]{13, 99, 112, 0, 90, -90, 0};
             case 1:
-                return null;
+                return new int[]{8, 99, 112, 8, 135, -45, 1};
         }
         return null;
-    }
-
-    public static void queue(Player player) {
-        Member member = Member.getMember(player);
-        if (!QueueCoolDown.contains(member)) {
-            player.playSound(player.getLocation(), Sound.NOTE_PLING, 1F, 1F);
-            QueueCoolDown.add(member);
-            Hologram stand = EntityList.Lobbys[4];
-            if (Queue == null) {
-                member.QuitAllQueue();
-                player.closeInventory();
-                player.sendMessage(StringList.MLGRushQueue[User.getUser(player).lang]);
-                Queue = member;
-                stand.setName("§a1/2");
-            } else {
-                stand.setName("§a0/2");
-                if (Queue.equals(member))
-                    player.sendMessage(StringList.MLGRushUnQueue[User.getUser(player).lang]);
-                else
-                    new MLGRush2x1(member, Queue, 0);
-                Queue = null;
-            }
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    QueueCoolDown.remove(member);
-                }
-            }, 2000);
-        }
-    }
-
-    public void resetBlocks() {
-        World world = Bukkit.getWorld("MLGRush2x1");
-        for (BlockPosition pos : Blocks) {
-            Diff.remove(pos);
-            world.getBlockAt(pos.getX(), pos.getY(), pos.getZ()).setType(Material.AIR);
-        }
-        Blocks.clear();
     }
 
     public void joinSpec(Player player) {
@@ -230,14 +111,14 @@ public class MLGRush2x1 extends MLGRushDuels {
         Member member = Member.getMember(player);
         Core.QuitAllGame(uuid);
         member.QuitAllQueue();
-        player.teleport(new Location(Bukkit.getWorld("MLGRush2x1"), 0.5, 110, Core.roomToBed(room), 0, 0));
+        player.teleport(new Location(Bukkit.getWorld("MLGRush2x1"), 0.5, 110, coord, 0, 0));
         String[] sidebar = StringList.MLGRushSideBar[member.user.lang];
         String[] suffix = (Score[0] == Score[1]) ? new String[]{"§e" + Score[0], "§e" + Score[1]} : (Score[0] > Score[1] ? new String[]{"§a" + Score[0], "§c" + Score[1]} : new String[]{"§c" + Score[0], "§a" + Score[1]});
         new SideBar(player, sidebar[0].replace("%h%", Time / 3600 == 0 ? "" : Time / 3600 + ":").replace("%m%", String.format("%02d", (Time % 3600) / 60) + ":").replace("%s%", String.format("%02d", Time % 60)))
                 .staticLine(sidebar[1], 4)
                 .staticLine(sidebar[2], 3)
-                .changeableLine(speedcubingServer.getFormat(Players[0].user.rank)[1] + Players[0].user.player.getName() + sidebar[3] + suffix[0], 2)
-                .changeableLine(speedcubingServer.getFormat(Players[1].user.rank)[1] + Players[1].user.player.getName() + sidebar[4] + suffix[1], 1)
+                .changeableLine(speedcubingServer.getFormat(Players[0].user.rank)[1] + Players[0].user.bGetName() + sidebar[3] + suffix[0], 2)
+                .changeableLine(speedcubingServer.getFormat(Players[1].user.rank)[1] + Players[1].user.bGetName() + sidebar[4] + suffix[1], 1)
                 .staticLine(sidebar[5], 0).create();
         player.getInventory().clear();
         player.getInventory().setItem(8, ItemStackList.HubSlime[member.user.lang]);
@@ -246,7 +127,7 @@ public class MLGRush2x1 extends MLGRushDuels {
         targets.addAll(Arrays.asList(Players));
         String name = speedcubingServer.getFormat(User.getUser(player).rank)[1] + player.getName();
         for (Member m : targets) {
-            m.user.player.sendMessage(StringList.JoinSpectate[m.user.lang].replace("%player%", name));
+            m.user.bSendMessage(StringList.JoinSpectate[m.user.lang].replace("%player%", name));
         }
         Spectators.add(member);
         member.Spectate = room;
@@ -260,7 +141,6 @@ public class MLGRush2x1 extends MLGRushDuels {
     public void fell(Player player) {
         Member member = Member.getMember(player);
         String[] format = speedcubingServer.getFormat(User.getUser(player).rank);
-        int z = Core.randomToBed(player.getLocation().getZ());
         member.PlacedBlocks = 0;
         if (Preference[0])
             resetBlocks();
@@ -273,7 +153,7 @@ public class MLGRush2x1 extends MLGRushDuels {
             killer.playSound(killer.getLocation(), Sound.SUCCESSFUL_HIT, 1F, 1F);
             String[] format1 = speedcubingServer.getFormat(Players2[1 - t[0]].user.rank);
             for (Member m : targets) {
-                m.user.player.sendMessage(StringList.MLGRushKill[m.user.lang]
+                m.user.bSendMessage(StringList.MLGRushKill[m.user.lang]
                         .replace("%format0%", format[1])
                         .replace("%name0%", player.getName())
                         .replace("%format1%", format1[1])
@@ -281,13 +161,13 @@ public class MLGRush2x1 extends MLGRushDuels {
             }
         } else
             for (Member m : targets) {
-                m.user.player.sendMessage(StringList.MLGRushFell[m.user.lang].replace("%format0%", format[0]).replace("%name%", player.getName()));
+                m.user.bSendMessage(StringList.MLGRushFell[m.user.lang].replace("%format0%", format[0]).replace("%name%", player.getName()));
             }
         WorldServer mlgrush2x1 = ((CraftWorld) Bukkit.getWorld("MLGRush2x1")).getHandle();
         int[] Map = MapLocations(map);
         for (int y = Map[2]; y >= Map[1]; y--) {
-            if (mlgrush2x1.getType(new BlockPosition(Map[0] * t[1], y, z + t[1] * Map[3])) != net.minecraft.server.v1_8_R3.Blocks.AIR.getBlockData()) {
-                player.teleport(new Location(player.getWorld(), 0.5 + Map[0] * t[1], y + 1, z + 0.5 + t[1] * Map[3], 180 - 90 * t[1], 0));
+            if (mlgrush2x1.getType(new BlockPosition(map * 500 + Map[0] * t[1], y, coord + t[1] * Map[3])) != net.minecraft.server.v1_8_R3.Blocks.AIR.getBlockData()) {
+                player.teleport(new Location(player.getWorld(), map * 500 + 0.5 + Map[0] * t[1], y + 1, coord + 0.5 + t[1] * Map[3] + (t[0] == 0 ? Map[6] : 0), Map[t[0] + 4], 0));
                 break;
             }
         }
@@ -298,7 +178,7 @@ public class MLGRush2x1 extends MLGRushDuels {
     public void breakBed(Player breaker, int bedX) {
         Player[] players = {Players[0].user.player, Players[1].user.player};
         Player[] players2 = {Players2[0].user.player, Players2[1].user.player};
-        if (bedX / Math.abs(bedX) == (players2[0] == breaker ? 1 : -1))
+        if ((bedX - map * 500) / Math.abs(bedX - map * 500) == (players2[0] == breaker ? 1 : -1))
             breaker.sendMessage(StringList.MLGRushBreakOwnBed[User.getUser(breaker).lang]);
         else {
             resetBlocks();
@@ -332,13 +212,13 @@ public class MLGRush2x1 extends MLGRushDuels {
                 SideBar.getSidebar(m.user.player)
                         .setLine(formats[0] + sidebar[3] + suffix[0], 3)
                         .setLine(formats[1] + sidebar[4] + suffix[1], 4);
-                m.user.player.sendMessage(StringList.MLGRushBedbreak[m.user.lang].replace("%player%", name2).replace("%player2%", breakerName));
+                m.user.bSendMessage(StringList.MLGRushBedbreak[m.user.lang].replace("%player%", name2).replace("%player2%", breakerName));
                 PlayerUtils.sendActionBar(m.user.player, actionbar);
             }
             int[] Map = MapLocations(map);
             int t = 1;
             for (Player p : players2) {
-                p.teleport(new Location(p.getWorld(), 0.5 + Map[0] * t, Map[1] + 1, 0.5 + Core.roomToBed(room) + t * Map[3], 180 - 90 * t, 0));
+                p.teleport(new Location(p.getWorld(), map * 500 + 0.5 + Map[0] * t, Map[1] + 1, coord + 0.5 + t * Map[3] + (t == 1 ? Map[6] : 0), Map[(1 - t) / 2 + 4], 0));
                 Core.resetItems(p);
                 t -= 2;
             }
@@ -348,25 +228,25 @@ public class MLGRush2x1 extends MLGRushDuels {
     public void gameEnd(Member member) {
         int quitter = Players[0].equals(member) ? 1 : 0;
         for (Member m : Players) {
-            m.oldKb = false;
-            m.inGame = false;
+            m.game = null;
             m.PlacedBlocks = -1;
         }
         Player[] players = {Players[0].user.player, Players[1].user.player};
         players[quitter].sendMessage(StringList.MLGRushOpponentDisconnect[Players[quitter].user.lang]);
         resetBlocks();
-        TimerTask.cancel();
+        timer.cancel();
         Location lb = new Location(Bukkit.getWorld("world"), 0.5, 100, 0.5, 0, 0);
         players[quitter].teleport(lb);
         for (Member m : Spectators) {
             for (Player pp : players) {
                 pp.showPlayer(m.user.player);
             }
-            m.user.player.setAllowFlight(false);
-            m.user.player.sendMessage(StringList.MLGRushGameEnd[m.user.lang]);
-            m.user.player.teleport(lb);
+            m.user.bSetAllowFlight(false);
+            m.user.bSendMessage(StringList.MLGRushGameEnd[m.user.lang]);
+            m.user.bTeleport(lb);
             m.Spectate = -1;
         }
+        WorldUtils.fillAir(-30 + 500 * map, 80, -30 + coord, 30 + map * 500, 120, 30 + coord, world);
 //        Core.specMenu2x1.remove(room);
 //        int key = -1;
 //        if (Core.specMenu2x1.containsKey(room))
@@ -391,6 +271,7 @@ public class MLGRush2x1 extends MLGRushDuels {
 //                p.updateInventory();
 //            }
 //        }
-        Rooms[room] = true;
+        inst.Rooms[map].remove(room);
+        MLGRush2x1.inst.lore(map, inst.Rooms[map].size(), true);
     }
 }

@@ -18,8 +18,6 @@ public class BlockEditor {
     public static final InventoryHolder sandstoneholder = () -> null;
     public static final InventoryHolder quartzeditor = () -> null;
     public static final InventoryHolder clayeditor = () -> null;
-
-
     static int length;
 
     public void Load() {

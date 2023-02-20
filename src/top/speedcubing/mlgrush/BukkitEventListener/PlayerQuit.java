@@ -4,7 +4,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
-import top.speedcubing.mlgrush.All.Lobby;
 import top.speedcubing.mlgrush.Member;
 import top.speedcubing.server.speedcubingServer;
 
@@ -18,7 +17,7 @@ public class PlayerQuit implements Listener {
             member.game.gameEnd(member);
         else {
             member.QuitAllQueue();
-            Lobby.DeleteChallenge(member);
+            member.DeleteChallenge();
             member.iseditingkit = false;
         }
         new Thread(() -> {
