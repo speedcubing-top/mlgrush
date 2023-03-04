@@ -19,7 +19,6 @@ import top.speedcubing.mlgrush.Core.Game.StickDuel;
 import top.speedcubing.mlgrush.List.ItemStackList;
 import top.speedcubing.mlgrush.Member;
 import top.speedcubing.server.libs.User;
-import top.speedcubing.server.listeners.PlayerVelocity;
 
 public class EntityDamageByEntity implements Listener {
 
@@ -84,7 +83,7 @@ public class EntityDamageByEntity implements Listener {
                         velocity.setX(velocity.getX() * horizontalMultiplier);
                         velocity.setY(velocity.getY() * verticalMultiplier);
                         velocity.setZ(velocity.getZ() * horizontalMultiplier);
-                        PlayerVelocity.applyKnockback(velocity, User.getUser(victim));
+                        velocity = member.user.applyKnockback(velocity);
                         victim.setVelocity(velocity);
                         (((CraftPlayer) victim).getHandle()).playerConnection.sendPacket(new PacketPlayOutEntityVelocity(((CraftPlayer) victim).getHandle()));
                     }
