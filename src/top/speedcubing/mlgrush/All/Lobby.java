@@ -4,10 +4,8 @@ package top.speedcubing.mlgrush.All;
 import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
 import net.minecraft.server.v1_8_R3.PlayerConnection;
 import org.bukkit.GameMode;
-import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import top.speedcubing.lib.bukkit.PlayerUtils;
 import top.speedcubing.lib.bukkit.SideBar;
@@ -15,7 +13,7 @@ import top.speedcubing.lib.bukkit.entity.NPC;
 import top.speedcubing.mlgrush.List.EntityList;
 import top.speedcubing.mlgrush.List.ItemStackList;
 import top.speedcubing.mlgrush.List.StringList;
-import top.speedcubing.mlgrush.Member;
+import top.speedcubing.server.database.DataCenter;
 import top.speedcubing.server.libs.User;
 import top.speedcubing.server.speedcubingServer;
 
@@ -56,7 +54,7 @@ public class Lobby {
                 .staticLine(sidebar[4], 4)
                 .staticLine(sidebar[3], 3)
                 .staticLine(sidebar[2], 2)
-                .changeableLine(sidebar[1] + speedcubingServer.getOnlineCount(), 1)
+                .changeableLine(sidebar[1] + DataCenter.onlineCount, 1)
                 .staticLine(sidebar[0], 0).create();
         PlayerUtils.sendActionBar(player, "");
         player.setGameMode(GameMode.ADVENTURE);

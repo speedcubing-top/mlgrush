@@ -7,6 +7,7 @@ import top.speedcubing.lib.bukkit.SideBar;
 import top.speedcubing.lib.bukkit.event.PlayInEvent;
 import top.speedcubing.lib.eventbus.LibEventHandler;
 import top.speedcubing.mlgrush.List.StringList;
+import top.speedcubing.server.database.DataCenter;
 import top.speedcubing.server.events.CubingTickEvent;
 import top.speedcubing.server.events.player.HubEvent;
 import top.speedcubing.server.events.player.NickEvent;
@@ -21,10 +22,9 @@ public class ServerEvent {
 
     @LibEventHandler
     public void CubingTickEvent(CubingTickEvent e) {
-        int a = speedcubingServer.getOnlineCount();
         for (SideBar s : SideBar.getSidebars()) {
             if (s.player.getWorld().getName().equals("world"))
-                s.setLine(StringList.LobbySideBar[User.getUser(s.player).lang][1] + a, 4);
+                s.setLine(StringList.LobbySideBar[User.getUser(s.player).lang][1] + DataCenter.onlineCount, 4);
         }
     }
 

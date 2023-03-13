@@ -45,7 +45,7 @@ public class Member {
         this.user = User.getUser(player);
         users.put(user.id, this);
         Lobby.Join(player, true);
-        new Thread(() -> integerCache = ArrayUtils.toPrimitive(speedcubingServer.connection.select("mlgrush_stick,mlgrush_block,mlgrush_pickaxe,mlgrush_stickskin,mlgrush_blockskin,mlgrush_autoreset,mlgrush_hitdelay,mlgrush_falldamage,mlgrush_autoremove,mlgrush_oldkb").from("playersdata").where("id=" + user.id).getIntArray())).start();
+        new Thread(() -> integerCache = ArrayUtils.toPrimitive(user.dbSelect("mlgrush_stick,mlgrush_block,mlgrush_pickaxe,mlgrush_stickskin,mlgrush_blockskin,mlgrush_autoreset,mlgrush_hitdelay,mlgrush_falldamage,mlgrush_autoremove,mlgrush_oldkb").getIntArray())).start();
     }
 
 
