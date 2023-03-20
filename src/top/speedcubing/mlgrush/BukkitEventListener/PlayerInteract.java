@@ -10,12 +10,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import top.speedcubing.mlgrush.All.Lobby;
 import top.speedcubing.mlgrush.List.ItemStackList;
 import top.speedcubing.mlgrush.List.StringList;
 import top.speedcubing.mlgrush.Member;
 import top.speedcubing.server.libs.User;
-import top.speedcubing.server.speedcubingServer;
 
 public class PlayerInteract implements Listener {
 
@@ -56,7 +54,7 @@ public class PlayerInteract implements Listener {
                             player.setAllowFlight(false);
                             member.game.Spectators.remove(member);
                             member.Spectate = -1;
-                            String str = speedcubingServer.getFormat(User.getUser(player).rank)[1] + player.getName();
+                            String str = User.getUser(player).getFormatName(false);
                             for (Member m : member.game.Spectators) {
                                 m.user.bSendMessage(StringList.LeaveSpectate[m.user.lang].replace("%player%", str));
                             }
@@ -72,7 +70,7 @@ public class PlayerInteract implements Listener {
                             Member member = Member.getMember(player);
                             member.game.Spectators.remove(member);
                             member.Spectate = -1;
-                            String str = speedcubingServer.getFormat(User.getUser(player).rank)[1] + player.getName();
+                            String str = member.user.getFormatName(false);
                             for (Member m : member.game.Spectators) {
                                 m.user.bSendMessage(StringList.LeaveSpectate[m.user.lang].replace("%player%", str));
                             }

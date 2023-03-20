@@ -23,10 +23,10 @@ import java.util.TimerTask;
 public class Lobby {
     public static void Join(Player player, boolean externalMessage) {
         String name = player.getName();
-        String[] format = speedcubingServer.getFormat(User.getUser(player).rank);
-        int lang = User.getUser(player).lang;
+        User user = User.getUser(player);
+        String[] format = user.getFormat();
         if (externalMessage)
-            player.sendMessage(StringList.LobbyJoinMessage[lang]
+            player.sendMessage(StringList.LobbyJoinMessage[user.lang]
                     .replace("%f0%", format[0])
                     .replace("%f1%", format[2])
                     .replace("%name%", name));

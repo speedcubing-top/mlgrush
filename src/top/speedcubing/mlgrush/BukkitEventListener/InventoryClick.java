@@ -83,14 +83,14 @@ public class InventoryClick implements Listener {
                             if (lastdamager.LastDamage != null && lastdamager.LastDamage.equals(member)) {
                                 lastdamager.Challenge.add(member);
                                 lastdamager.stick = null;
-                                player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", speedcubingServer.getFormat(lastdamager.user.rank)[1] + lastdamager.user.bGetName()).replace("%gametype%", "§bMLGRush 2x1"));
-                                lastdamager.user.bSendMessage(StringList.ChallengeFrom[lastdamager.user.lang].replace("%player%", speedcubingServer.getFormat(User.getUser(player).rank)[1] + player.getName()).replace("%gametype%", "§bMLGRush 2x1"));
+                                player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", lastdamager.user.getFormatName(false)).replace("%gametype%", "§bMLGRush 2x1"));
+                                lastdamager.user.bSendMessage(StringList.ChallengeFrom[lastdamager.user.lang].replace("%player%", member.user.getFormatName(false)).replace("%gametype%", "§bMLGRush 2x1"));
                             } else
-                                player.sendMessage(StringList.AlreadyChallenged[lang].replace("%player%", speedcubingServer.getFormat(lastdamager.user.rank)[1] + lastdamager.user.bGetName()).replace("%gametype%", "§bMLGRush 2x1"));
+                                player.sendMessage(StringList.AlreadyChallenged[lang].replace("%player%", lastdamager.user.getFormatName(false)).replace("%gametype%", "§bMLGRush 2x1"));
                         } else {
                             lastdamager.Challenge.add(member);
-                            player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", speedcubingServer.getFormat(lastdamager.user.rank)[1] + lastdamager.user.bGetName()).replace("%gametype%", "§bMLGRush 2x1"));
-                            lastdamager.user.bSendMessage(StringList.ChallengeFrom[lastdamager.user.lang].replace("%player%", speedcubingServer.getFormat(User.getUser(player).rank)[1] + player.getName()).replace("%gametype%", "§bMLGRush 2x1"));
+                            player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", lastdamager.user.getFormatName(false)).replace("%gametype%", "§bMLGRush 2x1"));
+                            lastdamager.user.bSendMessage(StringList.ChallengeFrom[lastdamager.user.lang].replace("%player%", member.user.getFormatName(false)).replace("%gametype%", "§bMLGRush 2x1"));
                         }
                         break;
                     case 15:
@@ -99,15 +99,15 @@ public class InventoryClick implements Listener {
                             if (lastdamager.LastDamage.equals(member)) {
                                 lastdamager.Challenge.add(member);
                                 lastdamager.stick = member;
-                                player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", speedcubingServer.getFormat(lastdamager.user.rank)[1] + lastdamager.user.bGetName()).replace("%gametype%", "§bStickDuel"));
-                                lastdamager.user.bSendMessage(StringList.ChallengeFrom[lastdamager.user.lang].replace("%player%", speedcubingServer.getFormat(User.getUser(player).rank)[1] + player.getName()).replace("%gametype%", "§bStickDuel"));
+                                player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", lastdamager.user.getFormatName(false)).replace("%gametype%", "§bStickDuel"));
+                                lastdamager.user.bSendMessage(StringList.ChallengeFrom[lastdamager.user.lang].replace("%player%", member.user.getFormatName(false)).replace("%gametype%", "§bStickDuel"));
                             } else
-                                player.sendMessage(StringList.AlreadyChallenged[lang].replace("%player%", speedcubingServer.getFormat(lastdamager.user.rank)[1] + lastdamager.user.bGetName()).replace("%gametype%", "§bStickDuel"));
+                                player.sendMessage(StringList.AlreadyChallenged[lang].replace("%player%", lastdamager.user.getFormatName(false)).replace("%gametype%", "§bStickDuel"));
                         } else {
                             lastdamager.Challenge.add(member);
                             lastdamager.stick = member;
-                            player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", speedcubingServer.getFormat(lastdamager.user.rank)[1] + lastdamager.user.bGetName()).replace("%gametype%", "§bStickDuel"));
-                            lastdamager.user.bSendMessage(StringList.ChallengeFrom[lastdamager.user.lang].replace("%player%", speedcubingServer.getFormat(User.getUser(player).rank)[1] + player.getName()).replace("%gametype%", "§bStickDuel"));
+                            player.sendMessage(StringList.ChallengingAction[lang].replace("%player%", lastdamager.user.getFormatName(false)).replace("%gametype%", "§bStickDuel"));
+                            lastdamager.user.bSendMessage(StringList.ChallengeFrom[lastdamager.user.lang].replace("%player%", member.user.getFormatName(false)).replace("%gametype%", "§bStickDuel"));
                         }
                         break;
                 }
