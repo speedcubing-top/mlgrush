@@ -33,6 +33,7 @@ public class Main extends JavaPlugin implements CommandExecutor {
         Bukkit.getPluginManager().registerEvents(new PlayerQuit(), this);
         Bukkit.getPluginManager().registerEvents(new FoodLevelChange(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerSpawnLocation(), this);
+        Bukkit.getPluginManager().registerEvents(new InventoryClose(), this);
         getServer().createWorld(new WorldCreator("MLGRush2x1"));
         getServer().createWorld(new WorldCreator("StickDuel"));
         getServer().createWorld(new WorldCreator("MLGRush4x1"));
