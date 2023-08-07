@@ -1,29 +1,18 @@
 package top.speedcubing.mlgrush.Core.Game;
 
-import net.minecraft.server.v1_8_R3.BlockPosition;
-import net.minecraft.server.v1_8_R3.WorldServer;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
+import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
-import top.speedcubing.lib.bukkit.PlayerUtils;
-import top.speedcubing.lib.bukkit.SideBar;
-import top.speedcubing.lib.bukkit.WorldUtils;
+import org.bukkit.inventory.*;
+import top.speedcubing.lib.bukkit.*;
 import top.speedcubing.mlgrush.Core.Core;
-import top.speedcubing.mlgrush.List.ItemStackList;
-import top.speedcubing.mlgrush.List.StringList;
-import top.speedcubing.mlgrush.Main;
-import top.speedcubing.mlgrush.Member;
-import top.speedcubing.server.libs.User;
+import top.speedcubing.mlgrush.List.*;
+import top.speedcubing.mlgrush.*;
+import top.speedcubing.server.player.User;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 public class MLGRush2x1 extends Duel {
     public static DuelCore inst = new DuelCore("MLGRush2x1");
@@ -48,7 +37,7 @@ public class MLGRush2x1 extends Duel {
             Players2[1].user.bTeleport(new Location(world, 500 * map + Map[0] * -1 + 0.5, Map[1] + 1, coord + 0.5 - Map[3], Map[5], 0));
             int[] settings = new int[5];
             for (Member p : Players) {
-                p.user.bSendMessage(StringList.MLGRushOpponentFound[p.user.lang]);
+                p.user.sendLangMessage(StringList.MLGRushOpponentFound);
 //                Core.QuitAllGame(p);
                 int[] ints = p.integerCache;
                 settings[0] += ints[5];
@@ -127,7 +116,7 @@ public class MLGRush2x1 extends Duel {
 //        Set<Member> targets = new HashSet<>();
 //        targets.addAll(Spectators);
 //        targets.addAll(Arrays.asList(Players));
-//        String name = speedcubingServer.getFormat(User.getUser(player).rank)[1] + player.getName();
+//        String name = speedcubingServer.getFormat(Member.getMember(player).user.rank)[1] + player.getName();
 //        for (Member m : targets) {
 //            m.user.bSendMessage(StringList.JoinSpectate[m.user.lang].replace("%player%", name));
 //        }
@@ -155,16 +144,15 @@ public class MLGRush2x1 extends Duel {
             killer.playSound(killer.getLocation(), Sound.SUCCESSFUL_HIT, 1F, 1F);
             String[] format1 = Players2[1 - t[0]].user.getFormat();
             for (Member m : targets) {
-                m.user.bSendMessage(StringList.MLGRushKill[m.user.lang]
-                        .replace("%format0%", format[1])
-                        .replace("%name0%", player.getName())
-                        .replace("%format1%", format1[1])
-                        .replace("%name1%", killer.getName()));
+                m.user.sendLangMessage(StringList.MLGRushKill
+                        , format[1]
+                        , player.getName()
+                        , format1[1]
+                        , killer.getName());
             }
         } else
-            for (Member m : targets) {
-                m.user.bSendMessage(StringList.MLGRushFell[m.user.lang].replace("%format0%", format[0]).replace("%name%", player.getName()));
-            }
+            for (Member m : targets)
+                m.user.sendLangMessage(StringList.MLGRushFell, format[0], player.getName());
         WorldServer mlgrush2x1 = ((CraftWorld) Bukkit.getWorld("MLGRush2x1")).getHandle();
         int[] Map = MapLocations(map);
         for (int y = Map[2]; y >= Map[1]; y--) {
@@ -181,7 +169,7 @@ public class MLGRush2x1 extends Duel {
         Player[] players = {Players[0].user.player, Players[1].user.player};
         Player[] players2 = {Players2[0].user.player, Players2[1].user.player};
         if ((bedX - map * 500) / Math.abs(bedX - map * 500) == (players2[0] == breaker ? 1 : -1))
-            breaker.sendMessage(StringList.MLGRushBreakOwnBed[User.getUser(breaker).lang]);
+            Member.getMember(breaker).user.sendLangMessage(StringList.MLGRushBreakOwnBed);
         else {
             resetBlocks();
             int w = players[0] == breaker ? 0 : 1;
@@ -212,7 +200,7 @@ public class MLGRush2x1 extends Duel {
                 SideBar.getSidebar(m.user.player)
                         .setLine(formats[0] + sidebar[3] + suffix[0], 3)
                         .setLine(formats[1] + sidebar[4] + suffix[1], 4);
-                m.user.bSendMessage(StringList.MLGRushBedbreak[m.user.lang].replace("%player%", w == 0 ? formats[1] : formats[0]).replace("%player2%", w == 0 ? formats[0] : formats[1]));
+                m.user.sendLangMessage(StringList.MLGRushBedbreak, w == 0 ? formats[1] : formats[0], w == 0 ? formats[0] : formats[1]);
                 PlayerUtils.sendActionBar(m.user.player, actionbar);
             }
             int[] Map = MapLocations(map);
@@ -231,18 +219,17 @@ public class MLGRush2x1 extends Duel {
             m.game = null;
             m.PlacedBlocks = -1;
         }
-        Player[] players = {Players[0].user.player, Players[1].user.player};
-        players[quitter].sendMessage(StringList.MLGRushOpponentDisconnect[Players[quitter].user.lang]);
+        Players[quitter].user.sendLangMessage(StringList.MLGRushOpponentDisconnect);
         resetBlocks();
         timer.cancel();
         Location lb = new Location(Bukkit.getWorld("world"), 0.5, 100, 0.5, 0, 0);
-        players[quitter].teleport(lb);
+        Players[quitter].user.bTeleport(lb);
         for (Member m : Spectators) {
-            for (Player pp : players) {
-                pp.showPlayer(m.user.player);
+            for (Member pp : Players) {
+                pp.user.bShowPlayer(m.user.player);
             }
             m.user.bSetAllowFlight(false);
-            m.user.bSendMessage(StringList.MLGRushGameEnd[m.user.lang]);
+            m.user.sendLangMessage(StringList.MLGRushGameEnd);
             m.user.bTeleport(lb);
             m.Spectate = -1;
         }

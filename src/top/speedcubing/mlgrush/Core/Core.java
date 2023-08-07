@@ -1,22 +1,15 @@
 package top.speedcubing.mlgrush.Core;
 
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemStack;
-import top.speedcubing.lib.bukkit.inventory.InventoryBuilder;
-import top.speedcubing.lib.bukkit.inventory.InventoryUtils;
+import org.bukkit.inventory.*;
+import top.speedcubing.lib.bukkit.inventory.*;
 import top.speedcubing.mlgrush.All.Lobby;
 import top.speedcubing.mlgrush.List.ItemStackList;
 import top.speedcubing.mlgrush.Member;
-import top.speedcubing.server.libs.GlobalString;
-import top.speedcubing.server.libs.User;
+import top.speedcubing.server.lang.GlobalString;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class Core {
 
@@ -31,24 +24,25 @@ public class Core {
 
     public static void resetItems(Player player) {
         int[] ints = Member.getMember(player).integerCache;
-        player.getInventory().setItem(ints[1], ItemStackList.Blocks[ints[4]][User.getUser(player).lang]);
+        player.getInventory().setItem(ints[1], ItemStackList.Blocks[ints[4]][Member.getMember(player).user.lang]);
     }
 
     public static void saveStickEditor(Player player, int RawSlot) {
         if (RawSlot >= 10 && RawSlot <= 15) {
             player.playSound(player.getLocation(), Sound.NOTE_PLING, 1F, 1F);
-            Member.getMember(player).integerCache[3] = RawSlot - 10;
+            Member member = Member.getMember(player);
+            member.integerCache[3] = RawSlot - 10;
             player.closeInventory();
-            player.sendMessage(GlobalString.SavedSettings[User.getUser(player).lang]);
+            member.user.sendLangMessage(GlobalString.SavedSettings);
         }
     }
 
-    public static void saveKitEditor(Player player, ItemStack cursor, int lang) {
+    public static void saveKitEditor(Player player, ItemStack cursor) {
         Inventory inventory = player.getInventory();
         if (cursor.getType() == Material.AIR) {
             Member member = Member.getMember(player);
             member.iseditingkit = false;
-            player.sendMessage(GlobalString.SavedSettings[lang]);
+            member.user.sendLangMessage(GlobalString.SavedSettings);
             int[] x = member.integerCache;
             for (int i = 0; i < 9; i++) {
                 if (inventory.getItem(i) != null) {
@@ -80,7 +74,7 @@ public class Core {
     }
 
     public static void openKitEditor(Player player) {
-        int lang = User.getUser(player).lang;
+        int lang = Member.getMember(player).user.lang;
         player.playSound(player.getLocation(), Sound.CLICK, 1F, 1F);
         Inventory inventory = player.getInventory();
         inventory.clear();
@@ -135,7 +129,7 @@ public class Core {
     }
 
     public static void openStickEditor(Player player) {
-        int lang = User.getUser(player).lang;
+        int lang = Member.getMember(player).user.lang;
         InventoryBuilder inventory = new InventoryBuilder(27, stickedit[lang]).deleteOnClose(true).setAllClickEvent((p, e) -> saveStickEditor(p, e.getRawSlot()));
         for (int i = 0; i < 6; i++)
             inventory.setItem(ItemStackList.stickeditor[0][i][lang], i + 10);

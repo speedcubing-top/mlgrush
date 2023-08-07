@@ -1,20 +1,16 @@
 package top.speedcubing.mlgrush;
 
 import net.minecraft.server.v1_8_R3.PacketPlayInChat;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
+import org.bukkit.*;
 import top.speedcubing.lib.bukkit.SideBar;
 import top.speedcubing.lib.bukkit.event.PlayInEvent;
 import top.speedcubing.lib.eventbus.LibEventHandler;
 import top.speedcubing.mlgrush.List.StringList;
 import top.speedcubing.server.database.DataCenter;
 import top.speedcubing.server.events.CubingTickEvent;
-import top.speedcubing.server.events.player.HubEvent;
-import top.speedcubing.server.events.player.NickEvent;
-import top.speedcubing.server.events.player.SkinEvent;
-import top.speedcubing.server.events.player.ToggleFlyEvent;
-import top.speedcubing.server.libs.GlobalString;
-import top.speedcubing.server.libs.User;
+import top.speedcubing.server.events.player.*;
+import top.speedcubing.server.lang.GlobalString;
+import top.speedcubing.server.player.User;
 import top.speedcubing.server.share.Chat;
 
 public class ServerEvent {
@@ -42,7 +38,7 @@ public class ServerEvent {
     @LibEventHandler
     public void ToggleFlyEvent(ToggleFlyEvent e) {
         if (!e.player.getWorld().getName().equals("world")) {
-            e.player.sendMessage(GlobalString.OnlyInHub[User.getUser(e.player).lang]);
+            Member.getMember(e.player).user.sendLangMessage(GlobalString.OnlyInHub);
             e.isCancelled = true;
         }
     }
@@ -50,7 +46,7 @@ public class ServerEvent {
     @LibEventHandler
     public void NickEvent(NickEvent e) {
         if (!e.player.getWorld().getName().equals("world")) {
-            e.player.sendMessage(GlobalString.OnlyInHub[User.getUser(e.player).lang]);
+            Member.getMember(e.player).user.sendLangMessage(GlobalString.OnlyInHub);
             e.isCancelled = true;
         }
     }
@@ -58,7 +54,7 @@ public class ServerEvent {
     @LibEventHandler
     public void SkinEvent(SkinEvent e) {
         if (!e.player.getWorld().getName().equals("world")) {
-            e.player.sendMessage(GlobalString.OnlyInHub[User.getUser(e.player).lang]);
+            Member.getMember(e.player).user.sendLangMessage(GlobalString.OnlyInHub);
             e.isCancelled = true;
         }
     }

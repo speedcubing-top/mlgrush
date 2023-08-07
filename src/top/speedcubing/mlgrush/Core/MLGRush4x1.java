@@ -163,7 +163,7 @@
 //            player.getInventory().clear();
 //            player.getInventory().setItem(8, ItemStackList.HubSlime[lang]);
 //            int R = room;
-//            String[] format = speedcubingServer.getFormat(User.getUser(player).rank);
+//            String[] format = speedcubingServer.getFormat(Member.getMember(player).user.rank);
 //            List<UUID> queue = Queue[room];
 //            String size = Integer.toString(queue.size());
 //            Bukkit.getScheduler().runTask(Main.getPlugin(Main.class), () -> player.teleport(new Location(Bukkit.getWorld("MLGRush4x1"), 1000, 100, Core.roomToBed(R), 0, 0)));

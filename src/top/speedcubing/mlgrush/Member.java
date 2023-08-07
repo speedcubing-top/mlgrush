@@ -4,17 +4,10 @@ import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import top.speedcubing.mlgrush.All.Lobby;
-import top.speedcubing.mlgrush.Core.Game.Duel;
-import top.speedcubing.mlgrush.Core.Game.MLGRush2x1;
-import top.speedcubing.mlgrush.Core.Game.StickDuel;
-import top.speedcubing.mlgrush.List.EntityList;
-import top.speedcubing.server.libs.User;
-import top.speedcubing.server.speedcubingServer;
+import top.speedcubing.mlgrush.Core.Game.*;
+import top.speedcubing.server.player.User;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Member {
     public static Map<Integer, Member> users = new HashMap<>();

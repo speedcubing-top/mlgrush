@@ -1,20 +1,14 @@
 package top.speedcubing.mlgrush.List;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import top.speedcubing.lib.bukkit.inventory.InventoryBuilder;
-import top.speedcubing.lib.bukkit.inventory.ItemBuilder;
+import org.bukkit.inventory.*;
+import top.speedcubing.lib.bukkit.inventory.*;
 import top.speedcubing.mlgrush.All.Lobby;
-import top.speedcubing.mlgrush.Core.BlockEditor;
-import top.speedcubing.mlgrush.Core.Core;
+import top.speedcubing.mlgrush.Core.*;
 import top.speedcubing.mlgrush.Core.Game.MLGRush2x1;
 import top.speedcubing.mlgrush.Member;
-import top.speedcubing.server.libs.GlobalString;
-import top.speedcubing.server.libs.User;
+import top.speedcubing.server.lang.GlobalString;
 
 public class ItemStackList {
 
@@ -163,7 +157,7 @@ public class ItemStackList {
                         .setItem(new ItemBuilder(Material.INK_SACK).durability(1).name(unsave[i]).build(), 5)
                         .setClickEvent((p, e) -> {
                             p.playSound(p.getLocation(), Sound.CLICK, 1F, 1F);
-                            Core.saveKitEditor(p, e.getCursor(), User.getUser(p).lang);
+                            Core.saveKitEditor(p, e.getCursor());
                         }, 3)
                         .setClickEvent((p, e) -> {
                             p.playSound(p.getLocation(), Sound.CLICK, 1F, 1F);
@@ -174,7 +168,7 @@ public class ItemStackList {
                             Member member = Member.getMember(p);
                             if (member.iseditingkit) {
                                 member.iseditingkit = false;
-                                p.sendMessage(GlobalString.UnSavedSettings[member.user.lang]);
+                                member.user.sendLangMessage(GlobalString.UnSavedSettings);
                                 Lobby.Items(p);
                             }
                         }).getInventory();
@@ -219,18 +213,18 @@ public class ItemStackList {
                         new ItemBuilder(Material.FEATHER).build()
                 };
                 ItemStack[] sticks2 = {
-                        new ItemBuilder(Material.STICK).glow().lore(GlobalString.selected[i]).build(),
-                        new ItemBuilder(Material.DIAMOND_SWORD).glow().hideAttr().lore(GlobalString.selected[i]).build(),
-                        new ItemBuilder(Material.DIAMOND_HOE).glow().hideAttr().lore(GlobalString.selected[i]).build(),
-                        new ItemBuilder(Material.BLAZE_ROD).glow().lore(GlobalString.selected[i]).build(),
-                        new ItemBuilder(Material.BONE).glow().lore(GlobalString.selected[i]).build(),
-                        new ItemBuilder(Material.FEATHER).glow().lore(GlobalString.selected[i]).build()
+                        new ItemBuilder(Material.STICK).glow().lore(GlobalString.selected.get(i)).build(),
+                        new ItemBuilder(Material.DIAMOND_SWORD).glow().hideAttr().lore(GlobalString.selected.get(i)).build(),
+                        new ItemBuilder(Material.DIAMOND_HOE).glow().hideAttr().lore(GlobalString.selected.get(i)).build(),
+                        new ItemBuilder(Material.BLAZE_ROD).glow().lore(GlobalString.selected.get(i)).build(),
+                        new ItemBuilder(Material.BONE).glow().lore(GlobalString.selected.get(i)).build(),
+                        new ItemBuilder(Material.FEATHER).glow().lore(GlobalString.selected.get(i)).build()
                 };
 
                 ItemStack[] categoryblockeditor = {
-                        new ItemBuilder(Material.SANDSTONE).name(block[0][i]).lore(GlobalString.category[i]).build(),
-                        new ItemBuilder(Material.QUARTZ_BLOCK).name(block[1][i]).lore(GlobalString.category[i]).build(),
-                        new ItemBuilder(Material.STAINED_CLAY).name(block[2][i]).lore(GlobalString.category[i]).build()
+                        new ItemBuilder(Material.SANDSTONE).name(block[0][i]).lore(GlobalString.category.get(i)).build(),
+                        new ItemBuilder(Material.QUARTZ_BLOCK).name(block[1][i]).lore(GlobalString.category.get(i)).build(),
+                        new ItemBuilder(Material.STAINED_CLAY).name(block[2][i]).lore(GlobalString.category.get(i)).build()
                 };
 
                 ItemStack[] sandstoneeditor = {

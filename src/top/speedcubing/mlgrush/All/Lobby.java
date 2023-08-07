@@ -1,40 +1,29 @@
 package top.speedcubing.mlgrush.All;
 
 
-import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
-import net.minecraft.server.v1_8_R3.PlayerConnection;
+import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.GameMode;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.PlayerInventory;
-import top.speedcubing.lib.bukkit.PlayerUtils;
-import top.speedcubing.lib.bukkit.SideBar;
+import top.speedcubing.lib.bukkit.*;
 import top.speedcubing.lib.bukkit.entity.NPC;
-import top.speedcubing.mlgrush.List.EntityList;
-import top.speedcubing.mlgrush.List.ItemStackList;
-import top.speedcubing.mlgrush.List.StringList;
+import top.speedcubing.mlgrush.List.*;
+import top.speedcubing.mlgrush.Member;
 import top.speedcubing.server.database.DataCenter;
-import top.speedcubing.server.libs.User;
-import top.speedcubing.server.speedcubingServer;
+import top.speedcubing.server.lang.GlobalString;
+import top.speedcubing.server.player.User;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class Lobby {
     public static void Join(Player player, boolean externalMessage) {
         String name = player.getName();
-        User user = User.getUser(player);
-        String[] format = user.getFormat();
-        if (externalMessage)
-            player.sendMessage(StringList.LobbyJoinMessage[user.lang]
-                    .replace("%f0%", format[0])
-                    .replace("%f1%", format[2])
-                    .replace("%name%", name));
+        Member member = Member.getMember(player);
+        String[] format = member.user.getFormat();
+        if (externalMessage) member.user.sendLangMessage(GlobalString.LobbyJoinMessage, format[0] + name + format[2]);
         for (Player p : player.getWorld().getPlayers()) {
-            p.sendMessage(StringList.LobbyJoinMessage[User.getUser(p).lang]
-                    .replace("%f0%", format[0])
-                    .replace("%f1%", format[2])
-                    .replace("%name%", name));
+            Member.getMember(p).user.sendLangMessage(GlobalString.LobbyJoinMessage, format[0] + name + format[2]);
         }
 
         player.setMaximumNoDamageTicks(20);
@@ -49,7 +38,7 @@ public class Lobby {
                 }
             }
         }, 4000);
-        String[] sidebar = StringList.LobbySideBar[User.getUser(player).lang];
+        String[] sidebar = StringList.LobbySideBar[Member.getMember(player).user.lang];
         new SideBar(player, sidebar[5])
                 .staticLine(sidebar[4], 4)
                 .staticLine(sidebar[3], 3)
@@ -61,7 +50,7 @@ public class Lobby {
     }
 
     public static void Items(Player player) {
-        int lang = User.getUser(player).lang;
+        int lang = Member.getMember(player).user.lang;
         PlayerInventory inventory = player.getInventory();
         inventory.clear();
         inventory.setItem(0, ItemStackList.LobbyItems[0][lang]);

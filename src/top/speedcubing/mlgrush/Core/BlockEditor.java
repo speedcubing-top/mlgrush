@@ -1,16 +1,13 @@
 package top.speedcubing.mlgrush.Core;
 
-import top.speedcubing.mlgrush.List.ItemStackList;
-import top.speedcubing.mlgrush.Member;
-import top.speedcubing.lib.bukkit.inventory.ItemUtils;
-import top.speedcubing.server.libs.GlobalString;
-import top.speedcubing.server.libs.User;
-import org.bukkit.Bukkit;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.*;
+import top.speedcubing.lib.bukkit.inventory.ItemUtils;
+import top.speedcubing.mlgrush.List.ItemStackList;
+import top.speedcubing.mlgrush.Member;
+import top.speedcubing.server.lang.GlobalString;
 
 public class BlockEditor {
 
@@ -26,7 +23,7 @@ public class BlockEditor {
 
     public static void createMainPage(Player player) {
         player.playSound(player.getLocation(), Sound.CLICK, 1F, 1F);
-        int lang = User.getUser(player).lang;
+        int lang = Member.getMember(player).user.lang;
         Inventory inv = Bukkit.createInventory(BlockHolder, 27, ItemStackList.blockedit[lang]);
         for (int i = 0; i < ItemStackList.categoryblockeditor.length; i++) {
             inv.setItem(i + 12, ItemStackList.categoryblockeditor[i][lang]);
@@ -42,7 +39,7 @@ public class BlockEditor {
                 switch (RawSlot) {
                     case 12: {
                         player.playSound(player.getLocation(), Sound.NOTE_PLING, 1F, 1F);
-                        int lang = User.getUser(player).lang;
+                        int lang = Member.getMember(player).user.lang;
                         Inventory inv = Bukkit.createInventory(sandstoneholder, 27, ItemStackList.sandstoneedit[lang]);
                         for (int i = 0; i < 3; i++) {
                             inv.setItem(i + 10, ItemStackList.sandstoneeditor[i][lang]);
@@ -52,33 +49,33 @@ public class BlockEditor {
                         }
                         int set = Member.getMember(player).integerCache[4];
                         if (set < 6)
-                            inv.setItem((set < 3) ? set + 10 : set + 11, ItemUtils.glow(ItemUtils.setLore(ItemStackList.sandstoneeditor[set][lang].clone(), GlobalString.selected[lang])));
+                            inv.setItem((set < 3) ? set + 10 : set + 11, ItemUtils.glow(ItemUtils.setLore(ItemStackList.sandstoneeditor[set][lang].clone(), GlobalString.selected.get(lang))));
                         player.openInventory(inv);
                     }
                     break;
                     case 13: {
                         player.playSound(player.getLocation(), Sound.NOTE_PLING, 1F, 1F);
-                        int lang = User.getUser(player).lang;
+                        int lang = Member.getMember(player).user.lang;
                         Inventory inv = Bukkit.createInventory(quartzeditor, 27, ItemStackList.quartzedit[lang]);
                         for (int i = 0; i < ItemStackList.quartzeditor.length; i++) {
                             inv.setItem(i + 12, ItemStackList.quartzeditor[i][lang]);
                         }
                         int index = Member.getMember(player).integerCache[4] - ItemStackList.sandstoneeditor.length;
                         if (index < ItemStackList.quartzeditor.length && index >= 0)
-                            inv.setItem(index + 12, ItemUtils.glow(ItemUtils.setLore(ItemStackList.quartzeditor[index][lang].clone(), GlobalString.selected[lang])));
+                            inv.setItem(index + 12, ItemUtils.glow(ItemUtils.setLore(ItemStackList.quartzeditor[index][lang].clone(), GlobalString.selected.get(lang))));
                         player.openInventory(inv);
                     }
                     break;
                     case 14: {
                         player.playSound(player.getLocation(), Sound.NOTE_PLING, 1F, 1F);
-                        int lang = User.getUser(player).lang;
+                        int lang = Member.getMember(player).user.lang;
                         Inventory inv = Bukkit.createInventory(clayeditor, 27, ItemStackList.clayedit[lang]);
                         for (int i = 0; i < ItemStackList.clayeditor.length; i++) {
                             inv.setItem(i, ItemStackList.clayeditor[i][lang]);
                         }
                         int index = Member.getMember(player).integerCache[4] - (ItemStackList.sandstoneeditor.length + ItemStackList.quartzeditor.length);
                         if (index < ItemStackList.clayeditor.length && index >= 0)
-                            inv.setItem(index, ItemUtils.glow(ItemUtils.setLore(ItemStackList.clayeditor[index][lang].clone(), GlobalString.selected[lang])));
+                            inv.setItem(index, ItemUtils.glow(ItemUtils.setLore(ItemStackList.clayeditor[index][lang].clone(), GlobalString.selected.get(lang))));
                         player.openInventory(inv);
                     }
                     break;
@@ -89,30 +86,30 @@ public class BlockEditor {
             if (RawSlot > 9 && RawSlot < 17 && RawSlot != 13) {
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1F, 1F);
                 int x = RawSlot > 12 ? RawSlot - 11 : RawSlot - 10;
-                int lang = User.getUser(player).lang;
+                int lang = Member.getMember(player).user.lang;
                 Member.getMember(player).integerCache[4] = x;
                 player.closeInventory();
-                player.sendMessage(GlobalString.SavedSettings[lang]);
+                player.sendMessage(GlobalString.SavedSettings.get(lang));
             }
         } else if (holder == quartzeditor) {
             e.setCancelled(true);
             if (RawSlot <= 14 && RawSlot >= 12) {
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1F, 1F);
                 int x = RawSlot + ItemStackList.sandstoneeditor.length - 12;
-                int lang = User.getUser(player).lang;
+                int lang = Member.getMember(player).user.lang;
                 Member.getMember(player).integerCache[4] = x;
                 player.closeInventory();
-                player.sendMessage(GlobalString.SavedSettings[lang]);
+                player.sendMessage(GlobalString.SavedSettings.get(lang));
             }
         } else if (holder == clayeditor) {
             e.setCancelled(true);
             if (RawSlot < 17) {
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1F, 1F);
                 int x = RawSlot + ItemStackList.sandstoneeditor.length + ItemStackList.quartzeditor.length;
-                int lang = User.getUser(player).lang;
+                int lang = Member.getMember(player).user.lang;
                 Member.getMember(player).integerCache[4] = x;
                 player.closeInventory();
-                player.sendMessage(GlobalString.SavedSettings[lang]);
+                player.sendMessage(GlobalString.SavedSettings.get(lang));
             }
         }
     }

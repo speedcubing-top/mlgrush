@@ -63,7 +63,7 @@ public class BlockPlace implements Listener {
 //                        MLGRush4x1.Blocks.get(Core.PlayerRoom.get(uuid)).add(new BlockPosition(block.getX(), y, z));
 //                        if (Core.PlacedBlocks.get(uuid) > 48) {
 //                            Core.PlacedBlocks.put(uuid, 0);
-//                            player.getInventory().setItem(Core.integerCache.get(uuid)[1], ItemStackList.Blocks[Core.integerCache.get(uuid)[4]][User.getUser(player).lang]);
+//                            player.getInventory().setItem(Core.integerCache.get(uuid)[1], ItemStackList.Blocks[Core.integerCache.get(uuid)[4]][Member.getMember(player).user.lang]);
 //                        }
 //                    }
                     break;

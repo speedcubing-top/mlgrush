@@ -2,23 +2,18 @@ package top.speedcubing.mlgrush.BukkitEventListener;
 
 
 import net.minecraft.server.v1_8_R3.PacketPlayOutEntityVelocity;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.*;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerVelocityEvent;
 import org.bukkit.util.Vector;
-import top.speedcubing.mlgrush.Core.Game.MLGRush2x1;
-import top.speedcubing.mlgrush.Core.Game.StickDuel;
+import top.speedcubing.mlgrush.Core.Game.*;
 import top.speedcubing.mlgrush.List.ItemStackList;
 import top.speedcubing.mlgrush.Member;
-import top.speedcubing.server.libs.User;
+import top.speedcubing.server.player.User;
 
 public class EntityDamageByEntity implements Listener {
 

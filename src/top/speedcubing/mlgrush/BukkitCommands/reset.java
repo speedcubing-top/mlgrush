@@ -1,16 +1,11 @@
 package top.speedcubing.mlgrush.BukkitCommands;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import top.speedcubing.mlgrush.List.StringList;
 import top.speedcubing.mlgrush.Member;
-import top.speedcubing.server.libs.User;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class reset implements CommandExecutor, TabCompleter {
 
@@ -18,7 +13,7 @@ public class reset implements CommandExecutor, TabCompleter {
         Player player = (Player) sender;
         if (args.length == 0) {
             if (player.getAllowFlight())
-                player.sendMessage(StringList.MLGRushInvalidWorld[User.getUser(player).lang]);
+                Member.getMember(player).user.sendLangMessage(StringList.MLGRushInvalidWorld);
             else
                 switch (player.getWorld().getName()) {
                     case "MLGRush2x1":
@@ -28,7 +23,7 @@ public class reset implements CommandExecutor, TabCompleter {
 //                        MLGRush4x1.resetBlocks(Core.randomToRoom(player.getLocation().getZ()));
                         break;
                     default:
-                        player.sendMessage(StringList.MLGRushInvalidWorld[User.getUser(player).lang]);
+                        Member.getMember(player).user.sendLangMessage(StringList.MLGRushInvalidWorld);
                         break;
                 }
         } else
