@@ -1,19 +1,14 @@
 package top.speedcubing.mlgrush;
 
 import net.minecraft.server.v1_8_R3.MinecraftServer;
-import org.bukkit.Bukkit;
-import org.bukkit.Difficulty;
-import org.bukkit.WorldCreator;
+import org.bukkit.*;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
-import top.speedcubing.lib.eventbus.LibEventManager;
+import top.speedcubing.lib.eventbus.CubingEventManager;
 import top.speedcubing.mlgrush.BukkitCommands.reset;
 import top.speedcubing.mlgrush.BukkitEventListener.*;
 import top.speedcubing.mlgrush.Core.BlockEditor;
-import top.speedcubing.mlgrush.Core.Game.MLGRush2x1;
-import top.speedcubing.mlgrush.Core.Game.StickDuel;
-import top.speedcubing.mlgrush.List.EntityList;
-import top.speedcubing.mlgrush.List.ItemStackList;
+import top.speedcubing.mlgrush.List.*;
 import top.speedcubing.server.speedcubingServer;
 
 public class Main extends JavaPlugin implements CommandExecutor {
@@ -50,7 +45,7 @@ public class Main extends JavaPlugin implements CommandExecutor {
         new ItemStackList().Load();
         new EntityList().Load();
         new BlockEditor().Load();
-        LibEventManager.registerListeners(new ServerEvent());
+        CubingEventManager.registerListeners(new ServerEvent());
         speedcubingServer.canRestart = false;
     }
 }

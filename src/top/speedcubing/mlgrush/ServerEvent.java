@@ -4,7 +4,7 @@ import net.minecraft.server.v1_8_R3.PacketPlayInChat;
 import org.bukkit.*;
 import top.speedcubing.lib.bukkit.SideBar;
 import top.speedcubing.lib.bukkit.event.PlayInEvent;
-import top.speedcubing.lib.eventbus.LibEventHandler;
+import top.speedcubing.lib.eventbus.CubingEventHandler;
 import top.speedcubing.mlgrush.List.StringList;
 import top.speedcubing.server.database.DataCenter;
 import top.speedcubing.server.events.CubingTickEvent;
@@ -15,7 +15,7 @@ import top.speedcubing.server.share.Chat;
 
 public class ServerEvent {
 
-    @LibEventHandler
+    @CubingEventHandler
     public void CubingTickEvent(CubingTickEvent e) {
         for (SideBar s : SideBar.getSidebars()) {
             if (s.player.getWorld().getName().equals("world"))
@@ -23,7 +23,7 @@ public class ServerEvent {
         }
     }
 
-    @LibEventHandler
+    @CubingEventHandler
     public void PlayInEvent(PlayInEvent e) {
         if (e.packet instanceof PacketPlayInChat) {
             String message = ((PacketPlayInChat) e.packet).a();
@@ -35,7 +35,7 @@ public class ServerEvent {
         }
     }
 
-    @LibEventHandler
+    @CubingEventHandler
     public void ToggleFlyEvent(ToggleFlyEvent e) {
         if (!e.player.getWorld().getName().equals("world")) {
             Member.getMember(e.player).user.sendLangMessage(GlobalString.OnlyInHub);
@@ -43,7 +43,7 @@ public class ServerEvent {
         }
     }
 
-    @LibEventHandler
+    @CubingEventHandler
     public void NickEvent(NickEvent e) {
         if (!e.player.getWorld().getName().equals("world")) {
             Member.getMember(e.player).user.sendLangMessage(GlobalString.OnlyInHub);
@@ -51,7 +51,7 @@ public class ServerEvent {
         }
     }
 
-    @LibEventHandler
+    @CubingEventHandler
     public void SkinEvent(SkinEvent e) {
         if (!e.player.getWorld().getName().equals("world")) {
             Member.getMember(e.player).user.sendLangMessage(GlobalString.OnlyInHub);
@@ -59,7 +59,7 @@ public class ServerEvent {
         }
     }
 
-    @LibEventHandler
+    @CubingEventHandler
     public void HubEvent(HubEvent e) {
         if (!e.player.getWorld().getName().equals("world")) {
             e.player.teleport(new Location(Bukkit.getWorld("world"), 0.5, 100, 0.5, 0, 0));

@@ -1,9 +1,7 @@
 package top.speedcubing.mlgrush.BukkitEventListener;
 
 
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntityVelocity;
 import org.bukkit.*;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.*;
@@ -78,9 +76,7 @@ public class EntityDamageByEntity implements Listener {
                         velocity.setX(velocity.getX() * horizontalMultiplier);
                         velocity.setY(velocity.getY() * verticalMultiplier);
                         velocity.setZ(velocity.getZ() * horizontalMultiplier);
-                        velocity = member.user.applyKnockback(velocity);
-                        victim.setVelocity(velocity);
-                        (((CraftPlayer) victim).getHandle()).playerConnection.sendPacket(new PacketPlayOutEntityVelocity(((CraftPlayer) victim).getHandle()));
+                        member.user.knockback(member.user.applyKnockback(velocity));
                     }
                     (member.game).Kill[(member.game).Players[0].equals(member) ? 0 : 1] = time;
                 }
