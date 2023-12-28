@@ -40,6 +40,10 @@ public class Main extends JavaPlugin implements CommandExecutor {
         Bukkit.getWorld("MLGRush4x1").setTime(6000);
         Bukkit.getWorld("StickDuel").setTime(6000);
         Bukkit.getWorld("world").setTime(6000);
+        Bukkit.getWorld("MLGRush2x1").setAutoSave(false);
+        Bukkit.getWorld("MLGRush4x1").setAutoSave(false);
+        Bukkit.getWorld("StickDuel").setAutoSave(false);
+        Bukkit.getWorld("world").setAutoSave(false);
         Bukkit.getPluginCommand("reset").setExecutor(new reset());
         Bukkit.getPluginCommand("reset").setTabCompleter(new reset());
         new ItemStackList().Load();
