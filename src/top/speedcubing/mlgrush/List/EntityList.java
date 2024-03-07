@@ -33,19 +33,19 @@ public class EntityList {
         Lobbys[0].setName("§bStickDuel");
         Lobbys[1].setName("§bMLGRush 2x1");
         Lobbys[2].setName("§bMLGRush 4x1");
-        npcs[0].setSpawnBodyYaw(180).setSkin(VEPEXtextures, VEPEXsignature).setClickEvent(((player, action) -> {
-            if (player.getItemInHand().getType() == org.bukkit.Material.AIR && action.equals(PacketPlayInUseEntity.EnumEntityUseAction.INTERACT)) {
+        npcs[0].setSpawnBodyYaw(180).setSkin(VEPEXtextures, VEPEXsignature).setClickEvent((r -> {
+            if (r.getPlayer().getItemInHand().getType() == org.bukkit.Material.AIR && r.getAction().equals(PacketPlayInUseEntity.EnumEntityUseAction.INTERACT)) {
 
             }
         }));
-        npcs[1].setSpawnBodyYaw(180).setSkin(TFGTEXTURES, TFGSIGNATURES).setClickEvent(((player, action) -> {
-            if (player.getItemInHand().getType() == org.bukkit.Material.AIR && action.equals(PacketPlayInUseEntity.EnumEntityUseAction.INTERACT)) {
-                player.openInventory(ItemStackList.duelMenu[Member.getMember(player).user.lang]);
+        npcs[1].setSpawnBodyYaw(180).setSkin(TFGTEXTURES, TFGSIGNATURES).setClickEvent((r -> {
+            if (r.getPlayer().getItemInHand().getType() == org.bukkit.Material.AIR && r.getAction().equals(PacketPlayInUseEntity.EnumEntityUseAction.INTERACT)) {
+                r.getPlayer().openInventory(ItemStackList.duelMenu[Member.getMember(r.getPlayer()).user.lang]);
             }
         }));
-        npcs[2].setSpawnBodyYaw(179).setSkin(RNStextures, RNSsignature).setClickEvent(((player, action) -> {
-            if (player.getItemInHand().getType() == org.bukkit.Material.AIR && action.equals(PacketPlayInUseEntity.EnumEntityUseAction.INTERACT))
-                player.sendMessage("§cThis gamemode is under maintenance.");
+        npcs[2].setSpawnBodyYaw(179).setSkin(RNStextures, RNSsignature).setClickEvent((r -> {
+            if (r.getPlayer().getItemInHand().getType() == org.bukkit.Material.AIR && r.getAction().equals(PacketPlayInUseEntity.EnumEntityUseAction.INTERACT))
+                r.getPlayer().sendMessage("§cThis gamemode is under maintenance.");
         }));
         npcs[0].setLocation(-2.5, 100, 19.5, 128, 0);
         npcs[1].setLocation(0.5, 100, 19.5, 128, 0);

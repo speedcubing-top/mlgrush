@@ -1,15 +1,20 @@
 package top.speedcubing.mlgrush.Core;
 
-import org.bukkit.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.*;
-import top.speedcubing.lib.bukkit.inventory.*;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.ItemStack;
+import top.speedcubing.lib.bukkit.inventory.InventoryBuilder;
+import top.speedcubing.lib.bukkit.inventory.InventoryUtils;
 import top.speedcubing.mlgrush.All.Lobby;
 import top.speedcubing.mlgrush.List.ItemStackList;
 import top.speedcubing.mlgrush.Member;
 import top.speedcubing.server.lang.GlobalString;
-
-import java.util.*;
 
 public class Core {
 
@@ -95,34 +100,34 @@ public class Core {
         ItemStack stack = ItemStackList.preferButton[0][member.user.lang];
         ItemStack stack1 = ItemStackList.preferButton[1][member.user.lang];
         int[] bs = member.integerCache;
-        builder.setItem(bs[9] == 1 ? stack : stack1, (p, e) -> {
-            p.playSound(p.getLocation(), Sound.CLICK, 1F, 1F);
+        builder.setItem(bs[9] == 1 ? stack : stack1, (r) -> {
+            player.playSound(r.getPlayer().getLocation(), Sound.CLICK, 1F, 1F);
             int b = member.integerCache[9];
-            e.getClickedInventory().setItem(20, ItemStackList.preferButton[b][member.user.lang]);
+            r.getEvent().getClickedInventory().setItem(20, ItemStackList.preferButton[b][member.user.lang]);
             member.integerCache[9] = 1 - b;
         }, 20);
-        builder.setItem(bs[5] == 1 ? stack : stack1, (p, e) -> {
+        builder.setItem(bs[5] == 1 ? stack : stack1, (r) -> {
             player.playSound(player.getLocation(), Sound.CLICK, 1F, 1F);
             int b = member.integerCache[5];
-            e.getClickedInventory().setItem(21, ItemStackList.preferButton[b][member.user.lang]);
+            r.getEvent().getClickedInventory().setItem(21, ItemStackList.preferButton[b][member.user.lang]);
             member.integerCache[5] = 1 - b;
         }, 21);
-        builder.setItem(bs[6] == 1 ? stack : stack1, (p, e) -> {
+        builder.setItem(bs[6] == 1 ? stack : stack1, (r) -> {
             player.playSound(player.getLocation(), Sound.CLICK, 1F, 1F);
             int b = member.integerCache[6];
-            e.getClickedInventory().setItem(22, ItemStackList.preferButton[b][member.user.lang]);
+            r.getEvent().getClickedInventory().setItem(22, ItemStackList.preferButton[b][member.user.lang]);
             member.integerCache[6] = 1 - b;
         }, 22);
-        builder.setItem(bs[7] == 1 ? stack : stack1, (p, e) -> {
+        builder.setItem(bs[7] == 1 ? stack : stack1, (r) -> {
             player.playSound(player.getLocation(), Sound.CLICK, 1F, 1F);
             int b = member.integerCache[7];
-            e.getClickedInventory().setItem(23, ItemStackList.preferButton[b][member.user.lang]);
+            r.getEvent().getClickedInventory().setItem(23, ItemStackList.preferButton[b][member.user.lang]);
             member.integerCache[7] = 1 - b;
         }, 23);
-        builder.setItem(bs[8] == 1 ? stack : stack1, (p, e) -> {
+        builder.setItem(bs[8] == 1 ? stack : stack1, (r) -> {
             player.playSound(player.getLocation(), Sound.CLICK, 1F, 1F);
             int b = member.integerCache[8];
-            e.getClickedInventory().setItem(24, ItemStackList.preferButton[b][member.user.lang]);
+            r.getEvent().getClickedInventory().setItem(24, ItemStackList.preferButton[b][member.user.lang]);
             member.integerCache[8] = 1 - b;
         }, 24);
         player.openInventory(builder.getInventory());
@@ -130,7 +135,7 @@ public class Core {
 
     public static void openStickEditor(Player player) {
         int lang = Member.getMember(player).user.lang;
-        InventoryBuilder inventory = new InventoryBuilder(27, stickedit[lang]).deleteOnClose(true).setAllClickEvent((p, e) -> saveStickEditor(p, e.getRawSlot()));
+        InventoryBuilder inventory = new InventoryBuilder(27, stickedit[lang]).deleteOnClose(true).setAllClickEvent((r) -> saveStickEditor(r.getPlayer(), r.getEvent().getRawSlot()));
         for (int i = 0; i < 6; i++)
             inventory.setItem(ItemStackList.stickeditor[0][i][lang], i + 10);
         int x = Member.getMember(player).integerCache[3];

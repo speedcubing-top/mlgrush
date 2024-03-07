@@ -1,9 +1,9 @@
 package top.speedcubing.mlgrush.BukkitEventListener;
 
-import top.speedcubing.mlgrush.Member;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import top.speedcubing.mlgrush.Member;
 
 public class PlayerJoin implements Listener {
 

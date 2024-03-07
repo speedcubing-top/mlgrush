@@ -1,16 +1,23 @@
 package top.speedcubing.mlgrush.Core.Game;
 
 
-import org.bukkit.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import top.speedcubing.lib.bukkit.*;
+import top.speedcubing.lib.bukkit.PlayerUtils;
+import top.speedcubing.lib.bukkit.SideBar;
 import top.speedcubing.mlgrush.Core.Core;
-import top.speedcubing.mlgrush.List.*;
-import top.speedcubing.mlgrush.*;
+import top.speedcubing.mlgrush.List.ItemStackList;
+import top.speedcubing.mlgrush.List.StringList;
+import top.speedcubing.mlgrush.Main;
+import top.speedcubing.mlgrush.Member;
 import top.speedcubing.server.player.User;
-
-import java.util.*;
 
 public class StickDuel extends Duel {
     public static DuelCore inst = new DuelCore("StickDuel");

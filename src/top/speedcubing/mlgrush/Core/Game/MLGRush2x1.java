@@ -1,18 +1,28 @@
 package top.speedcubing.mlgrush.Core.Game;
 
-import net.minecraft.server.v1_8_R3.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
+import net.minecraft.server.v1_8_R3.BlockPosition;
+import net.minecraft.server.v1_8_R3.WorldServer;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.*;
+import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.*;
-import top.speedcubing.lib.bukkit.*;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
+import top.speedcubing.lib.bukkit.PlayerUtils;
+import top.speedcubing.lib.bukkit.SideBar;
+import top.speedcubing.lib.bukkit.WorldUtils;
 import top.speedcubing.mlgrush.Core.Core;
-import top.speedcubing.mlgrush.List.*;
-import top.speedcubing.mlgrush.*;
+import top.speedcubing.mlgrush.List.ItemStackList;
+import top.speedcubing.mlgrush.List.StringList;
+import top.speedcubing.mlgrush.Main;
+import top.speedcubing.mlgrush.Member;
 import top.speedcubing.server.player.User;
-
-import java.util.*;
 
 public class MLGRush2x1 extends Duel {
     public static DuelCore inst = new DuelCore("MLGRush2x1");

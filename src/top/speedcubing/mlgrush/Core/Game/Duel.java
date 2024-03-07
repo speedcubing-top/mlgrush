@@ -1,26 +1,24 @@
 package top.speedcubing.mlgrush.Core.Game;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.DisplaySlot;
 import top.speedcubing.lib.bukkit.PlayerUtils;
 import top.speedcubing.lib.bukkit.WorldUtils;
-import top.speedcubing.lib.bukkit.inventory.ItemUtils;
 import top.speedcubing.lib.utils.TimeFormatter;
-import top.speedcubing.mlgrush.All.Lobby;
-import top.speedcubing.mlgrush.List.ItemStackList;
-import top.speedcubing.mlgrush.List.StringList;
 import top.speedcubing.mlgrush.Main;
 import top.speedcubing.mlgrush.Member;
-
-import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 public class Duel extends Game {
     public Member[] Players;

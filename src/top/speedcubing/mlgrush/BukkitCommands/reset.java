@@ -1,11 +1,14 @@
 package top.speedcubing.mlgrush.BukkitCommands;
 
-import org.bukkit.command.*;
+import java.util.ArrayList;
+import java.util.List;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import top.speedcubing.mlgrush.List.StringList;
 import top.speedcubing.mlgrush.Member;
-
-import java.util.*;
 
 public class reset implements CommandExecutor, TabCompleter {
 
