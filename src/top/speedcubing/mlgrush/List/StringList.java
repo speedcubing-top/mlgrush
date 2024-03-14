@@ -49,16 +49,16 @@ public class StringList {
             "§c遊戲已結束",
             "§c游戏已结束");
     public static LangMessage MLGRushFell = new LangMessage(
-            "§8[§bMLGRush§8] %1%%2%§7 has fell into the void.",
-            "§8[§bMLGRush§8] %1%%2%§7 has fell into the void.",
-            "§8[§bMLGRush§8] %1%%2%§7 has fell into the void.",
-            "§8[§bMLGRush§8] %1%%2%§7 has fell into the void."
+            "§8[§bMLGRush§8] %1%§7 has fell into the void.",
+            "§8[§bMLGRush§8] %1%§7 has fell into the void.",
+            "§8[§bMLGRush§8] %1%§7 has fell into the void.",
+            "§8[§bMLGRush§8] %1%§7 has fell into the void."
             );
     public static LangMessage MLGRushKill = new LangMessage(
-            "§8[§bMLGRush§8] %1%%2%§7 was killed by %3%%4%§7.",
-            "§8[§bMLGRush§8] %1%%2%§7 was killed by %3%%4%§7.",
-            "§8[§bMLGRush§8] %1%%2%§7 was killed by %3%%4%§7.",
-            "§8[§bMLGRush§8] %1%%2%§7 was killed by %3%%4%§7."
+            "§8[§bMLGRush§8] %1%§7 was killed by %2%§7.",
+            "§8[§bMLGRush§8] %1%§7 was killed by %2%§7.",
+            "§8[§bMLGRush§8] %1%§7 was killed by %2%§7.",
+            "§8[§bMLGRush§8] %1%§7 was killed by %2%§7."
     );
     public static LangMessage MLGRushGameStartCountDown = new LangMessage(
             "§8[§bMLGRush§8] §aThe game is about to start in §620 §aseconds.",
@@ -113,16 +113,16 @@ public class StringList {
             "§c遊戲已結束",
             "§c游戏已结束");
     public static LangMessage StickDuelFell = new LangMessage(
-            "§8[§bStickDuel§8] %1%%2%§7 has fell into the void.",
-            "§8[§bStickDuel§8] %1%%2%§7 has fell into the void.",
-            "§8[§bStickDuel§8] %1%%2%§7 has fell into the void.",
-            "§8[§bStickDuel§8] %1%%2%§7 has fell into the void."
+            "§8[§bStickDuel§8] %1%§7 has fell into the void.",
+            "§8[§bStickDuel§8] %1%§7 has fell into the void.",
+            "§8[§bStickDuel§8] %1%§7 has fell into the void.",
+            "§8[§bStickDuel§8] %1%§7 has fell into the void."
     );
     public static LangMessage StickDuelKill = new LangMessage(
-            "§8[§bStickDuel§8] %1%%2%§7 was killed by %3%%4%",
-            "§8[§bStickDuel§8] %1%%2%§7 was killed by %3%%4%",
-            "§8[§bStickDuel§8] %1%%2%§7 was killed by %3%%4%",
-            "§8[§bStickDuel§8] %1%%2%§7 was killed by %3%%4%"
+            "§8[§bStickDuel§8] %1%§7 was killed by %2%",
+            "§8[§bStickDuel§8] %1%§7 was killed by %2%",
+            "§8[§bStickDuel§8] %1%§7 was killed by %2%",
+            "§8[§bStickDuel§8] %1%§7 was killed by %2%"
             );
 
     public static LangMessage JoinSpectate = new LangMessage(
@@ -143,22 +143,22 @@ public class StringList {
 
 
     public static String[][] LobbySideBar = {
-            {"§5", "§8» §b", "§aOnline-Spieler§a:", "§8", "§6" + config.SERVERIP, "§3MLGRush"},
-            {"§5", "§8» §b", "§aOnline players§a:", "§8", "§6" + config.SERVERIP, "§3MLGRush"},
-            {"§5", "§8» §b", "§a線上玩家:", "§8", "§6" + config.SERVERIP, "§3MLGRush"},
-            {"§5", "§8» §b", "§a线上玩家", "§8", "§6" + config.SERVERIP, "§3MLGRush"}
+            {"§5", "§8» §b", "§aOnline-Spieler§a:", "§8", "§6speedcubing.top", "§3MLGRush"},
+            {"§5", "§8» §b", "§aOnline players§a:", "§8", "§6speedcubing.top", "§3MLGRush"},
+            {"§5", "§8» §b", "§a線上玩家:", "§8", "§6speedcubing.top", "§3MLGRush"},
+            {"§5", "§8» §b", "§a线上玩家", "§8", "§6speedcubing.top", "§3MLGRush"}
     };
     public static String[][] MLGRushSideBar = {
-            {"§3MLGRush 2x1 §7▶§b %t%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"},
-            {"§3MLGRush 2x1 §7▶§b %t%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"},
-            {"§3MLGRush 2x1 §7▶§b %t%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"},
-            {"§3MLGRush 2x1 §7▶§b %t%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"}
+            {"§3MLGRush 2x1 §7▶§b %t%", "§6speedcubing.top", "§3", " §7▶ ", " §7▶ ", "§0"},
+            {"§3MLGRush 2x1 §7▶§b %t%", "§6speedcubing.top", "§3", " §7▶ ", " §7▶ ", "§0"},
+            {"§3MLGRush 2x1 §7▶§b %t%", "§6speedcubing.top", "§3", " §7▶ ", " §7▶ ", "§0"},
+            {"§3MLGRush 2x1 §7▶§b %t%", "§6speedcubing.top", "§3", " §7▶ ", " §7▶ ", "§0"}
     };
     public static String[][] StickDuelSideBar = {
-            {"§3StickDuel §7▶§b %t%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"},
-            {"§3StickDuel §7▶§b %t%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"},
-            {"§3StickDuel §7▶§b %t%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"},
-            {"§3StickDuel §7▶§b %t%", "§6" + config.SERVERIP, "§3", " §7▶ ", " §7▶ ", "§0"}
+            {"§3StickDuel §7▶§b %t%", "§6speedcubing.top", "§3", " §7▶ ", " §7▶ ", "§0"},
+            {"§3StickDuel §7▶§b %t%", "§6speedcubing.top", "§3", " §7▶ ", " §7▶ ", "§0"},
+            {"§3StickDuel §7▶§b %t%", "§6speedcubing.top", "§3", " §7▶ ", " §7▶ ", "§0"},
+            {"§3StickDuel §7▶§b %t%", "§6speedcubing.top", "§3", " §7▶ ", " §7▶ ", "§0"}
     };
     public static String[][] Lores = {{" ", "§fIn Fights: §b%int%", "§fQueued: §b%int%"}, {" ", "§fIn Fights: §b%int%", "§fQueued: §b%int%"}, {" ", "§fIn Fights: §b%int%", "§fQueued: §b%int%"}, {" ", "§fIn Fights: §b%int%", "§fQueued: §b%int%"}};
 

@@ -19,11 +19,12 @@ import top.speedcubing.lib.bukkit.WorldUtils;
 import top.speedcubing.lib.utils.TimeFormatter;
 import top.speedcubing.mlgrush.Main;
 import top.speedcubing.mlgrush.Member;
+import top.speedcubing.server.player.User;
 
 public class Duel extends Game {
     public Member[] Players;
     public final int[] Score = {0, 0};
-    public final double[] Kill = {0D, 0D};
+    public final long[] Kill = {0,0};
     public java.util.Timer timer = new Timer();
     public int Time;
     public int map;
@@ -51,7 +52,7 @@ public class Duel extends Game {
                 WorldUtils.cloneArea(-30 + 500 * map, 80, -30, 30 + 500 * map, 120, 30, -30 + 500 * map, 80, -30 + coord, this.world));
     }
 
-    public void initStage2(int[] settings, Player[] players, String[][] displayName, Member[] members) {
+    public void initStage2(int[] settings, String[][] displayName, Member[] members) {
         Preference = new boolean[]{settings[0] > 1, settings[1] > 1, settings[2] > 1, settings[3] > 1, settings[4] > 1};
         for (Member m : members) {
             m.game = this;
@@ -59,13 +60,13 @@ public class Duel extends Game {
             m.QuitAllQueue();
             m.PlacedBlocks = 0;
         }
-        for (Player p : players) {
-            p.getInventory().setHeldItemSlot(0);
-            p.setGameMode(GameMode.SURVIVAL);
+        for (Member p : members) {
+            p.user.bGetInventory().setHeldItemSlot(0);
+            p.user.bSetGameMode(GameMode.SURVIVAL);
         }
         if (settings[1] > 1)
-            for (Player p : players)
-                p.setMaximumNoDamageTicks(0);
+            for (Member p : members)
+                p.user.bSetMaximumNoDamageTicks(0);
         oldKb = settings[4] > 1;
         timer.schedule(new TimerTask() {
             int x = 0;

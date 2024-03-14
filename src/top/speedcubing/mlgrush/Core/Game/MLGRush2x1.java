@@ -22,7 +22,6 @@ import top.speedcubing.mlgrush.List.ItemStackList;
 import top.speedcubing.mlgrush.List.StringList;
 import top.speedcubing.mlgrush.Main;
 import top.speedcubing.mlgrush.Member;
-import top.speedcubing.server.player.User;
 
 public class MLGRush2x1 extends Duel {
     public static DuelCore inst = new DuelCore("MLGRush2x1");
@@ -35,14 +34,16 @@ public class MLGRush2x1 extends Duel {
 
     public MLGRush2x1(Member member1, Member member2, int map) {
         super(map, "MLGRush2x1");
-        MLGRush2x1.inst.lore(map, inst.Rooms[map].size(), true);
         Players = new Random().nextBoolean() ? new Member[]{member1, member2} : new Member[]{member2, member1};
         Players2 = new Random().nextBoolean() ? new Member[]{member1, member2} : new Member[]{member2, member1};
-        Player[] players = {Players[0].user.player, Players[1].user.player};
-        String[] format = {User.getUser(players[0]).getFormatName(false), User.getUser(players[1]).getFormatName(false)};
+
+        String[] format = {Players[0].user.getColorName(false), Players[1].user.getColorName(false)};
         actionbar = format[0] + " §e0 §8x §e0 " + format[1];
-        int[] Map = MapLocations(map);
+
+        MLGRush2x1.inst.lore(map, inst.Rooms[map].size(), true);
+
         Bukkit.getScheduler().runTask(Main.getPlugin(Main.class), () -> {
+            int[] Map = MapLocations(map);
             Players2[0].user.bTeleport(new Location(world, 500 * map + Map[0] + 0.5, Map[1] + 1, coord + 0.5 + Map[3] + Map[6], Map[4], 0));
             Players2[1].user.bTeleport(new Location(world, 500 * map + Map[0] * -1 + 0.5, Map[1] + 1, coord + 0.5 - Map[3], Map[5], 0));
             int[] settings = new int[5];
@@ -69,7 +70,7 @@ public class MLGRush2x1 extends Duel {
                         .changeableLine(format[1] + sidebar[4] + "§e0", 1)
                         .staticLine(sidebar[5], 0).create();
             }
-            initStage2(settings, players, StringList.MLGRushSideBar, Players);
+            initStage2(settings, StringList.MLGRushSideBar, Players);
 //            int size = Core.specMenu2x1.size();
 //            int size2 = Core.specMenustick.size();
 //            int size3 = Core.specMenu4x1.size();
@@ -141,33 +142,34 @@ public class MLGRush2x1 extends Duel {
 
     public void fell(Player player) {
         Member member = Member.getMember(player);
-        String[] format = member.user.getFormat();
-        member.PlacedBlocks = 0;
-        if (Preference[0])
-            resetBlocks();
-        int[] t = Players2[0].user.player == player ? new int[]{0, 1} : new int[]{1, -1};
+        int t = Players2[0] == member ? 0 : 1;
+        Member killer = Players2[1 - t];
+
         Set<Member> targets = new HashSet<>();
         targets.addAll(Spectators);
         targets.addAll(Arrays.asList(Players2));
-        if (System.currentTimeMillis() - Kill[t[0]] < 2500) {
-            Player killer = Players2[1 - t[0]].user.player;
-            killer.playSound(killer.getLocation(), Sound.SUCCESSFUL_HIT, 1F, 1F);
-            String[] format1 = Players2[1 - t[0]].user.getFormat();
+
+        member.PlacedBlocks = 0;
+        if (Preference[0])
+            resetBlocks();
+        if (System.currentTimeMillis() - Kill[t] < 5000) {
+            Kill[t] = 0;
+            killer.user.bPlaySound(killer.user.bGetLocation(), Sound.SUCCESSFUL_HIT, 1F, 1F);
             for (Member m : targets) {
-                m.user.sendLangMessage(StringList.MLGRushKill
-                        , format[1]
-                        , player.getName()
-                        , format1[1]
-                        , killer.getName());
+                m.user.sendLangMessage(StringList.MLGRushKill,
+                        member.user.getColorName(false),
+                        killer.user.getColorName(false));
             }
         } else
             for (Member m : targets)
-                m.user.sendLangMessage(StringList.MLGRushFell, format[0], player.getName());
+                m.user.sendLangMessage(StringList.MLGRushFell, member.user.getColorName(false));
+
         WorldServer mlgrush2x1 = ((CraftWorld) Bukkit.getWorld("MLGRush2x1")).getHandle();
         int[] Map = MapLocations(map);
+        int k = Players2[0] == member ? 1 : -1;
         for (int y = Map[2]; y >= Map[1]; y--) {
-            if (mlgrush2x1.getType(new BlockPosition(map * 500 + Map[0] * t[1], y, coord + t[1] * Map[3])) != net.minecraft.server.v1_8_R3.Blocks.AIR.getBlockData()) {
-                player.teleport(new Location(player.getWorld(), map * 500 + 0.5 + Map[0] * t[1], y + 1, coord + 0.5 + t[1] * Map[3] + (t[0] == 0 ? Map[6] : 0), Map[t[0] + 4], 0));
+            if (mlgrush2x1.getType(new BlockPosition(map * 500 + Map[0] * k, y, coord + k * Map[3])) != net.minecraft.server.v1_8_R3.Blocks.AIR.getBlockData()) {
+                player.teleport(new Location(player.getWorld(), map * 500 + 0.5 + Map[0] * k, y + 1, coord + 0.5 + k * Map[3] + (t == 0 ? Map[6] : 0), Map[t + 4], 0));
                 break;
             }
         }
@@ -184,7 +186,7 @@ public class MLGRush2x1 extends Duel {
             resetBlocks();
             int w = players[0] == breaker ? 0 : 1;
             Score[w] += 1;
-            String[] formats = {Players[0].user.getFormatName(false), Players[1].user.getFormatName(false)};
+            String[] formats = {Players[0].user.getColorName(false), Players[1].user.getColorName(false)};
             Set<Member> targets = new HashSet<>();
             targets.addAll(Spectators);
             targets.addAll(Arrays.asList(Players));

@@ -23,7 +23,7 @@ public class EntityDamageByEntity implements Listener {
     @EventHandler
     public void EntityDamageByEntityEvent(EntityDamageByEntityEvent e) {
 //        System.out.println("C");
-        double time = System.currentTimeMillis();
+        long time = System.currentTimeMillis();
         if (!(e.getDamager() instanceof Player && e.getEntity() instanceof Player))
             return;
         Player damager = (Player) e.getDamager();
@@ -83,14 +83,14 @@ public class EntityDamageByEntity implements Listener {
                         velocity.setZ(velocity.getZ() * horizontalMultiplier);
                         member.user.knockback(member.user.applyKnockback(velocity));
                     }
-                    (member.game).Kill[(member.game).Players[0].equals(member) ? 0 : 1] = time;
+                    (member.game).Kill[((MLGRush2x1) (member.game)).Players2[0].equals(member) ? 0 : 1] = time;
                 }
             }
             break;
             case "StickDuel":
                 Member member = Member.getMember(victim);
                 if (!damager.getAllowFlight())
-                    ((StickDuel) member.game).Kill[((StickDuel) member.game).Players[0].equals(member) ? 0 : 1] = time;
+                    (member.game).Kill[(member.game).Players[0].equals(member) ? 0 : 1] = time;
                 break;
         }
 

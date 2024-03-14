@@ -80,14 +80,14 @@ public class InventoryClick implements Listener {
                             if (lastdamager.LastDamage != null && lastdamager.LastDamage.equals(member)) {
                                 lastdamager.Challenge.add(member);
                                 lastdamager.stick = null;
-                                member.user.sendLangMessage(StringList.ChallengingAction, lastdamager.user.getFormatName(false), "§bMLGRush 2x1");
-                                lastdamager.user.sendLangMessage(StringList.ChallengeFrom, member.user.getFormatName(false), "§bMLGRush 2x1");
+                                member.user.sendLangMessage(StringList.ChallengingAction, lastdamager.user.getPrefixName(false), "§bMLGRush 2x1");
+                                lastdamager.user.sendLangMessage(StringList.ChallengeFrom, member.user.getPrefixName(false), "§bMLGRush 2x1");
                             } else
-                                member.user.sendLangMessage(StringList.AlreadyChallenged, lastdamager.user.getFormatName(false), "§bMLGRush 2x1");
+                                member.user.sendLangMessage(StringList.AlreadyChallenged, lastdamager.user.getPrefixName(false), "§bMLGRush 2x1");
                         } else {
                             lastdamager.Challenge.add(member);
-                            member.user.sendLangMessage(StringList.ChallengingAction, lastdamager.user.getFormatName(false), "§bMLGRush 2x1");
-                            lastdamager.user.sendLangMessage(StringList.ChallengeFrom, member.user.getFormatName(false), "§bMLGRush 2x1");
+                            member.user.sendLangMessage(StringList.ChallengingAction, lastdamager.user.getPrefixName(false), "§bMLGRush 2x1");
+                            lastdamager.user.sendLangMessage(StringList.ChallengeFrom, member.user.getPrefixName(false), "§bMLGRush 2x1");
                         }
                         break;
                     case 15:
@@ -96,15 +96,15 @@ public class InventoryClick implements Listener {
                             if (lastdamager.LastDamage.equals(member)) {
                                 lastdamager.Challenge.add(member);
                                 lastdamager.stick = member;
-                                member.user.sendLangMessage(StringList.ChallengingAction, lastdamager.user.getFormatName(false), "§bStickDuel");
-                                lastdamager.user.sendLangMessage(StringList.ChallengeFrom, member.user.getFormatName(false), "§bStickDuel");
+                                member.user.sendLangMessage(StringList.ChallengingAction, lastdamager.user.getPrefixName(false), "§bStickDuel");
+                                lastdamager.user.sendLangMessage(StringList.ChallengeFrom, member.user.getPrefixName(false), "§bStickDuel");
                             } else
-                                member.user.sendLangMessage(StringList.AlreadyChallenged, lastdamager.user.getFormatName(false), "§bStickDuel");
+                                member.user.sendLangMessage(StringList.AlreadyChallenged, lastdamager.user.getPrefixName(false), "§bStickDuel");
                         } else {
                             lastdamager.Challenge.add(member);
                             lastdamager.stick = member;
-                            member.user.sendLangMessage(StringList.ChallengingAction, lastdamager.user.getFormatName(false), "§bStickDuel");
-                            lastdamager.user.sendLangMessage(StringList.ChallengeFrom, member.user.getFormatName(false), "§bStickDuel");
+                            member.user.sendLangMessage(StringList.ChallengingAction, lastdamager.user.getPrefixName(false), "§bStickDuel");
+                            lastdamager.user.sendLangMessage(StringList.ChallengeFrom, member.user.getPrefixName(false), "§bStickDuel");
                         }
                         break;
                 }

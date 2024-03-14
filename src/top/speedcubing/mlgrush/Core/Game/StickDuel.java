@@ -17,7 +17,6 @@ import top.speedcubing.mlgrush.List.ItemStackList;
 import top.speedcubing.mlgrush.List.StringList;
 import top.speedcubing.mlgrush.Main;
 import top.speedcubing.mlgrush.Member;
-import top.speedcubing.server.player.User;
 
 public class StickDuel extends Duel {
     public static DuelCore inst = new DuelCore("StickDuel");
@@ -25,13 +24,16 @@ public class StickDuel extends Duel {
     public StickDuel(Member member1, Member member2, int map) {
         super(map, "StickDuel");
         Players = new Random().nextBoolean() ? new Member[]{member1, member2} : new Member[]{member2, member1};
-        Player[] players = {Players[0].user.player, Players[1].user.player};
-        String[] format = {User.getUser(players[0]).getFormatName(false), User.getUser(players[1]).getFormatName(false)};
+
+        String[] format = {Players[0].user.getColorName(false), Players[0].user.getColorName(false)};
         actionbar = format[0] + " §e0 §8x §e0 " + format[1];
-        int[] Map = MapLocations(map);
+
+        StickDuel.inst.lore(map, inst.Rooms[map].size(), true);
+
         Bukkit.getScheduler().runTask(Main.getPlugin(Main.class), () -> {
-            players[0].teleport(new Location(world, Map[0] + 0.5, 101, coord + 0.5 + Map[1], 90, 0));
-            players[1].teleport(new Location(world, Map[0] * -1 + 0.5, 101, coord + 0.5 - Map[1], 270, 0));
+            int[] Map = MapLocations(map);
+            Players[0].user.bTeleport(new Location(world, Map[0] + 0.5, 101, coord + 0.5 + Map[1], 90, 0));
+            Players[1].user.bTeleport(new Location(world, Map[0] * -1 + 0.5, 101, coord + 0.5 - Map[1], 270, 0));
             int[] settings = new int[5];
             for (Member p : Players) {
                 p.user.sendLangMessage(StringList.StickDuelOpponentFound);
@@ -56,7 +58,7 @@ public class StickDuel extends Duel {
                         .changeableLine(format[1] + sidebar[4] + "§e0", 1)
                         .staticLine(sidebar[5], 0).create();
             }
-            initStage2(settings, players, StringList.StickDuelSideBar, Players);
+            initStage2(settings, StringList.StickDuelSideBar, Players);
 //            int size = MLGRush.specMenu2x1.size();
 //            int size2 = MLGRush.specMenustick.size();
 //            int size3 = MLGRush.specMenu4x1.size();
@@ -121,19 +123,19 @@ public class StickDuel extends Duel {
     }
 
     public void fell(Player player) {
-        Player[] players = {Players[0].user.player, Players[1].user.player};
-        int w = players[0] == player ? 1 : 0;
-        Player killer = players[w];
-        String[] loserformat = Member.getMember(player).user.getFormat();
+        Member member = Member.getMember(player);
+        int t = Players[0] == member ? 0 : 1;
+        Member killer = Players[1 - t];
+
         Set<Member> targets = new HashSet<>();
         targets.addAll(Spectators);
         targets.addAll(Arrays.asList(Players));
-        if (System.currentTimeMillis() - Kill[1 - w] < 2500) {
+
+        if (System.currentTimeMillis() - Kill[t] < 2500) {
             resetBlocks();
-            String[] winnerformat = Players[w].user.getFormat();
-            String[] formats = new String[]{Players[0].user.getFormatName(false), Players[1].user.getFormatName(false)};
-            killer.playSound(killer.getLocation(), Sound.SUCCESSFUL_HIT, 1F, 1F);
-            Score[w] += 1;
+            String[] formats = new String[]{Players[0].user.getColorName(false), Players[1].user.getColorName(false)};
+            killer.user.bPlaySound(killer.user.bGetLocation(), Sound.SUCCESSFUL_HIT, 1F, 1F);
+            Score[1 - t] += 1;
             String[] suffix = new String[2];
             if (Score[0] == Score[1]) {
                 actionbar = formats[0] + " §e" + Score[0] + " §8x §e" + Score[1] + " " + formats[1];
@@ -156,21 +158,21 @@ public class StickDuel extends Duel {
                 SideBar.getSidebar(m.user.player)
                         .setLine(formats[0] + sidebar[3] + suffix[0], 3)
                         .setLine(formats[1] + sidebar[4] + suffix[1], 4);
-                m.user.sendLangMessage(StringList.StickDuelKill, loserformat[1]
-                        , player.getName()
-                        , winnerformat[1]
-                        , killer.getName());
+                m.user.sendLangMessage(StringList.StickDuelKill,
+                        member.user.getColorName(false),
+                        killer.user.getColorName(false));
                 PlayerUtils.sendActionBar(m.user.player, actionbar);
             }
         } else {
             for (Member m : targets)
-                m.user.sendLangMessage(StringList.StickDuelFell, loserformat[0], player.getName());
+                m.user.sendLangMessage(StringList.StickDuelFell, member.user.getColorName(false));
         }
-        int pos = killer.getLocation().getX() > 0 ? -1 : 1;
+
+        int pos = killer.user.bGetLocation().getX() > 0 ? -1 : 1;
         int[] Map = MapLocations(map);
         player.teleport(new Location(player.getWorld(), 0.5 + Map[0] * pos, 101, coord + 0.5 + pos * Map[1], 180 - 90 * pos, 0));
-        for (Player p : players) {
-            Core.resetItems(p);
+        for (Member p : Players) {
+            Core.resetItems(p.user.player);
         }
     }
 

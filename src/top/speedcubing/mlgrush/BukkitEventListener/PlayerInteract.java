@@ -54,7 +54,7 @@ public class PlayerInteract implements Listener {
                             player.setAllowFlight(false);
                             member.game.Spectators.remove(member);
                             member.Spectate = -1;
-                            String str = member.user.getFormatName(false);
+                            String str = member.user.getColorName(false);
                             for (Member m : member.game.Spectators) {
                                 m.user.sendLangMessage(StringList.LeaveSpectate, str);
                             }

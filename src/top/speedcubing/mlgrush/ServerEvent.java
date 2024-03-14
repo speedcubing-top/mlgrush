@@ -3,11 +3,11 @@ package top.speedcubing.mlgrush;
 import net.minecraft.server.v1_8_R3.PacketPlayInChat;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import top.speedcubing.common.database.DatabaseData;
 import top.speedcubing.lib.bukkit.SideBar;
 import top.speedcubing.lib.eventbus.CubingEventHandler;
 import top.speedcubing.lib.events.packet.PlayInEvent;
 import top.speedcubing.mlgrush.List.StringList;
-import top.speedcubing.server.database.DataCenter;
 import top.speedcubing.server.events.CubingTickEvent;
 import top.speedcubing.server.events.player.HubEvent;
 import top.speedcubing.server.events.player.NickEvent;
@@ -23,7 +23,7 @@ public class ServerEvent {
     public void CubingTickEvent(CubingTickEvent e) {
         for (SideBar s : SideBar.getSidebars()) {
             if (s.player.getWorld().getName().equals("world"))
-                s.setLine(StringList.LobbySideBar[User.getUser(s.player).lang][1] + DataCenter.onlineCount, 4);
+                s.setLine(StringList.LobbySideBar[User.getUser(s.player).lang][1] + DatabaseData.onlineCount, 4);
         }
     }
 
@@ -33,8 +33,7 @@ public class ServerEvent {
             String message = ((PacketPlayInChat) e.packet).a();
             if (message.charAt(0) != '/') {
                 e.isCancelled = true;
-                String[] formats = Member.getMember(e.player).user.getFormat();
-                Chat.globalChat(Bukkit.getOnlinePlayers(), e.player, GlobalString.MessageFormat, message, formats[0] + e.player.getName(), formats[2]);
+                Chat.globalChat(Bukkit.getOnlinePlayers(), e.player, GlobalString.MessageFormat, message, Member.getMember(e.player).user.getPrefixName(false), Member.getMember(e.player).user.getChatColor(false));
             }
         }
     }
