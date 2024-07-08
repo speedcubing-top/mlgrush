@@ -31,20 +31,10 @@ public class Main extends JavaPlugin implements CommandExecutor {
 
     public void onEnable() {
         MinecraftServer.getServer().getPropertyManager().setProperty("server-name", "mlgrush");
-        Bukkit.getPluginManager().registerEvents(new EntityDamage(), this);
-        Bukkit.getPluginManager().registerEvents(new PlayerJoin(), this);
-        Bukkit.getPluginManager().registerEvents(new PlayerChangedWorld(), this);
-        Bukkit.getPluginManager().registerEvents(new EntityDamageByEntity(), this);
-        Bukkit.getPluginManager().registerEvents(new InventoryClick(), this);
-        Bukkit.getPluginManager().registerEvents(new BlockBreak(), this);
-        Bukkit.getPluginManager().registerEvents(new BlockPlace(), this);
-        Bukkit.getPluginManager().registerEvents(new PlayerDropItem(), this);
-        Bukkit.getPluginManager().registerEvents(new PlayerInteract(), this);
-        Bukkit.getPluginManager().registerEvents(new PlayerMove(), this);
-        Bukkit.getPluginManager().registerEvents(new PlayerQuit(), this);
-        Bukkit.getPluginManager().registerEvents(new FoodLevelChange(), this);
-        Bukkit.getPluginManager().registerEvents(new PlayerSpawnLocation(), this);
-        Bukkit.getPluginManager().registerEvents(new InventoryClose(), this);
+        CubingEventManager.registerListeners(new ServerEvent());
+        registerCommands();
+        registerListeners();
+
         getServer().createWorld(new WorldCreator("MLGRush2x1"));
         getServer().createWorld(new WorldCreator("StickDuel"));
         getServer().createWorld(new WorldCreator("MLGRush4x1"));
@@ -60,12 +50,32 @@ public class Main extends JavaPlugin implements CommandExecutor {
         Bukkit.getWorld("MLGRush4x1").setAutoSave(false);
         Bukkit.getWorld("StickDuel").setAutoSave(false);
         Bukkit.getWorld("world").setAutoSave(false);
-        Bukkit.getPluginCommand("reset").setExecutor(new reset());
-        Bukkit.getPluginCommand("reset").setTabCompleter(new reset());
         new ItemStackList().Load();
         new EntityList().Load();
         new BlockEditor().Load();
-        CubingEventManager.registerListeners(new ServerEvent());
-        speedcubingServer.canRestart = false;
+    }
+
+    private void registerCommands() {
+        Bukkit.getPluginCommand("reset").setExecutor(new reset());
+        Bukkit.getPluginCommand("reset").setTabCompleter(new reset());
+    }
+
+    private void registerListeners() {
+        speedcubingServer.registerListeners(
+                new EntityDamage(),
+                new PlayerJoin(),
+                new PlayerChangedWorld(),
+                new EntityDamageByEntity(),
+                new InventoryClick(),
+                new BlockBreak(),
+                new BlockPlace(),
+                new PlayerDropItem(),
+                new PlayerInteract(),
+                new PlayerMove(),
+                new PlayerQuit(),
+                new FoodLevelChange(),
+                new PlayerSpawnLocation(),
+                new InventoryClose()
+        );
     }
 }

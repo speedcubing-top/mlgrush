@@ -1,7 +1,6 @@
 package top.speedcubing.mlgrush.List;
 
 import top.speedcubing.server.lang.LangMessage;
-import top.speedcubing.server.utils.config;
 
 /**
  *
@@ -53,7 +52,7 @@ public class StringList {
             "§8[§bMLGRush§8] %1%§7 has fell into the void.",
             "§8[§bMLGRush§8] %1%§7 has fell into the void.",
             "§8[§bMLGRush§8] %1%§7 has fell into the void."
-            );
+    );
     public static LangMessage MLGRushKill = new LangMessage(
             "§8[§bMLGRush§8] %1%§7 was killed by %2%§7.",
             "§8[§bMLGRush§8] %1%§7 was killed by %2%§7.",
@@ -123,7 +122,7 @@ public class StringList {
             "§8[§bStickDuel§8] %1%§7 was killed by %2%",
             "§8[§bStickDuel§8] %1%§7 was killed by %2%",
             "§8[§bStickDuel§8] %1%§7 was killed by %2%"
-            );
+    );
 
     public static LangMessage JoinSpectate = new LangMessage(
             "§8[§3Spectate§8] %player% §3is now spectating.",
