@@ -20,7 +20,7 @@ public class PlayerInteract implements Listener {
     public void PlayerInteractEvent(PlayerInteractEvent e) {
         Player player = e.getPlayer();
         switch (player.getWorld().getName()) {
-            case "world":
+            case "lobby":
                 switch (player.getItemInHand().getType()) {
                     case COMPASS:
                         player.openInventory(ItemStackList.specinventory[Member.getMember(player).user.lang]);
@@ -49,7 +49,7 @@ public class PlayerInteract implements Listener {
                     switch (player.getWorld().getName()) {
                         case "MLGRush2x1":
                         case "StickDuel": {
-                            player.teleport(new Location(Bukkit.getWorld("world"), 0.5, 100, 0.5, 0, 0));
+                            player.teleport(new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0));
                             Member member = Member.getMember(player);
                             player.setAllowFlight(false);
                             member.game.Spectators.remove(member);

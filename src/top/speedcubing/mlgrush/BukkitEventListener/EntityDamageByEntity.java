@@ -33,7 +33,7 @@ public class EntityDamageByEntity implements Listener {
             return;
         }
         switch (victim.getWorld().getName()) {
-            case "world":
+            case "lobby":
                 if (damager.getItemInHand().getType() == Material.GOLD_SWORD) {
                     Member victimUniqueId = Member.getMember(victim);
                     Member damagerUniqueId = Member.getMember(damager);

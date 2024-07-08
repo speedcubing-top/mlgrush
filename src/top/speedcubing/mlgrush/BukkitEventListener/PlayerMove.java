@@ -44,7 +44,7 @@ public class PlayerMove implements Listener {
                     } else if (flag || to.getY() <= 85)
                         Member.getMember(player).game.fell(player);
                     break;
-                case "world":
+                case "lobby":
                     if (Math.abs(to.getX()) > 101 || Math.abs(to.getZ()) > 101)
                         player.teleport(e.getFrom());
                     if (to.getY() <= 80) {

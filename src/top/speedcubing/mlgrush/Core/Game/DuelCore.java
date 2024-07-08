@@ -60,7 +60,7 @@ public class DuelCore {
                 ItemUtils.setLore(stack, meta.get(0), meta.get(1), StringList.Lores[i][2].replace("%int%", Integer.toString(replacement)));
             }
         }
-        for (Player p : Bukkit.getWorld("world").getPlayers()) {
+        for (Player p : Bukkit.getWorld("lobby").getPlayers()) {
             for (Inventory i : ItemStackList.duelMenu) {
                 if (p.getOpenInventory().getTopInventory().getHolder() == i.getHolder())
                     p.updateInventory();

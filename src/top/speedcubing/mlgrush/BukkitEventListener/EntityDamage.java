@@ -26,7 +26,7 @@ public class EntityDamage implements Listener {
                     if (e.getCause() == EntityDamageEvent.DamageCause.FALL)
                         e.setCancelled(true);
                     break;
-                case "world":
+                case "lobby":
                     e.setCancelled(true);
                     break;
             }

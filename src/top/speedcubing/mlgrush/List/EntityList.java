@@ -21,11 +21,11 @@ public class EntityList {
 
         for (int i = 0; i < npcs.length; i++) {
             npcs[i] = new NPC("", null, true, true, true).hideNametag();
-            npcs[i].world.add("world");
+            npcs[i].world.add("lobby");
         }
         for (int i = 0; i < Lobbys.length; i++) {
             Lobbys[i] = new Hologram("", true, true);
-            Lobbys[i].world.add("world");
+            Lobbys[i].world.add("lobby");
         }
         Lobbys[0].setLocation(-2.5, 101.85, 19.5, 0, 0);
         Lobbys[1].setLocation(0.5, 101.85, 19.5, 0, 0);

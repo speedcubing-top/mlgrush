@@ -17,7 +17,7 @@ public class BlockBreak implements Listener {
     public void BlocKBreakEvent(BlockBreakEvent e) {
         Player player = e.getPlayer();
         switch (player.getWorld().getName()) {
-            case "world":
+            case "lobby":
                 if (player.getGameMode() == GameMode.SURVIVAL)
                     e.setCancelled(true);
             case "MLGRush2x1":

@@ -91,7 +91,7 @@ public class MLGRush2x1 extends Duel {
 //                stack.setItemMeta(meta);
 //                ItemStackList.specinventory[i].setItem(size, stack);
 //            }
-//            for (Player p : Bukkit.getWorld("world").getPlayers()) {
+//            for (Player p : Bukkit.getWorld("lobby").getPlayers()) {
 //                if (p.getOpenInventory().getTopInventory().getHolder() == Core.specHolder)
 //                    p.updateInventory();
 //            }
@@ -234,7 +234,7 @@ public class MLGRush2x1 extends Duel {
         Players[quitter].user.sendLangMessage(StringList.MLGRushOpponentDisconnect);
         resetBlocks();
         timer.cancel();
-        Location lb = new Location(Bukkit.getWorld("world"), 0.5, 100, 0.5, 0, 0);
+        Location lb = new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0);
         Players[quitter].user.bTeleport(lb);
         for (Member m : Spectators) {
             for (Member pp : Players) {
@@ -265,7 +265,7 @@ public class MLGRush2x1 extends Duel {
 //                inventory.setItem(j, inventory.getItem(j + 1));
 //            }
 //        }
-//        for (Player p : Bukkit.getWorld("world").getPlayers()) {
+//        for (Player p : Bukkit.getWorld("lobby").getPlayers()) {
 //            if (p.getOpenInventory().getTopInventory().getHolder() == Core.specHolder) {
 //                p.updateInventory();
 //            }

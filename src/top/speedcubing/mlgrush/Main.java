@@ -3,7 +3,6 @@ package top.speedcubing.mlgrush;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
-import org.bukkit.WorldCreator;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 import top.speedcubing.lib.eventbus.CubingEventManager;
@@ -26,6 +25,7 @@ import top.speedcubing.mlgrush.Core.BlockEditor;
 import top.speedcubing.mlgrush.List.EntityList;
 import top.speedcubing.mlgrush.List.ItemStackList;
 import top.speedcubing.server.speedcubingServer;
+import top.speedcubing.server.utils.MapManager;
 
 public class Main extends JavaPlugin implements CommandExecutor {
 
@@ -34,22 +34,8 @@ public class Main extends JavaPlugin implements CommandExecutor {
         CubingEventManager.registerListeners(new ServerEvent());
         registerCommands();
         registerListeners();
+        registerWorlds();
 
-        getServer().createWorld(new WorldCreator("MLGRush2x1"));
-        getServer().createWorld(new WorldCreator("StickDuel"));
-        getServer().createWorld(new WorldCreator("MLGRush4x1"));
-        Bukkit.getWorld("MLGRush2x1").setDifficulty(Difficulty.PEACEFUL);
-        Bukkit.getWorld("MLGRush4x1").setDifficulty(Difficulty.PEACEFUL);
-        Bukkit.getWorld("StickDuel").setDifficulty(Difficulty.PEACEFUL);
-        Bukkit.getWorld("world").setDifficulty(Difficulty.PEACEFUL);
-        Bukkit.getWorld("MLGRush2x1").setTime(6000);
-        Bukkit.getWorld("MLGRush4x1").setTime(6000);
-        Bukkit.getWorld("StickDuel").setTime(6000);
-        Bukkit.getWorld("world").setTime(6000);
-        Bukkit.getWorld("MLGRush2x1").setAutoSave(false);
-        Bukkit.getWorld("MLGRush4x1").setAutoSave(false);
-        Bukkit.getWorld("StickDuel").setAutoSave(false);
-        Bukkit.getWorld("world").setAutoSave(false);
         new ItemStackList().Load();
         new EntityList().Load();
         new BlockEditor().Load();
@@ -77,5 +63,16 @@ public class Main extends JavaPlugin implements CommandExecutor {
                 new PlayerSpawnLocation(),
                 new InventoryClose()
         );
+    }
+
+    private void registerWorlds() {
+        try {
+            MapManager.install("map_mlgrush_2x1", "MLGRush2x1", Difficulty.PEACEFUL, 6000, false);
+            MapManager.install("map_mlgrush_stickduel", "StickDuel", Difficulty.PEACEFUL, 6000, false);
+            MapManager.install("mlgrushLobby", "lobby", Difficulty.PEACEFUL, 6000, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Bukkit.getServer().shutdown();
+        }
     }
 }

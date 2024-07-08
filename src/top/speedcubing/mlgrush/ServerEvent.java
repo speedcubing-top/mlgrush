@@ -22,7 +22,7 @@ public class ServerEvent {
     @CubingEventHandler
     public void cubingTickEvent(CubingTickEvent e) {
         for (SideBar s : SideBar.getSidebars()) {
-            if (s.player.getWorld().getName().equals("world"))
+            if (s.player.getWorld().getName().equals("lobby"))
                 s.setLine(StringList.LobbySideBar[User.getUser(s.player).lang][1] + DatabaseData.onlineCount, 4);
         }
     }
@@ -41,15 +41,15 @@ public class ServerEvent {
 
     @CubingEventHandler
     public void hubEvent(HubEvent e) {
-        if (!e.getPlayer().getWorld().getName().equals("world")) {
-            e.getPlayer().teleport(new Location(Bukkit.getWorld("world"), 0.5, 100, 0.5, 0, 0));
+        if (!e.getPlayer().getWorld().getName().equals("lobby")) {
+            e.getPlayer().teleport(new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0));
             e.setCancelled(true);
         }
     }
 
     @CubingEventHandler
     public void nickEvent(NickEvent e) {
-        if (!e.getPlayer().getWorld().getName().equals("world")) {
+        if (!e.getPlayer().getWorld().getName().equals("lobby")) {
             Member.getMember(e.getPlayer()).user.sendLangMessage(GlobalString.OnlyInHub);
             e.setCancelled(true);
         }
@@ -57,7 +57,7 @@ public class ServerEvent {
 
     @CubingEventHandler
     public void skinEvent(SkinEvent e) {
-        if (!e.getPlayer().getWorld().getName().equals("world")) {
+        if (!e.getPlayer().getWorld().getName().equals("lobby")) {
             Member.getMember(e.getPlayer()).user.sendLangMessage(GlobalString.OnlyInHub);
             e.setCancelled(true);
         }
@@ -65,7 +65,7 @@ public class ServerEvent {
 
     @CubingEventHandler
     public void toggleFlyEvent(ToggleFlyEvent e) {
-        if (!e.getPlayer().getWorld().getName().equals("world")) {
+        if (!e.getPlayer().getWorld().getName().equals("lobby")) {
             Member.getMember(e.getPlayer()).user.sendLangMessage(GlobalString.OnlyInHub);
             e.setCancelled(true);
         }
