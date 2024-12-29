@@ -36,7 +36,7 @@ public class StickDuel extends Duel {
             Players[1].user.bTeleport(new Location(world, Map[0] * -1 + 0.5, 101, coord + 0.5 - Map[1], 270, 0));
             int[] settings = new int[5];
             for (Member p : Players) {
-                p.user.sendLangMessage(StringList.StickDuelOpponentFound);
+                p.user.sendMessage("§8[§bStickDuel§8] §aAn opponent has been found.");
 //                Core.QuitAllGame(p);
                 int[] ints = p.integerCache;
                 settings[0] += ints[5];
@@ -158,14 +158,14 @@ public class StickDuel extends Duel {
                 SideBar.getSidebar(m.user.player)
                         .setLine(formats[0] + sidebar[3] + suffix[0], 3)
                         .setLine(formats[1] + sidebar[4] + suffix[1], 4);
-                m.user.sendLangMessage(StringList.StickDuelKill,
+                m.user.sendMessage("§8[§bStickDuel§8] %p%§7 was killed by %p%",
                         member.user.getColorName(false),
                         killer.user.getColorName(false));
                 PlayerUtils.sendActionBar(m.user.player, actionbar);
             }
         } else {
             for (Member m : targets)
-                m.user.sendLangMessage(StringList.StickDuelFell, member.user.getColorName(false));
+                m.user.sendMessage("§8[§bStickDuel§8] %p%§7 has fell into the void.", member.user.getColorName(false));
         }
 
         int pos = killer.user.bGetLocation().getX() > 0 ? -1 : 1;
@@ -183,7 +183,7 @@ public class StickDuel extends Duel {
             m.game = null;
             m.PlacedBlocks = -1;
         }
-        Players[quitter].user.sendLangMessage(StringList.StickDuelOpponentDisconnect);
+        Players[quitter].user.sendMessage("§cYour opponent has disconnected.");
         resetBlocks();
         timer.cancel();
         Location lb = new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0);
@@ -193,7 +193,7 @@ public class StickDuel extends Duel {
                 pp.user.bShowPlayer(m.user.player);
             }
             m.user.bSetAllowFlight(false);
-            m.user.sendLangMessage(StringList.StickDuelGameEnd);
+            m.user.sendMessage("§cGame Over.");
             m.user.bTeleport(lb);
             m.Spectate = -1;
         }

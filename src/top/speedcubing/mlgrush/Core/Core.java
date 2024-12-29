@@ -14,14 +14,11 @@ import top.speedcubing.lib.bukkit.inventory.InventoryUtils;
 import top.speedcubing.mlgrush.All.Lobby;
 import top.speedcubing.mlgrush.List.ItemStackList;
 import top.speedcubing.mlgrush.Member;
-import top.speedcubing.server.lang.GlobalString;
 
 public class Core {
 
     public static final InventoryHolder specHolder = () -> null;
     public static final InventoryHolder ChallengerHolder = () -> null;
-    public static final Map<Integer, Integer> specMenu2x1 = new HashMap<>();
-    public static final Map<Integer, Integer> specMenustick = new HashMap<>();
     public static final Map<Integer, Integer> specMenu4x1 = new HashMap<>();
 
     private static final String[] stickedit = {"§bStick Skin", "§bStick Skin", "§bStick Skin", "§bStick Skin"};
@@ -38,7 +35,7 @@ public class Core {
             Member member = Member.getMember(player);
             member.integerCache[3] = RawSlot - 10;
             player.closeInventory();
-            member.user.sendLangMessage(GlobalString.SavedSettings);
+            player.sendMessage("%lang_general_saved_setting%");
         }
     }
 
@@ -47,7 +44,7 @@ public class Core {
         if (cursor.getType() == Material.AIR) {
             Member member = Member.getMember(player);
             member.iseditingkit = false;
-            member.user.sendLangMessage(GlobalString.SavedSettings);
+            player.sendMessage("%lang_general_saved_setting%");
             int[] x = member.integerCache;
             for (int i = 0; i < 9; i++) {
                 if (inventory.getItem(i) != null) {
@@ -94,7 +91,7 @@ public class Core {
 
     public static void openPreference(Player player) {
         Member member = Member.getMember(player);
-        InventoryBuilder builder = new InventoryBuilder(36, prefedit[member.user.lang]).deleteOnClose(true);
+        InventoryBuilder builder = new InventoryBuilder(36, prefedit[member.user.lang]);
         for (int i = 0; i < 5; i++)
             builder.setItem(ItemStackList.prefereditor[i][member.user.lang], i + 11);
         ItemStack stack = ItemStackList.preferButton[0][member.user.lang];
@@ -135,7 +132,7 @@ public class Core {
 
     public static void openStickEditor(Player player) {
         int lang = Member.getMember(player).user.lang;
-        InventoryBuilder inventory = new InventoryBuilder(27, stickedit[lang]).deleteOnClose(true).setAllClickEvent((r) -> saveStickEditor(r.getPlayer(), r.getEvent().getRawSlot()));
+        InventoryBuilder inventory = new InventoryBuilder(27, stickedit[lang]).setAllClickEvent((r) -> saveStickEditor(r.getPlayer(), r.getEvent().getRawSlot()));
         for (int i = 0; i < 6; i++)
             inventory.setItem(ItemStackList.stickeditor[0][i][lang], i + 10);
         int x = Member.getMember(player).integerCache[3];

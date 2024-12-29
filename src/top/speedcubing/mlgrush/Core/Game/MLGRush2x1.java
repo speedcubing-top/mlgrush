@@ -48,7 +48,7 @@ public class MLGRush2x1 extends Duel {
             Players2[1].user.bTeleport(new Location(world, 500 * map + Map[0] * -1 + 0.5, Map[1] + 1, coord + 0.5 - Map[3], Map[5], 0));
             int[] settings = new int[5];
             for (Member p : Players) {
-                p.user.sendLangMessage(StringList.MLGRushOpponentFound);
+                p.user.sendMessage("§8[§bMLGRush§8] §aAn opponent has been found.");
 //                Core.QuitAllGame(p);
                 int[] ints = p.integerCache;
                 settings[0] += ints[5];
@@ -156,13 +156,13 @@ public class MLGRush2x1 extends Duel {
             Kill[t] = 0;
             killer.user.bPlaySound(killer.user.bGetLocation(), Sound.SUCCESSFUL_HIT, 1F, 1F);
             for (Member m : targets) {
-                m.user.sendLangMessage(StringList.MLGRushKill,
+                m.user.sendMessage("§8[§bMLGRush§8] %p%§7 was killed by %p%§7.",
                         member.user.getColorName(false),
                         killer.user.getColorName(false));
             }
         } else
             for (Member m : targets)
-                m.user.sendLangMessage(StringList.MLGRushFell, member.user.getColorName(false));
+                m.user.sendMessage("§8[§bMLGRush§8] %p%§7 has fell into the void.", member.user.getColorName(false));
 
         WorldServer mlgrush2x1 = ((CraftWorld) Bukkit.getWorld("MLGRush2x1")).getHandle();
         int[] Map = MapLocations(map);
@@ -181,7 +181,7 @@ public class MLGRush2x1 extends Duel {
         Player[] players = {Players[0].user.player, Players[1].user.player};
         Player[] players2 = {Players2[0].user.player, Players2[1].user.player};
         if ((bedX - map * 500) / Math.abs(bedX - map * 500) == (players2[0] == breaker ? 1 : -1))
-            Member.getMember(breaker).user.sendLangMessage(StringList.MLGRushBreakOwnBed);
+            Member.getMember(breaker).user.sendMessage("§8[§bMLGRush§8] §cYou can't break your bed!");
         else {
             resetBlocks();
             int w = players[0] == breaker ? 0 : 1;
@@ -212,7 +212,7 @@ public class MLGRush2x1 extends Duel {
                 SideBar.getSidebar(m.user.player)
                         .setLine(formats[0] + sidebar[3] + suffix[0], 3)
                         .setLine(formats[1] + sidebar[4] + suffix[1], 4);
-                m.user.sendLangMessage(StringList.MLGRushBedbreak, w == 0 ? formats[1] : formats[0], w == 0 ? formats[0] : formats[1]);
+                m.user.sendMessage("§8[§bMLGRush§8] %p%§7's bed was broken by %p%", w == 0 ? formats[1] : formats[0], w == 0 ? formats[0] : formats[1]);
                 PlayerUtils.sendActionBar(m.user.player, actionbar);
             }
             int[] Map = MapLocations(map);
@@ -231,7 +231,7 @@ public class MLGRush2x1 extends Duel {
             m.game = null;
             m.PlacedBlocks = -1;
         }
-        Players[quitter].user.sendLangMessage(StringList.MLGRushOpponentDisconnect);
+        Players[quitter].user.sendMessage("§cYour opponent has disconnected.");
         resetBlocks();
         timer.cancel();
         Location lb = new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0);
@@ -241,7 +241,7 @@ public class MLGRush2x1 extends Duel {
                 pp.user.bShowPlayer(m.user.player);
             }
             m.user.bSetAllowFlight(false);
-            m.user.sendLangMessage(StringList.MLGRushGameEnd);
+            m.user.sendMessage("§cGame Over.");
             m.user.bTeleport(lb);
             m.Spectate = -1;
         }

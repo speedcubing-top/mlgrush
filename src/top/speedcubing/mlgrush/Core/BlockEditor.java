@@ -9,7 +9,6 @@ import org.bukkit.inventory.InventoryHolder;
 import top.speedcubing.lib.bukkit.inventory.ItemUtils;
 import top.speedcubing.mlgrush.List.ItemStackList;
 import top.speedcubing.mlgrush.Member;
-import top.speedcubing.server.lang.GlobalString;
 
 public class BlockEditor {
 
@@ -51,7 +50,7 @@ public class BlockEditor {
                         }
                         int set = Member.getMember(player).integerCache[4];
                         if (set < 6)
-                            inv.setItem((set < 3) ? set + 10 : set + 11, ItemUtils.glow(ItemUtils.setLore(ItemStackList.sandstoneeditor[set][lang].clone(), GlobalString.selected.get(lang))));
+                            inv.setItem((set < 3) ? set + 10 : set + 11, ItemUtils.glow(ItemUtils.setLore(ItemStackList.sandstoneeditor[set][lang].clone(), "selected")));
                         player.openInventory(inv);
                     }
                     break;
@@ -64,7 +63,7 @@ public class BlockEditor {
                         }
                         int index = Member.getMember(player).integerCache[4] - ItemStackList.sandstoneeditor.length;
                         if (index < ItemStackList.quartzeditor.length && index >= 0)
-                            inv.setItem(index + 12, ItemUtils.glow(ItemUtils.setLore(ItemStackList.quartzeditor[index][lang].clone(), GlobalString.selected.get(lang))));
+                            inv.setItem(index + 12, ItemUtils.glow(ItemUtils.setLore(ItemStackList.quartzeditor[index][lang].clone(), "selected")));
                         player.openInventory(inv);
                     }
                     break;
@@ -77,7 +76,7 @@ public class BlockEditor {
                         }
                         int index = Member.getMember(player).integerCache[4] - (ItemStackList.sandstoneeditor.length + ItemStackList.quartzeditor.length);
                         if (index < ItemStackList.clayeditor.length && index >= 0)
-                            inv.setItem(index, ItemUtils.glow(ItemUtils.setLore(ItemStackList.clayeditor[index][lang].clone(), GlobalString.selected.get(lang))));
+                            inv.setItem(index, ItemUtils.glow(ItemUtils.setLore(ItemStackList.clayeditor[index][lang].clone(), "selected")));
                         player.openInventory(inv);
                     }
                     break;
@@ -88,10 +87,9 @@ public class BlockEditor {
             if (RawSlot > 9 && RawSlot < 17 && RawSlot != 13) {
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1F, 1F);
                 int x = RawSlot > 12 ? RawSlot - 11 : RawSlot - 10;
-                int lang = Member.getMember(player).user.lang;
                 Member.getMember(player).integerCache[4] = x;
                 player.closeInventory();
-                player.sendMessage(GlobalString.SavedSettings.get(lang));
+                player.sendMessage("%lang_general_saved_setting%");
             }
         } else if (holder == quartzeditor) {
             e.setCancelled(true);
@@ -101,7 +99,7 @@ public class BlockEditor {
                 int lang = Member.getMember(player).user.lang;
                 Member.getMember(player).integerCache[4] = x;
                 player.closeInventory();
-                player.sendMessage(GlobalString.SavedSettings.get(lang));
+                player.sendMessage("%lang_general_saved_setting%");
             }
         } else if (holder == clayeditor) {
             e.setCancelled(true);
@@ -111,7 +109,7 @@ public class BlockEditor {
                 int lang = Member.getMember(player).user.lang;
                 Member.getMember(player).integerCache[4] = x;
                 player.closeInventory();
-                player.sendMessage(GlobalString.SavedSettings.get(lang));
+                player.sendMessage("%lang_general_saved_setting%");
             }
         }
     }

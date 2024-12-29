@@ -17,15 +17,14 @@ import top.speedcubing.mlgrush.List.EntityList;
 import top.speedcubing.mlgrush.List.ItemStackList;
 import top.speedcubing.mlgrush.List.StringList;
 import top.speedcubing.mlgrush.Member;
-import top.speedcubing.server.lang.GlobalString;
 
 public class Lobby {
     public static void Join(Player player, boolean externalMessage) {
         Member member = Member.getMember(player);
         if (externalMessage)
-            member.user.sendLangMessage(GlobalString.LobbyJoinMessage, member.user.getPrefixNameChatColor(false));
+            member.user.sendMessage("%lang_lobby_msg_join_lobby%", member.user.getPrefixNameChatColor(false));
         for (Player p : player.getWorld().getPlayers()) {
-            Member.getMember(p).user.sendLangMessage(GlobalString.LobbyJoinMessage, member.user.getPrefixNameChatColor(false));
+            Member.getMember(p).user.sendMessage("%lang_lobby_msg_join_lobby%", member.user.getPrefixNameChatColor(false));
         }
 
         player.setMaximumNoDamageTicks(20);

@@ -56,10 +56,10 @@ public class PlayerInteract implements Listener {
                             member.Spectate = -1;
                             String str = member.user.getColorName(false);
                             for (Member m : member.game.Spectators) {
-                                m.user.sendLangMessage(StringList.LeaveSpectate, str);
+                                m.user.sendMessage("§8[§3Spectate§8] %p% §3is no longer spectating.", str);
                             }
                             for (Member m : member.game.Players) {
-                                m.user.sendLangMessage(StringList.LeaveSpectate, str);
+                                m.user.sendMessage("§8[§3Spectate§8] %p% §3is no longer spectating.", str);
                                 m.user.bShowPlayer(player);
                             }
                         }

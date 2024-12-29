@@ -7,6 +7,9 @@ import java.util.Set;
 import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import top.speedcubing.lib.utils.SQL.SQLField;
+import top.speedcubing.lib.utils.SQL.SQLResult;
+import top.speedcubing.lib.utils.SQL.SQLRow;
 import top.speedcubing.mlgrush.All.Lobby;
 import top.speedcubing.mlgrush.Core.Game.Duel;
 import top.speedcubing.mlgrush.Core.Game.MLGRush2x1;
@@ -35,14 +38,18 @@ public class Member {
     public boolean iseditingkit;
 
     public Duel game;
-    public int[] integerCache;
+    public int[] integerCache = new int[10];
     public Member LastDamage;
 
     public Member(Player player) {
         this.user = User.getUser(player);
         users.put(user.id, this);
         Lobby.Join(player, true);
-        new Thread(() -> integerCache = ArrayUtils.toPrimitive(user.dbSelect("mlgrush_stick,mlgrush_block,mlgrush_pickaxe,mlgrush_stickskin,mlgrush_blockskin,mlgrush_autoreset,mlgrush_hitdelay,mlgrush_falldamage,mlgrush_autoremove,mlgrush_oldkb").getIntArray())).start();
+        SQLRow r = user.dbSelect("mlgrush_stick,mlgrush_block,mlgrush_pickaxe,mlgrush_stickskin,mlgrush_blockskin,mlgrush_autoreset,mlgrush_hitdelay,mlgrush_falldamage,mlgrush_autoremove,mlgrush_oldkb");
+        int i = 0;
+        for(SQLField f : r) {
+            integerCache[i++] = f.getInt();
+        }
     }
 
 

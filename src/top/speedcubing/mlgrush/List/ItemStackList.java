@@ -14,7 +14,6 @@ import top.speedcubing.mlgrush.Core.BlockEditor;
 import top.speedcubing.mlgrush.Core.Core;
 import top.speedcubing.mlgrush.Core.Game.MLGRush2x1;
 import top.speedcubing.mlgrush.Member;
-import top.speedcubing.server.lang.GlobalString;
 
 public class ItemStackList {
 
@@ -82,7 +81,7 @@ public class ItemStackList {
                             if (waiter != null) {
                                 if (waiter != member) {
                                     new MLGRush2x1(member, MLGRush2x1.inst.Queue[map], map);
-                                    member.user.sendLangMessage(StringList.MLGRushOpponentFound);
+                                    member.user.sendMessage("§8[§bMLGRush§8] §aAn opponent has been found.");
                                     member.QuitAllQueue();
                                     MLGRush2x1.inst.Queue[map] = member;
                                 } else {
@@ -91,7 +90,7 @@ public class ItemStackList {
                                 }
                                 MLGRush2x1.inst.lore(map, 0, false);
                             } else {
-                                member.user.sendLangMessage(StringList.MLGRushQueue);
+                                member.user.sendMessage("§8[§bMLGRush§8] §aYou joined the queue.");
                                 member.QuitAllQueue();
                                 MLGRush2x1.inst.Queue[map] = member;
                                 MLGRush2x1.inst.lore(map, 1, false);
@@ -105,7 +104,7 @@ public class ItemStackList {
         String[] gad = {"§bGadgets", "§bGadgets", "§bGadgets", "§bGadgets"};
         String[] settings = {"§cSettings", "§cSettings", "§cSettings", "§cSettings"};
         for (int i = 0; i < 4; i++) {
-            LobbyItems[0][i] = new ItemBuilder(Material.GOLD_SWORD).name(Challenge[i]).hideAttr().hideUnBreak().build();
+            LobbyItems[0][i] = new ItemBuilder(Material.GOLD_SWORD).name(Challenge[i]).hideAttr().hideUnbreak().build();
             LobbyItems[1][i] = new ItemBuilder(Material.CHEST).name(gad[i]).build();
             LobbyItems[2][i] = new ItemBuilder(Material.REDSTONE_COMPARATOR).name(settings[i]).build();
             LobbyItems[3][i] = new ItemBuilder(Material.COMPASS).name(spec[i]).build();
@@ -171,11 +170,11 @@ public class ItemStackList {
                             r.getPlayer().closeInventory();
                         }, 5)
                         .setClickable(true, 36, 44)
-                        .setCloseInventory((r) -> {
+                        .setCloseEvent((r) -> {
                             Member member = Member.getMember(r.getPlayer());
                             if (member.iseditingkit) {
                                 member.iseditingkit = false;
-                                member.user.sendLangMessage(GlobalString.UnSavedSettings);
+                                member.user.sendMessage("§cDiscard Inventory Settings.");
                                 Lobby.Items(r.getPlayer());
                             }
                         }).getInventory();
@@ -220,18 +219,18 @@ public class ItemStackList {
                         new ItemBuilder(Material.FEATHER).build()
                 };
                 ItemStack[] sticks2 = {
-                        new ItemBuilder(Material.STICK).glow().lore(GlobalString.selected.get(i)).build(),
-                        new ItemBuilder(Material.DIAMOND_SWORD).glow().hideAttr().lore(GlobalString.selected.get(i)).build(),
-                        new ItemBuilder(Material.DIAMOND_HOE).glow().hideAttr().lore(GlobalString.selected.get(i)).build(),
-                        new ItemBuilder(Material.BLAZE_ROD).glow().lore(GlobalString.selected.get(i)).build(),
-                        new ItemBuilder(Material.BONE).glow().lore(GlobalString.selected.get(i)).build(),
-                        new ItemBuilder(Material.FEATHER).glow().lore(GlobalString.selected.get(i)).build()
+                        new ItemBuilder(Material.STICK).glow().lore("selected!").build(),
+                        new ItemBuilder(Material.DIAMOND_SWORD).glow().hideAttr().lore("selected!").build(),
+                        new ItemBuilder(Material.DIAMOND_HOE).glow().hideAttr().lore("selected!").build(),
+                        new ItemBuilder(Material.BLAZE_ROD).glow().lore("selected!").build(),
+                        new ItemBuilder(Material.BONE).glow().lore("selected!").build(),
+                        new ItemBuilder(Material.FEATHER).glow().lore("selected!").build()
                 };
 
                 ItemStack[] categoryblockeditor = {
-                        new ItemBuilder(Material.SANDSTONE).name(block[0][i]).lore(GlobalString.category.get(i)).build(),
-                        new ItemBuilder(Material.QUARTZ_BLOCK).name(block[1][i]).lore(GlobalString.category.get(i)).build(),
-                        new ItemBuilder(Material.STAINED_CLAY).name(block[2][i]).lore(GlobalString.category.get(i)).build()
+                        new ItemBuilder(Material.SANDSTONE).name(block[0][i]).lore().build(),
+                        new ItemBuilder(Material.QUARTZ_BLOCK).name(block[1][i]).lore().build(),
+                        new ItemBuilder(Material.STAINED_CLAY).name(block[2][i]).lore().build()
                 };
 
                 ItemStack[] sandstoneeditor = {
@@ -310,14 +309,14 @@ public class ItemStackList {
             String[] spec = {"§bSpectate Menu (Testing)", "§bSpectate Menu (Testing)", "§bSpectate Menu (Testing)", "§bSpectate Menu (Testing)"};
             for (int i = 0; i < 4; i++) {
                 {
-                    Pickaxe[i] = new ItemBuilder(Material.WOOD_PICKAXE).unBreak().hideAttr().ench(new Enchantment[]{Enchantment.DIG_SPEED}, new int[]{2}).build();
+                    Pickaxe[i] = new ItemBuilder(Material.WOOD_PICKAXE).unBreak().hideAttr().ench(Enchantment.DIG_SPEED, 2).build();
                     ItemStack[] sticks = {
-                            new ItemBuilder(Material.STICK).ench(new Enchantment[]{Enchantment.KNOCKBACK}, new int[]{1}).build(),
-                            new ItemBuilder(Material.DIAMOND_SWORD).unBreak().hideAttr().ench(new Enchantment[]{Enchantment.KNOCKBACK}, new int[]{1}).build(),
-                            new ItemBuilder(Material.DIAMOND_HOE).unBreak().hideAttr().ench(new Enchantment[]{Enchantment.KNOCKBACK}, new int[]{1}).build(),
-                            new ItemBuilder(Material.BLAZE_ROD).ench(new Enchantment[]{Enchantment.KNOCKBACK}, new int[]{1}).build(),
-                            new ItemBuilder(Material.BONE).ench(new Enchantment[]{Enchantment.KNOCKBACK}, new int[]{1}).build(),
-                            new ItemBuilder(Material.FEATHER).ench(new Enchantment[]{Enchantment.KNOCKBACK}, new int[]{1}).build(),
+                            new ItemBuilder(Material.STICK).ench(Enchantment.KNOCKBACK,1).build(),
+                            new ItemBuilder(Material.DIAMOND_SWORD).unBreak().hideAttr().ench(Enchantment.KNOCKBACK, 1).build(),
+                            new ItemBuilder(Material.DIAMOND_HOE).unBreak().hideAttr().ench(Enchantment.KNOCKBACK, 1).build(),
+                            new ItemBuilder(Material.BLAZE_ROD).ench(Enchantment.KNOCKBACK, 1).build(),
+                            new ItemBuilder(Material.BONE).ench(Enchantment.KNOCKBACK, 1).build(),
+                            new ItemBuilder(Material.FEATHER).ench(Enchantment.KNOCKBACK, 1).build(),
                     };
                     for (int j = 0; j < sticks.length; j++) {
                         Sticks[j][i] = sticks[j];
