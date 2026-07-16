@@ -31,6 +31,7 @@ public class Main extends JavaPlugin implements CommandExecutor {
 
     public void onEnable() {
         MinecraftServer.getServer().getPropertyManager().setProperty("server-name", "mlgrush");
+        CubingEventManager.registerListeners(new ServerEvent());
         registerCommands();
         registerListeners();
         registerWorlds();
