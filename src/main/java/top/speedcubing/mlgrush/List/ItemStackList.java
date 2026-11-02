@@ -208,7 +208,7 @@ public class ItemStackList {
                     {"§6Auto Block Remove", "§6Auto Block Remove", "§6Auto Block Remove", "§6Auto Block Remove"}
             };
             String[] active = {"§aActivated", "§aActivated", "§aActivated", "§aActivated"};
-            String[] deactive = {"§cDeactivated", "§cDeactivated", "§cDeactivated", "§cDeactivated"};
+            String[] deactivated = {"§cDeactivated", "§cDeactivated", "§cDeactivated", "§cDeactivated"};
             for (int i = 0; i < 4; i++) {
                 ItemStack[] sticks = {
                         new ItemBuilder(Material.STICK).build(),
@@ -275,7 +275,7 @@ public class ItemStackList {
                 };
                 ItemStack[] pref = {
                         new ItemBuilder(Material.INK_SACK).durability(10).name(active[i]).build(),
-                        new ItemBuilder(Material.INK_SACK).durability(1).name(deactive[i]).build()
+                        new ItemBuilder(Material.INK_SACK).durability(1).name(deactivated[i]).build()
                 };
                 for (int j = 0; j < sticks.length; j++) {
                     stickeditor[0][j][i] = sticks[j];
