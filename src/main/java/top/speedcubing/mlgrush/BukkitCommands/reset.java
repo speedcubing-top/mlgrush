@@ -16,7 +16,7 @@ public class reset implements CommandExecutor, TabCompleter {
         Player player = (Player) sender;
         if (args.length == 0) {
             if (player.getAllowFlight())
-                Member.getMember(player).user.sendMessage("§cYou are not in a MLGRush Game!");
+                Member.getMember(player).user.sendMessage("%lang_mlgrush_not_in_game%");
             else
                 switch (player.getWorld().getName()) {
                     case "MLGRush2x1":
@@ -26,11 +26,11 @@ public class reset implements CommandExecutor, TabCompleter {
 //                        MLGRush4x1.resetBlocks(Core.randomToRoom(player.getLocation().getZ()));
                         break;
                     default:
-                        Member.getMember(player).user.sendMessage("§cYou are not in a MLGRush Game!");
+                        Member.getMember(player).user.sendMessage("%lang_mlgrush_not_in_game%");
                         break;
                 }
         } else
-            player.sendMessage("/reset");
+            Member.getMember(player).user.sendMessage("%lang_mlgrush_reset_usage%");
         return true;
     }
 

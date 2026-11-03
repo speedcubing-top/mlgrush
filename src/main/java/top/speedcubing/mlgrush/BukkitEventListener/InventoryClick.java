@@ -75,14 +75,14 @@ public class InventoryClick implements Listener {
                             if (lastdamager.LastDamage != null && lastdamager.LastDamage.equals(member)) {
                                 lastdamager.Challenge.add(member);
                                 lastdamager.stick = null;
-                                member.user.sendMessage("§8[§eChallenger§8] §eYou challenged %p%§e. §8(§eGameType§8:§e%p%§8)", lastdamager.user.getPrefixName(false), "§bMLGRush 2x1");
-                                lastdamager.user.sendMessage("§8[§eChallenger§8] %p% §ehas challenged you.\n    §8(§eGameType§8:§e%p%§8)", member.user.getPrefixName(false), "§bMLGRush 2x1");
+                                member.user.sendMessage("%lang_mlgrush_challenge_sent%", lastdamager.user.getPrefixName(false), "§bMLGRush 2x1");
+                                lastdamager.user.sendMessage("%lang_mlgrush_challenge_received%", member.user.getPrefixName(false), "§bMLGRush 2x1");
                             } else
-                                member.user.sendMessage("§8[§eChallenger§8] §cYou already Challenged player %p%§c!\n    §8(§eGameType§8:§e%p%§8)", lastdamager.user.getPrefixName(false), "§bMLGRush 2x1");
+                                member.user.sendMessage("%lang_mlgrush_challenge_already%", lastdamager.user.getPrefixName(false), "§bMLGRush 2x1");
                         } else {
                             lastdamager.Challenge.add(member);
-                            member.user.sendMessage("§8[§eChallenger§8] §eYou challenged %p%§e. §8(§eGameType§8:§e%p%§8)", lastdamager.user.getPrefixName(false), "§bMLGRush 2x1");
-                            lastdamager.user.sendMessage("§8[§eChallenger§8] %p% §ehas challenged you.\n    §8(§eGameType§8:§e%p%§8)", member.user.getPrefixName(false), "§bMLGRush 2x1");
+                            member.user.sendMessage("%lang_mlgrush_challenge_sent%", lastdamager.user.getPrefixName(false), "§bMLGRush 2x1");
+                            lastdamager.user.sendMessage("%lang_mlgrush_challenge_received%", member.user.getPrefixName(false), "§bMLGRush 2x1");
                         }
                         break;
                     case 15:
@@ -91,15 +91,15 @@ public class InventoryClick implements Listener {
                             if (lastdamager.LastDamage.equals(member)) {
                                 lastdamager.Challenge.add(member);
                                 lastdamager.stick = member;
-                                member.user.sendMessage("§8[§eChallenger§8] §eYou challenged %p%§e. §8(§eGameType§8:§e%p%§8)", lastdamager.user.getPrefixName(false), "§bStickDuel");
-                                lastdamager.user.sendMessage("§8[§eChallenger§8] %p% §ehas challenged you.\n    §8(§eGameType§8:§e%p%§8)", member.user.getPrefixName(false), "§bStickDuel");
+                                member.user.sendMessage("%lang_mlgrush_challenge_sent%", lastdamager.user.getPrefixName(false), "§bStickDuel");
+                                lastdamager.user.sendMessage("%lang_mlgrush_challenge_received%", member.user.getPrefixName(false), "§bStickDuel");
                             } else
-                                member.user.sendMessage("§8[§eChallenger§8] §cYou already Challenged player %p%§c!\n    §8(§eGameType§8:§e%p%§8)", lastdamager.user.getPrefixName(false), "§bStickDuel");
+                                member.user.sendMessage("%lang_mlgrush_challenge_already%", lastdamager.user.getPrefixName(false), "§bStickDuel");
                         } else {
                             lastdamager.Challenge.add(member);
                             lastdamager.stick = member;
-                            member.user.sendMessage("§8[§eChallenger§8] §eYou challenged %p%§e. §8(§eGameType§8:§e%p%§8)", lastdamager.user.getPrefixName(false), "§bStickDuel");
-                            lastdamager.user.sendMessage("§8[§eChallenger§8] %p% §ehas challenged you.\n    §8(§eGameType§8:§e%p%§8)", member.user.getPrefixName(false), "§bStickDuel");
+                            member.user.sendMessage("%lang_mlgrush_challenge_sent%", lastdamager.user.getPrefixName(false), "§bStickDuel");
+                            lastdamager.user.sendMessage("%lang_mlgrush_challenge_received%", member.user.getPrefixName(false), "§bStickDuel");
                         }
                         break;
                 }

@@ -45,7 +45,7 @@ public class EntityList {
         }));
         npcs[2].setSpawnBodyYaw(179).setSkin(RNStextures, RNSsignature).setClickEvent((r -> {
             if (r.getPlayer().getItemInHand().getType() == org.bukkit.Material.AIR && r.getAction().equals(PacketPlayInUseEntity.EnumEntityUseAction.INTERACT))
-                r.getPlayer().sendMessage("§cThis gamemode is under maintenance.");
+                Member.getMember(r.getPlayer()).user.sendMessage("%lang_mlgrush_maintenance%");
         }));
         npcs[0].setLocation(-2.5, 100, 19.5, 128, 0);
         npcs[1].setLocation(0.5, 100, 19.5, 128, 0);

@@ -44,10 +44,10 @@ public class ItemStackList {
     public static ItemStack[][] clayeditor = new ItemStack[17][4];
     public static ItemStack[] unQueue = new ItemStack[4];
 
-    public static final String[] blockedit = {"§bBlock Skin", "§bBlock Skin", "§bBlock Skin", "§bBlock Skin"};
-    public static final String[] sandstoneedit = {"§bCategory: Sandstone", "§bCategory: Sandstone", "§bCategory: Sandstone", "§bCategory: Sandstone"};
-    public static final String[] quartzedit = {"§bCategory: Quartz Blocks", "§bCategory: Quartz Blocks", "§bCategory: Quartz Blocks", "§bCategory: Quartz Blocks"};
-    public static final String[] clayedit = {"§bCategory: Clay", "§bCategory: Clay", "§bCategory: Clay", "§bCategory: Clay"};
+    public static final String[] blockedit = StringList.lang("block_inv");
+    public static final String[] sandstoneedit = StringList.text("%lang_block_category%%lang_block_item_sandstone%");
+    public static final String[] quartzedit = StringList.text("%lang_block_category%%lang_block_item_quartz%");
+    public static final String[] clayedit = StringList.text("%lang_block_category%%lang_block_item_clay%");
 
     public static Inventory[] duelMenu = new Inventory[4];
 
@@ -66,7 +66,7 @@ public class ItemStackList {
     }
 
     private void Lobby() {
-        String[] title = {"§bJoin Queue", "§bJoin Queue", "§bJoin Queue", "§bJoin Queue"};
+        String[] title = StringList.lang("mlgrush_inv_join_queue");
         for (int i = 0; i < 4; i++) {
             duelMenu[i] = new InventoryBuilder(18, title[i])
                     .setItem(new ItemBuilder(Material.SANDSTONE).name("Normal").lore(StringList.Lores[i][0], StringList.Lores[i][1].replace("%int%", "0"), StringList.Lores[i][2].replace("%int%", "0")).build(), 0)
@@ -81,7 +81,7 @@ public class ItemStackList {
                             if (waiter != null) {
                                 if (waiter != member) {
                                     new MLGRush2x1(member, MLGRush2x1.inst.Queue[map], map);
-                                    member.user.sendMessage("§8[§bMLGRush§8] §aAn opponent has been found.");
+                                    member.user.sendMessage("%lang_mlgrush_opponent_found%");
                                     member.QuitAllQueue();
                                     MLGRush2x1.inst.Queue[map] = member;
                                 } else {
@@ -90,7 +90,7 @@ public class ItemStackList {
                                 }
                                 MLGRush2x1.inst.lore(map, 0, false);
                             } else {
-                                member.user.sendMessage("§8[§bMLGRush§8] §aYou joined the queue.");
+                                member.user.sendMessage("%lang_mlgrush_queue_joined%");
                                 member.QuitAllQueue();
                                 MLGRush2x1.inst.Queue[map] = member;
                                 MLGRush2x1.inst.lore(map, 1, false);
@@ -99,10 +99,10 @@ public class ItemStackList {
                         }
                     }).getInventory();
         }
-        String[] Challenge = {"§6Challenger", "§6Challenger", "§6Challenger", "§6Challenger"};
-        String[] spec = {"§bSpectate", "§bSpectate", "§bSpectate", "§bSpectate"};
-        String[] gad = {"§bGadgets", "§bGadgets", "§bGadgets", "§bGadgets"};
-        String[] settings = {"§cSettings", "§cSettings", "§cSettings", "§cSettings"};
+        String[] Challenge = StringList.lang("mlgrush_item_challenger");
+        String[] spec = StringList.lang("mlgrush_item_spectate");
+        String[] gad = StringList.lang("mlgrush_item_gadgets");
+        String[] settings = StringList.lang("lobby_item_settings");
         for (int i = 0; i < 4; i++) {
             LobbyItems[0][i] = new ItemBuilder(Material.GOLD_SWORD).name(Challenge[i]).hideAttr().hideUnbreak().build();
             LobbyItems[1][i] = new ItemBuilder(Material.CHEST).name(gad[i]).build();
@@ -121,7 +121,7 @@ public class ItemStackList {
 
     private void MLGRush() {
         {
-            String[] unqueue = {"§4Click to unqueue", "§4Click to unqueue", "§4Click to unqueue", "§4Click to unqueue"};
+            String[] unqueue = StringList.lang("mlgrush_item_unqueue");
             for (int i = 0; i < 4; i++) {
                 unQueue[i] = new ItemBuilder(Material.REDSTONE).name(unqueue[i]).build();
             }
@@ -139,7 +139,7 @@ public class ItemStackList {
         {
             String[] title = {"§cMLGRush Einstellungen", "§cMLGRush Settings", "§cMLGRush 設定", "§cMLGRush 设置"};
             String[] inv = {"§bInventar", "§bInventory", "§b物品欄", "§b物品栏"};
-            String[] prefedit = {"§bPreferences", "§bPreferences", "§bPreferences", "§bPreferences"};
+            String[] prefedit = StringList.lang("mlgrush_item_preferences");
             for (int i = 0; i < 4; i++) {
                 Settings[i] = new InventoryBuilder(27, title[i])
                         .setItem(new ItemBuilder(Material.CHEST).durability(3).name(inv[i]).build(), (r) -> {
@@ -174,14 +174,14 @@ public class ItemStackList {
                             Member member = Member.getMember(r.getPlayer());
                             if (member.iseditingkit) {
                                 member.iseditingkit = false;
-                                member.user.sendMessage("§cDiscard Inventory Settings.");
+                                member.user.sendMessage("%lang_inventory_discard%");
                                 Lobby.Items(r.getPlayer());
                             }
                         }).getInventory();
             }
         }
         {
-            String[] title = {"§eMode Select", "§eMode Select", "§eMode Select", "§eMode Select"};
+            String[] title = StringList.lang("mlgrush_inv_mode_select");
             String[] rush = {"§bMLGRush", "§bMLGRush", "§bMLGRush", "§bMLGRush"};
             String[] stick = {"§bStickDuel", "§bStickDuel", "§bStickDuel", "§bStickDuel"};
             for (int i = 0; i < 4; i++) {
@@ -193,22 +193,20 @@ public class ItemStackList {
 
         {
             String[][] block = {
-                    {"§bSandstone Blocks", "§bSandstone Blocks", "§bSandstone Blocks", "§bSandstone Blocks"},
-                    {"§bQuartz Blocks", "§bQuartz Blocks", "§bQuartz Blocks", "§bQuartz Blocks"},
-                    {"§bOre (Blocks)", "§bOre (Blocks)", "§bOre (Blocks)", "§bOre (Blocks)"},
-                    {"§bOres", "§bOres", "§bOres", "§bOres"},
-                    {"§bQuartz Blocks", "§bQuartz Blocks", "§bQuartz Blocks", "§bQuartz Blocks"},
-                    {"§bWoods", "§bWoods", "§bWoods", "§bWoods"}
+                    StringList.lang("block_item_sandstone"),
+                    StringList.lang("block_item_quartz"),
+                    StringList.lang("block_item_clay")
             };
             String[][] prefs = {
-                    {"§6Another Kb for flats", "§6Another Kb for flats", "§6Another Kb for flats", "§6Another Kb for flats"},
-                    {"§6Auto Block Reset", "§6Auto Block Reset", "§6Auto Block Reset", "§6Auto Block Reset"},
-                    {"§6No Hit Delay", "§6No Hit Delay", "§6No Hit Delay", "§6No Hit Delay"},
-                    {"§6Fall Damage", "§6Fall Damage", "§6Fall Damage", "§6Fall Damage"},
-                    {"§6Auto Block Remove", "§6Auto Block Remove", "§6Auto Block Remove", "§6Auto Block Remove"}
+                    StringList.lang("mlgrush_pref_old_kb"),
+                    StringList.lang("mlgrush_pref_auto_reset"),
+                    StringList.lang("mlgrush_pref_no_hit_delay"),
+                    StringList.lang("mlgrush_pref_fall_damage"),
+                    StringList.lang("mlgrush_pref_auto_remove")
             };
-            String[] active = {"§aActivated", "§aActivated", "§aActivated", "§aActivated"};
-            String[] deactivated = {"§cDeactivated", "§cDeactivated", "§cDeactivated", "§cDeactivated"};
+            String[] active = StringList.lang("mlgrush_pref_activated");
+            String[] deactivated = StringList.lang("mlgrush_pref_deactivated");
+            String[] selected = StringList.lang("general_selected");
             for (int i = 0; i < 4; i++) {
                 ItemStack[] sticks = {
                         new ItemBuilder(Material.STICK).build(),
@@ -219,12 +217,12 @@ public class ItemStackList {
                         new ItemBuilder(Material.FEATHER).build()
                 };
                 ItemStack[] sticks2 = {
-                        new ItemBuilder(Material.STICK).glow().lore("selected!").build(),
-                        new ItemBuilder(Material.DIAMOND_SWORD).glow().hideAttr().lore("selected!").build(),
-                        new ItemBuilder(Material.DIAMOND_HOE).glow().hideAttr().lore("selected!").build(),
-                        new ItemBuilder(Material.BLAZE_ROD).glow().lore("selected!").build(),
-                        new ItemBuilder(Material.BONE).glow().lore("selected!").build(),
-                        new ItemBuilder(Material.FEATHER).glow().lore("selected!").build()
+                        new ItemBuilder(Material.STICK).glow().lore(selected[i]).build(),
+                        new ItemBuilder(Material.DIAMOND_SWORD).glow().hideAttr().lore(selected[i]).build(),
+                        new ItemBuilder(Material.DIAMOND_HOE).glow().hideAttr().lore(selected[i]).build(),
+                        new ItemBuilder(Material.BLAZE_ROD).glow().lore(selected[i]).build(),
+                        new ItemBuilder(Material.BONE).glow().lore(selected[i]).build(),
+                        new ItemBuilder(Material.FEATHER).glow().lore(selected[i]).build()
                 };
 
                 ItemStack[] categoryblockeditor = {
@@ -303,10 +301,10 @@ public class ItemStackList {
         }
 
         {
-            String[] title = {"§bGadgets", "§bGadgets", "§bGadgets", "§bGadgets"};
-            String[] stick = {"§bStick Skin", "§bStick Skin", "§bStick Skin", "§bStick Skin"};
-            String[] block = {"§bBlock Skin", "§bBlock Skin", "§bBlock Skin", "§bBlock Skin"};
-            String[] spec = {"§bSpectate Menu (Testing)", "§bSpectate Menu (Testing)", "§bSpectate Menu (Testing)", "§bSpectate Menu (Testing)"};
+            String[] title = StringList.lang("mlgrush_item_gadgets");
+            String[] stick = StringList.lang("mlgrush_item_stick_skin");
+            String[] block = StringList.lang("block_inv");
+            String[] spec = StringList.lang("mlgrush_inv_spectate");
             for (int i = 0; i < 4; i++) {
                 {
                     Pickaxe[i] = new ItemBuilder(Material.WOOD_PICKAXE).unBreak().hideAttr().ench(Enchantment.DIG_SPEED, 2).build();

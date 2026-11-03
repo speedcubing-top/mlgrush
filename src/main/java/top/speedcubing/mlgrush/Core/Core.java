@@ -13,6 +13,7 @@ import top.speedcubing.lib.bukkit.inventory.InventoryBuilder;
 import top.speedcubing.lib.bukkit.inventory.InventoryUtils;
 import top.speedcubing.mlgrush.All.Lobby;
 import top.speedcubing.mlgrush.List.ItemStackList;
+import top.speedcubing.mlgrush.List.StringList;
 import top.speedcubing.mlgrush.Member;
 
 public class Core {
@@ -21,8 +22,8 @@ public class Core {
     public static final InventoryHolder ChallengerHolder = () -> null;
     public static final Map<Integer, Integer> specMenu4x1 = new HashMap<>();
 
-    private static final String[] stickedit = {"§bStick Skin", "§bStick Skin", "§bStick Skin", "§bStick Skin"};
-    private static final String[] prefedit = {"§bPreferences", "§bPreferences", "§bPreferences", "§bPreferences"};
+    private static final String[] stickedit = StringList.lang("mlgrush_item_stick_skin");
+    private static final String[] prefedit = StringList.lang("mlgrush_item_preferences");
 
     public static void resetItems(Player player) {
         int[] ints = Member.getMember(player).integerCache;
@@ -35,7 +36,7 @@ public class Core {
             Member member = Member.getMember(player);
             member.integerCache[3] = RawSlot - 10;
             player.closeInventory();
-            player.sendMessage("%lang_general_saved_setting%");
+            member.user.sendMessage("%lang_general_saved_setting%");
         }
     }
 
@@ -44,7 +45,7 @@ public class Core {
         if (cursor.getType() == Material.AIR) {
             Member member = Member.getMember(player);
             member.iseditingkit = false;
-            player.sendMessage("%lang_general_saved_setting%");
+            member.user.sendMessage("%lang_general_saved_setting%");
             int[] x = member.integerCache;
             for (int i = 0; i < 9; i++) {
                 if (inventory.getItem(i) != null) {

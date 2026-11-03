@@ -36,7 +36,7 @@ public class StickDuel extends Duel {
             Players[1].user.bTeleport(new Location(world, Map[0] * -1 + 0.5, 101, coord + 0.5 - Map[1], 270, 0));
             int[] settings = new int[5];
             for (Member p : Players) {
-                p.user.sendMessage("§8[§bStickDuel§8] §aAn opponent has been found.");
+                p.user.sendMessage("%lang_mlgrush_opponent_found%");
 //                Core.QuitAllGame(p);
                 int[] ints = p.integerCache;
                 settings[0] += ints[5];
@@ -158,14 +158,14 @@ public class StickDuel extends Duel {
                 SideBar.getSidebar(m.user.player)
                         .setLine(formats[0] + sidebar[3] + suffix[0], 3)
                         .setLine(formats[1] + sidebar[4] + suffix[1], 4);
-                m.user.sendMessage("§8[§bStickDuel§8] %p%§7 was killed by %p%",
+                m.user.sendMessage("%lang_mlgrush_killed_by%",
                         member.user.getColorName(false),
                         killer.user.getColorName(false));
                 PlayerUtils.sendActionBar(m.user.player, actionbar);
             }
         } else {
             for (Member m : targets)
-                m.user.sendMessage("§8[§bStickDuel§8] %p%§7 has fell into the void.", member.user.getColorName(false));
+                m.user.sendMessage("%lang_mlgrush_void%", member.user.getColorName(false));
         }
 
         int pos = killer.user.bGetLocation().getX() > 0 ? -1 : 1;
@@ -183,7 +183,7 @@ public class StickDuel extends Duel {
             m.game = null;
             m.PlacedBlocks = -1;
         }
-        Players[quitter].user.sendMessage("§cYour opponent has disconnected.");
+        Players[quitter].user.sendMessage("%lang_mlgrush_opponent_disconnected%");
         resetBlocks();
         timer.cancel();
         Location lb = new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0);
@@ -193,7 +193,7 @@ public class StickDuel extends Duel {
                 pp.user.bShowPlayer(m.user.player);
             }
             m.user.bSetAllowFlight(false);
-            m.user.sendMessage("§cGame Over.");
+            m.user.sendMessage("%lang_mlgrush_game_over%");
             m.user.bTeleport(lb);
             m.Spectate = -1;
         }
