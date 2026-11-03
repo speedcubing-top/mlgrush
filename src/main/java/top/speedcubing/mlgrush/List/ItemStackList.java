@@ -113,7 +113,7 @@ public class ItemStackList {
 
 
     private void Invalid() {
-        String[] display = {"§4Sie können die Elemente hier nicht einstellen!", "§4You can't set the items here!", "§4你不能將物品設定於此處!", "§4你不能将物品设定于此处!"};
+        String[] display = {"§4Sie können die Elemente hier nicht einstellen!", "§4You can't set the items here!", "§4無法在此處設定物品！", "§4你不能将物品设定于此处!"};
         for (int i = 0; i < 4; i++) {
             Invalid[i] = new ItemBuilder(Material.STAINED_GLASS_PANE).durability(8).name(display[i]).build();
         }
@@ -154,8 +154,8 @@ public class ItemStackList {
         }
         {
             String[] title = {"§cMLGRush Inventar", "§cMLGRush Inventory", "§cMLGRush 物品欄", "§cMLGRush 物品栏"};
-            String[] save = {"§aÄnderungen speichern", "§aSave Changes", "§a儲存設定", "§a储存设置"};
-            String[] unsave = {"§cnicht gespeicherte Änderungen", "§cUnSave Changes", "§c不儲存設定", "§c不储存设置"};
+            String[] save = {"§aÄnderungen speichern", "§aSave Changes", "§a儲存變更", "§a储存设置"};
+            String[] unsave = {"§cnicht gespeicherte Änderungen", "§cUnSave Changes", "§c捨棄變更", "§c不储存设置"};
             for (int i = 0; i < 4; i++) {
                 InventoryKitEditor[i] = new InventoryBuilder(9, title[i])
                         .setItem(new ItemBuilder(Material.STAINED_GLASS_PANE).durability(7).name("§a").build(), 0, 8)

@@ -27,7 +27,7 @@ public class StringList {
     public static String[][] LobbySideBar = {
             {"§5", "§8» §b", "§aOnline-Spieler§a:", "§8", "§6speedcubing.top", "§3MLGRush"},
             {"§5", "§8» §b", "§aOnline players§a:", "§8", "§6speedcubing.top", "§3MLGRush"},
-            {"§5", "§8» §b", "§a線上玩家:", "§8", "§6speedcubing.top", "§3MLGRush"},
+            {"§5", "§8» §b", "§a線上玩家：", "§8", "§6speedcubing.top", "§3MLGRush"},
             {"§5", "§8» §b", "§a线上玩家", "§8", "§6speedcubing.top", "§3MLGRush"}
     };
     public static String[][] MLGRushSideBar = {
