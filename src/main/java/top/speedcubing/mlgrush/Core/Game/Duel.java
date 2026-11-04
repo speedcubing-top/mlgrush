@@ -1,7 +1,6 @@
 package top.speedcubing.mlgrush.Core.Game;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Timer;
@@ -36,7 +35,6 @@ public class Duel extends Game {
     public String actionbar;
     public boolean[] Preference;
     public World world;
-    public HashMap<BlockPosition, Integer> Diff = new HashMap<>();
 
     public Duel(int map, String world) {
         this.world = Bukkit.getWorld(world);
@@ -90,7 +88,7 @@ public class Duel extends Game {
 
     public void resetBlocks() {
         for (BlockPosition pos : Blocks) {
-            Diff.remove(pos);
+            MLGRush2x1.inst.Diff.remove(pos);
             world.getBlockAt(pos.getX(), pos.getY(), pos.getZ()).setType(Material.AIR);
         }
         Blocks.clear();

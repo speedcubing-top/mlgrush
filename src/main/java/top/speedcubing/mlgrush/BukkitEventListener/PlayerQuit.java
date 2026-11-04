@@ -12,7 +12,7 @@ public class PlayerQuit implements Listener {
     public void PlayerQuitEvent(PlayerQuitEvent e) {
         Player player = e.getPlayer();
         Member member = Member.getMember(player);
-        if (player.getWorld().getName().equals("MLGRush2x1"))
+        if (member.game != null)
             member.game.gameEnd(member);
         else {
             member.QuitAllQueue();
