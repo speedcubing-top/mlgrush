@@ -64,40 +64,37 @@ public class InventoryClick implements Listener {
                 e.setCancelled(true);
                 Member member = Member.getMember(player);
                 Member lastdamager = member.LastDamage;
-                if (lastdamager.user.player == null) {
+                if (lastdamager == null) {
                     player.closeInventory();
                     return;
                 }
                 switch (RawSlot) {
                     case 11:
                         player.closeInventory();
-                        if (lastdamager.Challenge.contains(member)) {
+                        if (lastdamager.Challenge.containsKey(member)) {
                             if (lastdamager.LastDamage != null && lastdamager.LastDamage.equals(member)) {
-                                lastdamager.Challenge.add(member);
-                                lastdamager.stick = null;
+                                lastdamager.Challenge.put(member, false);
                                 member.user.sendMessage("%lang_mlgrush_challenge_sent%", lastdamager.user.getPrefixName(false), "§bMLGRush 2x1");
                                 lastdamager.user.sendMessage("%lang_mlgrush_challenge_received%", member.user.getPrefixName(false), "§bMLGRush 2x1");
                             } else
                                 member.user.sendMessage("%lang_mlgrush_challenge_already%", lastdamager.user.getPrefixName(false), "§bMLGRush 2x1");
                         } else {
-                            lastdamager.Challenge.add(member);
+                            lastdamager.Challenge.put(member, false);
                             member.user.sendMessage("%lang_mlgrush_challenge_sent%", lastdamager.user.getPrefixName(false), "§bMLGRush 2x1");
                             lastdamager.user.sendMessage("%lang_mlgrush_challenge_received%", member.user.getPrefixName(false), "§bMLGRush 2x1");
                         }
                         break;
                     case 15:
                         player.closeInventory();
-                        if (lastdamager.Challenge.contains(member)) {
-                            if (lastdamager.LastDamage.equals(member)) {
-                                lastdamager.Challenge.add(member);
-                                lastdamager.stick = member;
+                        if (lastdamager.Challenge.containsKey(member)) {
+                            if (lastdamager.LastDamage != null && lastdamager.LastDamage.equals(member)) {
+                                lastdamager.Challenge.put(member, true);
                                 member.user.sendMessage("%lang_mlgrush_challenge_sent%", lastdamager.user.getPrefixName(false), "§bStickDuel");
                                 lastdamager.user.sendMessage("%lang_mlgrush_challenge_received%", member.user.getPrefixName(false), "§bStickDuel");
                             } else
                                 member.user.sendMessage("%lang_mlgrush_challenge_already%", lastdamager.user.getPrefixName(false), "§bStickDuel");
                         } else {
-                            lastdamager.Challenge.add(member);
-                            lastdamager.stick = member;
+                            lastdamager.Challenge.put(member, true);
                             member.user.sendMessage("%lang_mlgrush_challenge_sent%", lastdamager.user.getPrefixName(false), "§bStickDuel");
                             lastdamager.user.sendMessage("%lang_mlgrush_challenge_received%", member.user.getPrefixName(false), "§bStickDuel");
                         }

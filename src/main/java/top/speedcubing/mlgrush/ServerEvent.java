@@ -23,10 +23,14 @@ public class ServerEvent {
 
     @CubingEventHandler
     public void cubingTickEvent(CubingTickEvent e) {
-        for (SideBar s : SideBar.getSidebars()) {
-            if (s.player.getWorld().getName().equals("lobby"))
-                s.setLine(StringList.LobbySideBar[User.getUser(s.player).lang][1] + DatabaseData.onlineCount, 4);
-        }
+        int onlineCount = DatabaseData.onlineCount;
+        Bukkit.getScheduler().runTask(Main.getPlugin(Main.class), () -> {
+            for (SideBar s : SideBar.getSidebars()) {
+                User user = User.getUser(s.player);
+                if (user != null && s.player.getWorld().getName().equals("lobby"))
+                    s.setLine(StringList.LobbySideBar[user.lang][1] + onlineCount, 4);
+            }
+        });
     }
 
     @CubingEventHandler

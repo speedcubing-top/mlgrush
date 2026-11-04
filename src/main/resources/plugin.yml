@@ -4,8 +4,6 @@ version: 1.0
 commands:
   reset:
     usage: /reset
-  version:
-    usage: /reset
 depend:
   - speedcubingServer
   - speedcubingLib

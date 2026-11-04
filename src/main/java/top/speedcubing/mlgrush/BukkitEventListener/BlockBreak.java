@@ -20,6 +20,7 @@ public class BlockBreak implements Listener {
             case "lobby":
                 if (player.getGameMode() == GameMode.SURVIVAL)
                     e.setCancelled(true);
+                break;
             case "MLGRush2x1":
                 if (player.getGameMode() == GameMode.SURVIVAL) {
                     e.setCancelled(true);

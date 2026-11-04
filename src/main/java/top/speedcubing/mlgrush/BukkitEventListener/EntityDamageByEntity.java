@@ -38,8 +38,9 @@ public class EntityDamageByEntity implements Listener {
                     Member victimUniqueId = Member.getMember(victim);
                     Member damagerUniqueId = Member.getMember(damager);
                     damagerUniqueId.LastDamage = victimUniqueId;
-                    if (damagerUniqueId.Challenge.contains(victimUniqueId)) {
-                        if (damagerUniqueId.stick != null && damagerUniqueId.stick.equals(victimUniqueId))
+                    Boolean stick = damagerUniqueId.Challenge.get(victimUniqueId);
+                    if (stick != null) {
+                        if (stick)
                             new StickDuel(damagerUniqueId, victimUniqueId, 0);
                         else
                             new MLGRush2x1(damagerUniqueId, victimUniqueId, 0);

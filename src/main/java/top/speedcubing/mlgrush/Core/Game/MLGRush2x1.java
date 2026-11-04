@@ -43,6 +43,12 @@ public class MLGRush2x1 extends Duel {
         MLGRush2x1.inst.lore(map, inst.Rooms[map].size(), true);
 
         Bukkit.getScheduler().runTask(Main.getPlugin(Main.class), () -> {
+            if (participantQuit()) {
+                WorldUtils.fillAir(-30 + 500 * map, 80, -30 + coord, 30 + map * 500, 120, 30 + coord, world);
+                inst.Rooms[map].remove(room);
+                inst.lore(map, inst.Rooms[map].size(), true);
+                return;
+            }
             int[] Map = MapLocations(map);
             Players2[0].user.bTeleport(new Location(world, 500 * map + Map[0] + 0.5, Map[1] + 1, coord + 0.5 + Map[3] + Map[6], Map[4], 0));
             Players2[1].user.bTeleport(new Location(world, 500 * map + Map[0] * -1 + 0.5, Map[1] + 1, coord + 0.5 - Map[3], Map[5], 0));

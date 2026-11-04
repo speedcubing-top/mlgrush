@@ -1,9 +1,7 @@
 package top.speedcubing.mlgrush;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -29,9 +27,8 @@ public class Member {
 
     public final User user;
 
-    //Challenge
-    public final Set<Member> Challenge = new HashSet<>();
-    public Member stick;
+    //Challenge: challenger -> true for StickDuel, false for MLGRush 2x1
+    public final Map<Member, Boolean> Challenge = new HashMap<>();
     //spec
     public int Spectate;
     public int PlacedBlocks;
@@ -70,11 +67,17 @@ public class Member {
 
     public void DeleteChallenge() {
         Challenge.clear();
-        stick = null;
         for (Member m : Member.users.values()) {
             m.Challenge.remove(this);
-            if (m.stick != null && m.stick.equals(this))
-                m.stick = null;
+        }
+    }
+
+    public void remove() {
+        DeleteChallenge();
+        users.remove(user.id);
+        for (Member m : users.values()) {
+            if (m.LastDamage == this)
+                m.LastDamage = null;
         }
     }
 }

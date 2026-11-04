@@ -3,8 +3,6 @@ package top.speedcubing.mlgrush.Core.Game;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import org.bukkit.Bukkit;
@@ -12,6 +10,8 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.DisplaySlot;
 import top.speedcubing.lib.bukkit.PlayerUtils;
 import top.speedcubing.lib.bukkit.WorldUtils;
@@ -24,7 +24,7 @@ public class Duel extends Game {
     public Member[] Players;
     public final int[] Score = {0, 0};
     public final long[] Kill = {0,0};
-    public java.util.Timer timer = new Timer();
+    public BukkitTask timer;
     public int Time;
     public int map;
     public int room;
@@ -50,6 +50,20 @@ public class Duel extends Game {
                 WorldUtils.cloneArea(-30 + 500 * map, 80, -30, 30 + 500 * map, 120, 30, -30 + 500 * map, 80, -30 + coord, this.world));
     }
 
+    // a participant may quit in the tick between matching and initStage2; tell the one still online
+    protected boolean participantQuit() {
+        for (Member m : Players) {
+            if (Member.getMember(m.user.id) != m) {
+                for (Member p : Players) {
+                    if (Member.getMember(p.user.id) == p)
+                        p.user.sendMessage("%lang_mlgrush_opponent_disconnected%");
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void initStage2(int[] settings, String[][] displayName, Member[] members) {
         Preference = new boolean[]{settings[0] > 1, settings[1] > 1, settings[2] > 1, settings[3] > 1, settings[4] > 1};
         for (Member m : members) {
@@ -66,7 +80,7 @@ public class Duel extends Game {
             for (Member p : members)
                 p.user.bSetMaximumNoDamageTicks(0);
         oldKb = settings[4] > 1;
-        timer.schedule(new TimerTask() {
+        timer = new BukkitRunnable() {
             int x = 0;
 
             @Override
@@ -83,7 +97,7 @@ public class Duel extends Game {
                 }
                 x++;
             }
-        }, 0, 1000);
+        }.runTaskTimer(Main.getPlugin(Main.class), 0, 20);
     }
 
     public void resetBlocks() {

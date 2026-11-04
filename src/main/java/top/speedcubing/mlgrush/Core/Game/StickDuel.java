@@ -25,12 +25,17 @@ public class StickDuel extends Duel {
         super(map, "StickDuel");
         Players = new Random().nextBoolean() ? new Member[]{member1, member2} : new Member[]{member2, member1};
 
-        String[] format = {Players[0].user.getColorName(false), Players[0].user.getColorName(false)};
+        String[] format = {Players[0].user.getColorName(false), Players[1].user.getColorName(false)};
         actionbar = format[0] + " §e0 §8x §e0 " + format[1];
 
         StickDuel.inst.lore(map, inst.Rooms[map].size(), true);
 
         Bukkit.getScheduler().runTask(Main.getPlugin(Main.class), () -> {
+            if (participantQuit()) {
+                inst.Rooms[map].remove(room);
+                inst.lore(map, inst.Rooms[map].size(), true);
+                return;
+            }
             int[] Map = MapLocations(map);
             Players[0].user.bTeleport(new Location(world, Map[0] + 0.5, 101, coord + 0.5 + Map[1], 90, 0));
             Players[1].user.bTeleport(new Location(world, Map[0] * -1 + 0.5, 101, coord + 0.5 - Map[1], 270, 0));

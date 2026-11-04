@@ -16,9 +16,9 @@ public class PlayerQuit implements Listener {
             member.game.gameEnd(member);
         else {
             member.QuitAllQueue();
-            member.DeleteChallenge();
             member.iseditingkit = false;
         }
+        member.remove();
         int[] x = member.integerCache;
         member.user.dbUpdate(
                 "mlgrush_stick=" + x[0] +

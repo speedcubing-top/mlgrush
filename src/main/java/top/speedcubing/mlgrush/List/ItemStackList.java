@@ -83,7 +83,7 @@ public class ItemStackList {
                                     new MLGRush2x1(member, MLGRush2x1.inst.Queue[map], map);
                                     member.user.sendMessage("%lang_mlgrush_opponent_found%");
                                     member.QuitAllQueue();
-                                    MLGRush2x1.inst.Queue[map] = member;
+                                    MLGRush2x1.inst.Queue[map] = null;
                                 } else {
                                     member.QuitAllQueue();
                                     Lobby.Items(p);
